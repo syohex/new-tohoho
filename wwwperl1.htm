@@ -939,26 +939,26 @@ sub add {
 </pre>
 <p>サブルーチンは宣言しただけでは実行されませんが、次のように呼び出す事によって実行されます。</p>
 <pre class=c>
-print &amp;add(3, 5);
+print add(3, 5);
 </pre>
 <p>サブルーチンに渡された引数は特殊配列変数 @_ に格納されるので、$_[0], $_[1], $_[2],...として参照することができます。return(...)は ... をサブルーチンの戻り値としてサブルーチンを終了することを意味します。return()を省略した場合は、サブルーチンの最後の文(statement)の結果がサブルーチンの戻り値となります。</p>
 <p>C言語と違ってperlではほとんどの変数はグローバル変数なので、サブルーチンの外でも中でも同じ名前で参照・設定できます。サブルーチンの中でローカル変数(サブルーチンの中だけで有効な名前)を使用するには次のようにします。</p>
 <pre class=c>
 sub add {
-    local(@a) = @_;
-    local($i);
-    local($ans) = 0;
-    for ($i = 0; $i &lt;= $#a; $i++) {
-        $ans += $a[$i];
+    my @a = @_;
+    my $i;
+    my $ans = 0;
+    foreach my $i (@a) {
+        $a += $i;
     }
-    return($ans);
+    return $ans;
 }
 </pre>
 <p>特殊変数 @_ の代入部を次のようにすると、perl Ver4.X ではうまくいかない(値が渡されない)場合があるので注意しましょう。</p>
 <pre class=c>
 sub add {
-    local(@a);
-    local($i);
+    my @a;
+    my $i;
     @a = @_;
        :
 </pre>
@@ -966,16 +966,16 @@ sub add {
 
 <b>◆ <a name="CallByRef">参照渡し</a></b>
 <div class=i>
-<p>サブルーチンに複数の配列を渡す際や、pop, push を用いてサブルーチン内で配列の個数を変更する際など、「*名前」という参照渡しを用いると都合が良い場合があります。</p>
+<p>サブルーチンに複数の配列を渡す際や、pop, push を用いてサブルーチン内で配列の個数を変更する際など、リファレンスを渡します</p>
 <pre class=c>
 sub listprint {
-    local(*list1, *list2) = @_;
-    print "[ "; print @list1; print " ]\n";
-    print "[ "; print @list2; print " ]\n";
+    my $list1, $list2 = @_;
+    print "[ "; print @{$list1}; print " ]\n";
+    print "[ "; print @{$list2}; print " ]\n";
 }
-@xx = (1, 2, 3);
-@yy = (4, 5, 6);
-&amp;listprint(*xx, *yy);
+my @xx = (1, 2, 3);
+my @yy = (4, 5, 6);
+listprint(\@xx, \@yy);
 </pre>
 </div>
 
