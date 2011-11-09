@@ -1,0 +1,1313 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=Shift_JIS">
+<title>とほほのperl入門（リファレンス編）</title>
+<link rel="stylesheet" href="style.css">
+<style type="text/css">
+<!--
+DT {
+    font-weight: bold;
+    font-family: "Arial";
+    color: #555555;
+    background-color: #f0f0f0;
+    padding: 2px;
+    border: 1px solid #e0e0e0;
+    width: 90%;
+    white-space: pre;
+}
+DD {
+    margin: 1em; 0em 1em 0em;
+}
+I {
+    font-weight: normal;
+}
+PRE {
+    padding: 3px;
+    border: 1px solid gray;
+    white-space: pre;
+    width: 95%;
+}
+-->
+</style>
+</head>
+<body>
+<!-- テキスト広告(FE) -->
+<div style="border:1px solid #9999cc; width:468px; background-color:#eeeeff; padding:3px; margin-top:3px; color:#000080; text-align:left; font-size:9pt;">
+[広告]
+<a href="http://www.npb-net.com/">ドコモショップ</a> /
+<a href="http://www.k-dentalclinic.jp/">裏側矯正</a> /
+<a href="http://www.gapcentral.gapbuster.com/ja-jp/index.asp">覆面調査</a> /
+<a href="http://review-info.info/">情報商材 暴露</a> /
+<a href="http://sakura-buzz.com/">悪徳出会い</a>
+</div>
+<h2><img src="image/popase.gif" height=19 width=18 alt="">とほほのperl入門（リファレンス編）</h2>
+<a href="www.htm">トップ</a> &gt;
+<a href="wwwperl.htm">とほほのperl入門</a> &gt;
+リファレンス編
+
+<h4>■ <a name="Statement">プログラム制御</a></h4>
+<div class=i>
+<a href="#if">if</a> - 条件分岐する（もし・・・ならば）<br>
+<a href="#else">else</a> - 条件分岐する（さもなくば）<br>
+<a href="#elsif">elsif</a> - 条件分岐する（あるいは・・・ならば）<br>
+<a href="#unless">unless</a> - 条件分岐する（もし・・・でなければ）<br>
+<a href="#while">while</a> - 繰り返す（・・・のあいだ）<br>
+<a href="#for">for</a> - 繰り返す（・・・から・・・のあいだ）<br>
+<a href="#foreach">foreach</a> - 繰り返す（配列の全要素に対して）<br>
+<a href="#last">last</a> - ループを抜ける<br>
+<a href="#next">next</a> - 次のループを繰り返す<br>
+<a href="#redo">redo</a> - 今のループを繰り返す<br>
+<a href="#goto">goto</a> - ジャンプする<br>
+<a href="#do">do</a> - 処理を実行する<br>
+<a href="#eval">eval</a> - 処理を実行する<br>
+<a href="#exit">exit</a> - スクリプトを終了する<br>
+<a href="#die">die</a> - スクリプトを終了する<br>
+<a href="#dump">dump</a> - コアダンプする
+</div>
+
+<h4>■ <a name="Subroutine">サブルーチン・パッケージ・ライブラリ</a></h4>
+<div class=i>
+<a href="#sub">sub</a> - サブルーチンを定義する<br>
+<a href="#return">return</a> - サブルーチンから戻る<br>
+<a href="#caller">caller</a> - サブルーチンの情報を返す<br>
+<a href="#package">package</a> - パッケージを開始する<br>
+<a href="#require">require</a> - ライブラリファイルを読み込む
+</div>
+
+<h4>■ <a name="FileIo">ファイル入出力</a></h4>
+<div class=i>
+<a href="#open">open</a> - ファイルをオープンする<br>
+<a href="#close">close</a> - ファイルをクローズする<br>
+<a href="#read">read</a> - ファイルからデータを読み出す<br>
+<a href="#write">write</a> - フォーマット付きの出力を行う<br>
+<a href="#sysread">sysread</a> - ファイルから直接読み込む<br>
+<a href="#syswrite">syswrite</a> - ファイルへ直接書き込む<br>
+<a href="#eof">eof</a> - ファイルの終端を判断する<br>
+<a href="#stat">stat</a> - ファイルの属性を得る<br>
+<a href="#lstat">lstat</a> - ファイルの属性を得る<br>
+<a href="#binmode">binmode</a> - バイナリモードで読み書きする<br>
+<a href="#fileno">fileno</a> - ファイルディスクリプタを得る<br>
+<a href="#flock">flock</a> - ファイルをロックする<br>
+<a href="#getc">getc</a> - ファイルから1文字読み込む<br>
+<a href="#seek">seek</a> - ファイルの読み込み・書き込み位置を変更する<br>
+<a href="#tell">tell</a> - ファイルの読み込み・書き込み位置を得る<br>
+<a href="#truncate">truncate</a> - ファイルサイズを変更する<br>
+<a href="#print">print</a> - ファイルへ書き出す<br>
+<a href="#printf">printf</a> - ファイルへフォーマット付きで書き出す<br>
+select - 未稿<br>
+fcntl - 未稿<br>
+ioctl - 未稿
+</div>
+
+<h4>■ <a name="FileOp">ファイル操作</a></h4>
+<div class=i>
+<a href="#chmod">chmod</a> - ファイルのモードを変更する<br>
+<a href="#chown">chown</a> - ファイルのオーナーを変更する<br>
+<a href="#rename">rename</a> - ファイル名を変更する<br>
+<a href="#unlink">unlink</a> - ファイルを削除する<br>
+<a href="#utime">utime</a> - ファイルの時刻を変更する<br>
+<a href="#link">link</a> - リンクファイルを作成する<br>
+<a href="#symlink">symlink</a> - シンボリックリンクを作成する<br>
+<a href="#readlink">readlink</a> - シンボリックリンク数を得る
+</div>
+
+<h4>■ <a name="DirOp">ディレクトリ操作</a></h4>
+<div class=i>
+<a href="#chdir">chdir</a> - カレントディレクトリを変更する<br>
+<a href="#chroot">chroot</a> - ルートディレクトリを変更する<br>
+<a href="#mkdir">mkdir</a> - ディレクトリを作成する<br>
+<a href="#rmdir">rmdir</a> - ディレクトリを削除する
+</div>
+
+<h4>■ <a name="DirIo">ディレクトリ読み出し</a></h4>
+<div class=i>
+<a href="#opendir">opendir</a> - ディレクトリをオープンする<br>
+<a href="#closedir">closedir</a> - ディレクトリをクローズする<br>
+<a href="#readdir">readdir</a> - ディレクトリエントリを読み出す<br>
+<a href="#rewinddir">rewinddir</a> - 最初から読むようにする<br>
+<a href="#telldir">telldir</a> - 現在の位置を得る<br>
+<a href="#seekdir">seekdir</a> - 現在の位置を変更する
+</div>
+
+<h4>■ <a name="String">文字列操作</a></h4>
+<div class=i>
+<a href="#length">length</a> - 文字列長を得る<br>
+<a href="#substr">substr</a> - 文字列の一部を取り出す<br>
+<a href="#join">join</a> - 複数の文字列を連結する<br>
+<a href="#split">split</a> - 文字列を分割する<br>
+<a href="#index">index</a> - 文字列の中から特定文字を探す<br>
+<a href="#rindex">rindex</a> - 文字列の中から特定文字を探す<br>
+<a href="#sprintf">sprintf</a> - 値をフォーマッティングする<br>
+<a href="#chop">chop</a> - 行末の1文字を削除する
+<a href="#chomp">chomp</a> - 行末の改行コードを削除する
+m/<i>pattern</i>/gio<br>
+/<i>pattern</i>/gio<br>
+q/<i>string</i>/<br>
+qq/<i>string</i>/<br>
+qx/<i>string</i>/<br>
+s/<i>pattern</i>/<i>replacement</i>/gieo<br>
+tr/<i>pattern</i>/<i>replacement</i>/cds<br>
+y/<i>pattern</i>/<i>replacement</i>/cds
+</div>
+
+<h4>■ <a name="Times">時刻操作</a></h4>
+<div class=i>
+<a href="#time">time</a> - 現在の時刻を得る<br>
+<a href="#localtime">localtime</a> - 時刻を得る<br>
+<a href="#gmtime">gmtime</a> - 時刻を得る
+</div>
+
+<h4>■ <a name="Array">配列制御</a></h4>
+<div class=i>
+<a href="#pop">pop</a> - 最後の要素を取り出す<br>
+<a href="#push">push</a> - 要素を最後に追加する<br>
+<a href="#shift">shift</a> - 最初の要素を取り出す<br>
+<a href="#unshift">unshift</a> - 要素を最初に追加する<br>
+<a href="#sort">sort</a> - 配列をソートする<br>
+<a href="#grep">grep</a> - パターンマッチした要素を取り出す<br>
+<a href="#reverse">reverse</a> - 配列要素を逆順にする<br>
+<a href="#splice">splice</a> - 配列要素を部分削除(置換)する
+</div>
+
+<h4>■ <a name="XArray">連想配列制御</a></h4>
+<div class=i>
+<a href="#delete">delete</a> - 連想配列変数を削除する<br>
+<a href="#each">each</a> - 連想配列の全要素を処理する<br>
+<a href="#keys">keys</a> - 連想配列のキーの一覧を得る<br>
+<a href="#values">values</a> - 連想配列の値の一覧を得る
+</div>
+
+<h4>■ <a name="Math">数学関数</a></h4>
+<div class=i>
+<a href="#atan2">atan2</a> - atan y/x<br>
+<a href="#sin">sin</a> - sin x<br>
+<a href="#cos">cos</a> - cos x<br>
+<a href="#exp">exp</a> - eのn乗<br>
+<a href="#sqrt">sqrt</a> - ルート<br>
+<a href="#int">int</a> - 整数値<br>
+<a href="#log">log</a> - log x<br>
+<a href="#rand">rand</a> - 乱数<br>
+<a href="#srand">srand</a> - 乱数を初期化する
+</div>
+
+<h4>■ <a name="Conv">データ変換</a></h4>
+<div class=i>
+<a href="#ord">ord</a> - 文字のASCIIコードを得る<br>
+<a href="#oct">oct</a> - 8進数や16進数を解釈する<br>
+<a href="#hex">hex</a> - 16進数を解釈する<br>
+<a href="#pack">pack</a> - バイナリデータを生成する<br>
+<a href="#unpack">unpack</a> - バイナリデータを解釈する<br>
+<a href="#scalar">scalar</a> - スカラー値に変換する<br>
+vec - ビットフィールドを取り出す
+</div>
+
+<h4>■ <a name="Process">プロセス制御</a></h4>
+<div class=i>
+<a href="#fork">fork</a> - 子プロセスを生成する<br>
+wait - 未稿<br>
+waitpid - 未稿
+</div>
+
+<h4>■ <a name="Signal">シグナル</a></h4>
+<div class=i>
+<a href="#alarm">alarm</a> - アラームシグナルを発行する<br>
+<a href="#kill">kill</a> - SIGKILLを送る
+</div>
+
+<h4>■ <a name="Sockets">ソケット</a></h4>
+<div class=i>
+<a href="#socket">socket</a> - ソケットを作成する<br>
+socketpair - 未稿<br>
+<a href="#bind">bind</a> - ソケットに名前をつける<br>
+listen - 未稿<br>
+connect - 未稿<br>
+recv - 未稿<br>
+send - 未稿<br>
+shutdown - 未稿<br>
+getpeername - 未稿<br>
+getsockname - 未稿<br>
+getsockopt - 未稿<br>
+setsockopt - 未稿<br>
+<a href="#gethostbyname">gethostbyname</a> - ホスト名からIPアドレスを得る<br>
+getnetbyname - 未稿<br>
+getprotobyname - 未稿<br>
+getservbyname - 未稿<br>
+<a href="#gethostbyaddr">gethostbyaddr</a> - IPアドレスからホスト名を得る<br>
+gethostent - 未稿<br>
+gethostent - 未稿<br>
+endhostent - 未稿<br>
+getnetent - 未稿<br>
+setnetent - 未稿<br>
+endnetent - 未稿<br>
+getprotoent - 未稿<br>
+setprotoent - 未稿<br>
+endprotoent - 未稿<br>
+getservent - 未稿<br>
+setservent - 未稿<br>
+endservent - 未稿
+</div>
+
+<h4>■ <a name="Msg">メッセージ</a></h4>
+<div class=i>
+msgctl - 未稿<br>
+msgget - 未稿<br>
+msgsnd - 未稿<br>
+msgrcv - 未稿
+</div>
+
+<h4>■ <a name="Semaphore">セマフォ</a></h4>
+<div class=i>
+semctl - 未稿<br>
+semget - 未稿<br>
+semop - 未稿
+</div>
+
+<h4>■ <a name="Shm">共有メモリ</a></h4>
+<div class=i>
+shmctl - 未稿<br>
+shmget - 未稿<br>
+shmread - 未稿<br>
+shmwrite - 未稿
+</div>
+
+<h4>■ <a name="Db">データベース</a></h4>
+<div class=i>
+dbmopen - 未稿<br>
+dbmclose - 未稿
+</div>
+
+<h4>■ <a name="Other">その他</a></h4>
+<div class=i>
+<a href="#crypt">crypt</a> - パスワードをチェックする<br>
+<a href="#defined">defined</a> - 定義されているか調べる<br>
+<a href="#system">system</a> - 外部コマンドを実行する<br>
+<a href="#exec">exec</a> - 外部コマンドを実行する<br>
+<a href="#local">local</a> - ローカル変数を定義する<br>
+<a href="#sleep">sleep</a> - 数秒間待つ<br>
+<a href="#undef">undef</a> - 変数などを未定義の状態にする<br>
+<a href="#warn">warn</a> - エラーメッセージを出力する<br>
+<a href="#wantarray">wantarray</a> - サブルーチンのコンテキストを調べる<br>
+study - 未稿<br>
+syscall - 未稿<br>
+umask - 未稿<br>
+pipe - 未稿<br>
+reset - 未稿<br>
+getlogin - 未稿<br>
+getpgrp - 未稿<br>
+setpgrp - 未稿<br>
+getppid - 未稿<br>
+getpriority - 未稿<br>
+setpriority - 未稿<br>
+getpwnam - 未稿<br>
+getgrnam - 未稿<br>
+getpwuid - 未稿<br>
+getgrgid - 未稿<br>
+getpwent - 未稿<br>
+setpwent - 未稿<br>
+endpwent - 未稿<br>
+getgrent - 未稿<br>
+setgrent - 未稿<br>
+endgrent - 未稿
+</div>
+
+<h4>■ リファレンス</h4>
+<dl style="margin-right:20px">
+
+<dt>◆ <a name="alarm">alarm(<i>expr</i>)</a>
+<dd><p><i>expr</i> 秒後にアラームシグナル（SIGALRM）を発行する。SIGALRM は、$SIG{'ALRM'}="関数名"; で捕獲する。再設定したり <i>expr</i> に 0 を指定すると、以前の設定はキャンセルされ、以前の設定の残り時間が返される。OS によってはサポートされていない。</p>
+<pre>
+$SIG{'ALRM'} = "sigalrm";
+sub sigalrm { print "ALARM!!\n"; }
+alarm(5);
+</pre>
+
+<dt>◆ <a name="atan2">atan2(<i>y</i>, <i>x</i>)</a>
+<dd><p><i>y</i>/<i>x</i> のアークタンジェントの値、つまり、原点から見た、座標 <i>x</i>, <i>y</i> の角度をラジアン単位（－π～π ）で返す。</p>
+
+<dt>◆ <a name="bind">bind(<i>SOCKET</i>, <i>name</i>)</a>
+<dd><p>ソケットに名前をつける。→ <a href="#socket">socket</a> 参照。</p>
+
+<dt>◆ <a name="binmode">binmode(<i>FILEHANDLE</i>)</a>
+<dd><p><i>FILEHANDLE</i> の入出力をバイナリモードで行うようにする。UNIX では意味が無いが、Windows ではバイナリファイルを読み書きする際にはバイナリモードにしなくてはならない。さもないと、改行コード変換（CR LF ←→ LF）が行われてしまい、バイナリデータが破損してしまう。</p>
+
+<dt>◆ <a name="caller">caller(<i>expr</i>)</a>
+<dt>◆ caller()
+<dd><p>サブルーチンを呼び出した側のパッケージ名、ファイル名、行番号を得る。</p>
+<pre>
+func()
+
+sub func {
+    ($package, $filename, $line) = caller;
+    print "$package, $filename, $line\n";
+}
+</pre>
+
+<dt>◆ <a name="chdir">chdir(<i>dirname</i>)</a>
+<dd><p>カレントディレクトリ（作業フォルダ）を変更する。カレントディレクトリはプロセスが終了するまで有効で、子プロセス起動時は子プロセスに引き継がれる。区切り文字は \ よりも / を使用するのが無難。</p>
+<pre>
+chdir("C:/Temp");
+</pre>
+
+<dt>◆ <a name="chmod">chmod(<i>mode</i>, <i>filelist</i>)</a>
+<dd><p><i>filelist</i> で指定したファイル（複数指定可）の<a href="wwwxx012.htm">パーミッション</a>を変更する。変更が成功したファイルの個数を返す。</p>
+
+<dt>◆ <a name="chomp">chomp(<i>list</i>)</a>
+<dd><p>行末の改行コードを削除する。具体的には、行末のレコードセパレータ $/ にマッチする部分を削除するので、<a href="#chop">chop</a> に比べて安全性は高い。Perl 5 からサポート。</p>
+
+<dt>◆ <a name="chop">chop(<i>list</i>)</a>
+<dt>◆ chop(<i>string</i>)
+<dt>◆ chop()
+<dd><p>文字列の最後の文字を削除して、その文字列を返す。文字列を配列で与えた場合はすべての文字列の最後の文字を削除し、最後の文字列の結果を返す。&lt;<i>FILEHANDLE</i>&gt; で読み込んだデータ末尾の改行コード（\n）を削るのに便利だが、\r\n の時でも \n しか削らないので注意。引数省略時は chop($_) と同じ。→ <a href="#chomp">chomp</a> </p>
+
+<dt>◆ <a name="chown">chown(<i>uid</i>, <i>gid</i>, <i>filelist</i>)</a>
+<dd><p><i>filelist</i>（配列指定可能）で指定したファイルのオーナーユーザーとオーナーグループを変更する。<i>uid</i>, <i>gid</i> にはそれぞれユーザーIDとグループIDを指定する。変更に成功したファイルの個数を返す。</p>
+
+<dt>◆ <a name="chroot">chroot(<i>dirname</i>)</a>
+<dd><p>このプロセスにおけるルートディレクトリを変更する。</p>
+
+<dt>◆ <a name="close">close(<i>FILEHANDLE</i>)</a>
+<dd><p>open() でオープンしたファイルハンドルをクローズする。スクリプトが終了する時にはファイルは自動的にクローズされるが、オープンしたファイルは使い終わったらクローズするのがお作法。</p>
+
+<dt>◆ <a name="closedir">closedir(<i>DIRHANDLE</i>)</a>
+<dd><p>opendir() でオープンしたディレクトリハンドルをクローズする。</p>
+
+<dt>◆ connect(<i>SOCKET</i>, <i>name</i>)
+<dd><p>→ socket 参照。</p>
+
+<dt>◆ <a name="cos">cos(<i>expr</i>)</a>
+<dt>◆ cos()
+<dd><p>数学関数 cos(<i>expr</i>) の値をラジアン単位で返す。<i>expr</i> 省略時は cos($_) と同じ。</p>
+
+<dt>◆ <a name="crypt">crypt(<i>passwd</i>, <i>salt</i>)</a>
+<dd><p>利用者のパスワードをファイルに保存する際、そのまま保存しておくと危険なので、crypt() で DES による暗号化を行ってから保存するとよい。暗号化したパスワードから元のパスワードを解読することは困難だが、元のパスワードをチェックすることは容易にできる。解読を困難にするために、<i>salt</i> にはドット（.）、スラッシュ（/）を含む2文字の英数文字をランダムに指定する。この2文字は暗号化されたパスワードの最初の2文字となる。2文字目より後ろは無視される。</p>
+<pre>
+# パスワードを "hi.mi.tu" とする
+$passwd = "hi.mi.tu";
+
+# 暗号化したパスワード($epasswd)を得る
+srand();
+@salts = ( "A".."Z", "a".."z", "0".."9", ".", "/" );
+$salt = $salts[int(rand(64))] . $salts[int(rand(64))];
+$epasswd = crypt($passwd, $salt);
+print "epasswd=$epasswd\n";
+
+# 暗号化したパスワードでパスワードをチェックする
+$passwd = "hi.mi.tu";
+$epasswd = "ZpoK9sz7yGHRo";
+if ($epasswd eq crypt($passwd, $epasswd)) {
+    print "Match!!\n";
+}
+</pre>
+<p>MD5 がサポートされているシステムでは、<i>salt</i> に、"$1$" で始まる 8文字（$1$ を含めて11文字）を指定することにより、MD5 を使用できる。DES よりも安全度が高い。</p>
+
+<dt>◆ dbmclose(<i>assoc_array</i>)
+<dd><p>未稿。</p>
+
+<dt>◆ dbmopen(<i>assoc_array</i>, <i>dbname</i>, <i>mode</i>)
+<dd><p>未稿。</p>
+
+<dt>◆ <a name="defined">defined(<i>expr</i>)</a>
+<dd><p>変数、配列、サブルーチンが定義されているかどうかを調べ、真または偽を返す。値がヌル文字(または0、または空配列)なのか、それとも定義されていないのかを調べる事ができる。いくつかの関数もundefineの値を返す事がある。</p>
+<pre>
+defined($xx)              # 偽を返す
+$xx = ""; defined($xx)    # 真を返す
+$xx = 0; defined($xx)     # 真を返す
+</pre>
+
+<dt>◆ <a name="delete">delete $<i>assoc_array</i>{<i>key</i>}</a>
+<dd><p>指定した連想配列を削除、つまり、undefine の状態にする。</p>
+
+<dt>◆ <a name="die">die(<i>list</i>)</a>
+<dd><p>perl スクリプトを終了する。<i>list</i> を STDERR に出力し、$! の値（もし $! が 0 なら($?&gt;&gt;8) の値）を perl スクリプトの戻り値とする。eval の中で使用した場合はスクリプトを終了せず、<i>list</i> を $@ に設定し、eval が undefine で終了する。<i>list</i> の末尾に改行が無い場合は、スクリプト名や行番号などが末尾に付加される。</p>
+<pre>
+open(IN, $file) || die "Can't open file.\n";
+open(IN, $file) || die "Can't open file. Stopped";
+</pre>
+
+<dt>◆ <a name="do">do { ... }</a>
+<dt>◆ do <i>subroutine</i> (<i>list</i>)
+<dt>◆ do <i>expr</i>
+<dd><p>... や <i>Ssubroutine</i> を実行する。次の例では最後の式の値が do の戻り値となる。</p>
+<pre>
+$xx = do { $yy = 5; $zz = 8; }  # 戻り値は最後の式の値
+</pre>
+<p>次の例ではサブルーチン do を呼び出して戻り値を返す。（ただし、&amp;add(5, 3) を用いるのが一般的。）</p>
+<pre>
+sub add { return($_[0] + $_[1]); }
+print do add(5, 3);
+</pre>
+<p>次の例では libfile.pl という外部ファイルを perl のライブラリとして呼び出す。（ただし、require "libfile.pl"; を用いるのが一般的。）</p>
+<pre>
+do "libfile.pl";
+</pre>
+<p>do を用いて、if文、unless文、while文、until文の順序を変更することができる。</p>
+<pre>
+do { print "5です。\n"; } if ($xx == 5);
+do { print "xx = $xx\n"; $xx++; } while ($xx &lt; 5);
+</pre>
+
+<dt>◆ <a name="dump">dump <i>label</i></a>
+<dd><p>直ちにコアダンプしてスクリプトを終了する。undump コマンドでコアファイルから実行ファイルを生成して再実行すると、<i>label</i> の場所から実行される。変数の内容はダンプ前の状態が保存されるので、初期化処理をスキップした高速起動コマンドを生成できるが、ファイルディスクリプタは保存されない。</p>
+
+<dt>◆ <a name="each">each(<i>assoc_array</i>)</a>
+<dd><p>連想配列のすべての要素について処理を行う。</p>
+<pre>
+while (($key, $value) = each(%xxx)) {
+    print "$key = $value\n";
+}
+</pre>
+
+<dt>◆ <a name="else">else</a>
+<dd><p><a href="#if">if</a> と組み合わせて「さもなくば」の処理を行う。</p>
+<pre>
+if ($xx == 5) {
+    print "5です。\n";
+} else {
+    print "5ではありません。\n";
+}
+</pre>
+
+<dt>◆ <a name="elsif">elsif</a>
+<dd><p><a href="#if">if</a> と組み合わせて「あるいは」の処理を行う。</p>
+<pre>
+if ($xx == 5) {
+    print "5です。\n";
+} elsif ($xx == 6) {
+    print "6です。\n";
+} elsif ($xx == 7) {
+    print "7です。\n";
+} else {
+    print "5でも6でも7でもありません。\n";
+}
+</pre>
+
+<dt>◆ <a name="eof">eof(<i>FILEHANDLE</i>)</a>
+<dt>◆ eof()
+<dd><p><i>FILEHANDLE</i> がオープンされていないか、オープンされているがファイルの終端に達している場合に 1 を返す。eof() とした場合はコマンドラインで指定したすべてのファイルが終端に達した場合に、eof() とした場合は最後に読み込んだファイルが終端に達した場合に 1 を返す。</p>
+
+<dt>◆ <a name="eval">eval(<i>expr</i>)</a>
+<dt>◆ eval { ... }
+<dd><p><i>expr</i> の値や ... を perl のスクリプトとみなして実行する。最後に実行した命令の結果が戻り値として返される。perl がエラーメッセージを出して終了するような命令や、die が実行された場合、undefine を返し、$@にエラーメッセージを格納する。dbmopen, symlink, flock など、実装されているかどうか分からない命令や、0除算の可能性のある割り算を行う際に、eval を用いて perl が異常終了するのを防ぐ事ができる。（eval { ... }; のセミコロン( ; )に注意）</p>
+<pre>
+print eval("3 * (5 + 3)") . "\n";
+
+$x = 10; $y = 0;
+$ans = eval { $x / $y; };
+if ($@) { warn "WARNING: $@"; }
+
+open(OUT, "&gt; xx");
+eval { flock(OUT, 2); };
+if ($@) { warn "WARNING: flock isn't supported.\n"; }
+</pre>
+
+<dt>◆ <a name="exec">exec(<i>list</i>)</a>
+<dd><p><i>list</i> で指定した外部コマンドに処理を移す。system() と異なり、exec() を呼び出した以降のスクリプトは実行されない。出力がバッファリングされてしまうことがあるので、$| = 1; としておくことを奨める。</p>
+
+<dt>◆ <a name="exit">exit(<i>expr</i>)</a>
+<dd><p>perl スクリプトを終了する。終了コードとして <i>expr</i> の値を返す。通常、成功終了は 0、異常終了は 0 以外の値を返す。<i>expr</i> 省略時は 0 を返す。</p>
+
+<dt>◆ <a name="exp">exp(<i>expr</i>)</a>
+<dt>◆ exp()
+<dd><p>e の <i>expr</i> 乗を返す。<i>expr</i> 省略時はexp($_) と同じ。</p>
+
+<dt>◆ <a name="fcntl">fcntl(<i>FILEHANDLE</i>, <i>function</i>, <i>scalar</i>)</a>
+<dd><p></p>
+
+<dt>◆ <a name="fileno">fileno(<i>FILEHANDLE</i>)</a>
+<dd><p><i>FILEHANDLE</i> で示されるファイルのファイルディスクリプタを返す。これは select() などで用いられる。</p>
+
+<dt>◆ <a name="flock">flock(<i>FILEHANDLE</i>, <i>operation</i>)</a>
+<dd><p>他のプロセスが書込み中のファイルを読み込むと、不完全なデータを読み込んでしまい、それを書き戻した時点でファイルが破壊されることがある。これを防ぐためにflock() を用いてファイルをロック（排他制御）する。<i>operation</i> には次の値のいずれかを指定する。（まれに、数値の異なるシステムもあるかも）</p>
+<pre>
+1   読み込み宣言ロック(ブロックモード)
+2   書き込み宣言ロック(ブロックモード)
+5   読み込み宣言ロック(非ブロックモード)
+6   書き込み宣言ロック(非ブロックモード)
+8   ロック解除(アンロック)
+</pre>
+<p>読み込み宣言ロックは「今から私が読み込むから、他の誰も書き込むな」という宣言であり、書き込み宣言ロックは「今から私が書き込むから、他の誰も読み込んだり書き込んだりするな」という宣言である。ただし、書き込みを禁止すると言っても、flock() を使用していないプロセスの書き込みまで禁止できる訳ではない。ブロックモードでは、自分がロックをかけることができる状態になるまでプログラムが一時停止する。非ブロックモードでは、自分がロックをかけることができたか、できなかったらすぐに真または偽を返す。flock() をサポートしていないシステムもあり、無理に使用すると perl が異常終了する。汎用性のあるプログラムを記述する場合は eval を使用するとよい。</p>
+<p>下記の例は2つの誤りを犯している。</p>
+<pre>
+open(OUT, "&gt; outfile.txt");
+flock(OUT, 2);
+print OUT "........";
+flock(OUT, 8);
+close(OUT);
+</pre>
+<p>ひとつ目は open() を行った時点で、ロックを行うよりも前にファイルサイズを 0 にしてしまう点。ふたつ目は、print による書き込みキャッシュがフラッシュされる前に flock(OUT, 8) でロックを解除してしまっている点である。上記のコードは次のように書かなくてはならない。close() を行った時やプログラムが終了する時には自動的にロックは解除される。（ただし、2つ目の問題は最近の perl では改善されている）</p>
+<pre>
+open(OUT, "+&lt; outfile.txt");
+flock(OUT, 2);
+truncate(OUT, 0);
+seek(OUT, 0, 0);
+print OUT "........";
+close(OUT);
+</pre>
+
+<dt>◆ <a name="for">for (<i>expr1</i>; <i>expr2</i>; <i>expr3</i>) { <i>statements</i> }</a>
+<dt>◆ for (<i>list</i>) { <i>statement</i> }
+<dt>◆ for (<i>from</i> .. <i>to</i>) { <i>statement</i> }
+<dd><p>まず <i>expr1</i> を実行し、その後、<i>expr3</i> を行いながら <i>expr2</i> が真の間 <i>statements</i> を実行する。次の例はいずれも、10回ループを実行する例である。</p>
+<pre>
+for ($xx = 1; $xx &lt;= 10; $xx++) {
+    print "xx = $xx\n";
+}
+for (1, 2, 3, 4, 5, 6, 7, 8, 9, 10) {
+    print "xx = $xx\n";
+}
+for (1..10) {
+    print "xx = $xx\n";
+}
+</pre>
+
+<dt>◆ <a name="foreach">foreach <i>var</i> (<i>array</i>) { <i>statements</i> }</a>
+<dt>◆ foreach (<i>array</i>) { <i>statements</i> }
+<dd><p>配列の各要素に対して処理を行う。foreach の代わりに for を使うこともその逆も可能だが、配列操作の場合は foreach を用いるのが一般的。</p>
+<pre>
+@zz = (11, 22, 33, 44, 55);
+foreach $xx (@zz) {
+    print "xx = $xx\n";
+}
+</pre>
+<p>$xx を省略した場合は、省略時変数 $_ が用いられる。</p>
+<pre>
+foreach (@zz) {
+    print "xx = $_\n";
+}
+</pre>
+
+<dt>◆ <a name="fork">fork()</a>
+<dd><p>子プロセスを生成し、親プロセスと子プロセスに分岐する。親プロセスの場合 $pid には子プロセスのIDが、子プロセスの場合、$pid には 0 が返る。fork() をサポートしていないシステムもあり、無理に使用すると perl が異常終了する。</p>
+<pre>
+if ($pid = fork()) {
+    print "これは親プロセスです。\n";
+} else {
+    print "これは子プロセスです。\n";
+}
+</pre>
+
+<dt>◆ <a name="getc">getc(<i>FILEHANDLE</i>)</a>
+<dt>◆ getc()
+<dd><p><i>FILEHANDLE</i> から 1文字読み込む。<i>FILEHANDLE</i> 省略時は標準入力 STDIN から読み込む。ファイルの終端に達するとヌル文字を返す。</p>
+<pre>
+while ($c = getc(IN)) { print $c; }
+</pre>
+
+<dt>◆ getlogin()
+<dd>
+
+<dt>◆ getpeername(<i>SOCKET</i>)
+<dd>
+
+<dt>◆ getpgrp(<i>pid</i>)
+<dd>
+
+<dt>◆ getppid()
+<dd>
+
+<dt>◆ getpriority(<i>which</i>, <i>who</i>)
+<dd>
+
+<dt>◆ getpwnam(<i>name</i>)
+<dd>
+
+<dt>◆ getgrnam(<i>name</i>)
+<dd>
+
+<dt>◆ <a name="gethostbyname">gethostbyname(<i>name</i>)</a>
+<dd><p>詳細説明は省略するが、DNS を用いてホスト名をIPアドレスに変換することができる。</p>
+<pre>
+$addr = (gethostbyname($host))[4];
+$addr = sprintf("%u.%u.%u.%u", unpack("C*", $addr));
+</pre>
+
+<dt>◆ getnetbyname(<i>name</i>)
+<dd>
+
+<dt>◆ getprotobyname(<i>name</i>)
+<dd>
+
+<dt>◆ getpwuid(<i>uid</i>)
+<dd>
+
+<dt>◆ getgrgid(<i>gid</i>)
+<dd>
+
+<dt>◆ getservbyname(<i>name</i>, <i>proto</i>)
+<dd>
+
+<dt>◆ <a name="gethostbyaddr">gethostbyaddr(<i>addr</i>, <i>addrtype</i>)</a>
+<dd><p>詳細説明は省略するが、DNS を用いてIPアドレスからホスト名を求めることができる。</p>
+<pre>
+$addr = "127.0.0.1";
+$host = gethostbyaddr(pack("C4", split(/\./, $addr)), 2);
+</pre>
+
+<dt>◆ getnetbyaddr(<i>addr</i>, <i>addrtype</i>)
+<dd>
+
+<dt>◆ getprotobynumber(<i>number</i>)
+<dd>
+
+<dt>◆ getservbyport(<i>port</i>, <i>proto</i>)
+<dd>
+
+<dt>◆ getpwent()
+<dd>
+
+<dt>◆ getgrent()
+<dd>
+
+<dt>◆ gethostent()
+<dd>
+
+<dt>◆ getnetent()
+<dd>
+
+<dt>◆ getprotoent()
+<dd>
+
+<dt>◆ getservent()
+<dd>
+
+<dt>◆ setpwent()
+<dd>
+
+<dt>◆ setgrent()
+<dd>
+
+<dt>◆ sethostent(<i>stayopen</i>)
+<dd>
+
+<dt>◆ setnetent(<i>stayopen</i>)
+<dd>
+
+<dt>◆ setprotoent(<i>stayopen</i>)
+<dd>
+
+<dt>◆ setservent(<i>stayopen</i>)
+<dd>
+
+<dt>◆ endpwent()
+<dd>
+
+<dt>◆ endgrent()
+<dd>
+
+<dt>◆ endhostent()
+<dd>
+
+<dt>◆ endnetent()
+<dd>
+
+<dt>◆ endprotoent()
+<dd>
+
+<dt>◆ endservent()
+<dd>
+
+<dt>◆ getsockname(<i>SOCKET</i>)
+<dd>
+
+<dt>◆ getsockopt(<i>SOCKET</i>, <i>level</i>, <i>optname</i>)
+<dd>
+
+<dt>◆ <a name="gmtime">gmtime(<i>expr</i>)</a>
+<dd><p>localtime と同様だが、グリニッジ標準時の値を返す点が異なる。</p>
+
+<dt>◆ <a name="goto">goto <i>label</i></a>
+<dd><p><i>label</i> の場所にジャンプする。<i>label</i> はラベル名にコロン（:）をつけて宣言し、コロン無しのラベル名を指定してジャンプする。</p>
+
+<dt>◆ <a name="grep">grep(<i>expr</i>, <i>list</i>)</a>
+<dd><p>配列から、パターンにマッチした要素を取り出す。次の例は、配列 @lines の中から "#include" で始まるものの配列を抜き出す。</p>
+<pre>
+@result = grep(/^#include/, @lines);
+</pre>
+
+<dt>◆ <a name="hex">hex(<i>expr</i>)</a>
+<dd><p><i>expr</i> を 16進数の文字列と解釈してその値を返す。<i>expr</i> 省略時は hex($_) と同様。</p>
+<pre>
+$ans = hex("FF");
+</pre>
+
+<dt>◆ <a name="if">if (<i>expr</i>) { <i>statements</i> }</a>
+<dd><p><i>expr</i> が真であれば <i>statements</i> を実行する。</p>
+<pre>
+if ($xx &gt; 5) {
+    print "5より大きい\n";
+}
+</pre>
+
+<dt>◆ <a name="index">index(<i>str</i>, <i>substr</i>, <i>position</i>)</a>
+<dt>◆ index(<i>str</i>, <i>substr</i>)
+<dd><p>文字列の中から特定の文字列を探す。文字列 <i>str</i> の <i>position</i> 番目（省略時は最初）から後方に <i>substr</i> を探していき、最初に現れる位置を返す。</p>
+<pre>
+index("ABCDEFG", "DEF");   # 3を返す
+</pre>
+
+<dt>◆ <a name="int">int(<i>expr</i>)</a>
+<dt>◆ int()
+<dd><p><i>expr</i> の整数部を返す。<i>expr</i> 省略時は int($_) と同じ。</p>
+
+<dt>◆ <a name="ioctl">ioctl(<i>FILEHANDLE</i>, <i>function</i>, <i>scalar</i>)</a>
+<dd>
+
+<dt>◆ <a name="join">join(<i>expr</i>, <i>list</i>)</a>
+<dt>◆ join(<i>expr</i>, <i>array</i>)
+<dd><p><i>array</i> で与えられる文字列を <i>expr</i> の値で区切りながら連結する。</p>
+<pre>
+$now = join(":", $hour, $min, $sec);
+</pre>
+
+<dt>◆ <a name="keys">keys(<i>assoc_array</i>)</a>
+<dd><p>指定された連想配列のすべてのキーの一覧を配列で返す。</p>
+
+<dt>◆ <a name="kill">kill(<i>sig</i>, <i>list</i>)</a>
+<dt>◆ kill <i>sig</i>, <i>list</i>
+<dd><p><i>list</i> で示すプロセスに SIGKILL シグナルを送る。詳細は UNIX のシステムコールマニュアルを参照。</p>
+
+<dt>◆ <a name="last">last <i>label</i></a>
+<dt>◆ last
+<dd><p>最も内側のループを抜ける。<i>label</i> が指定されていればラベル名のループを抜ける。</p>
+<pre>
+aaa: while (&lt;IN&gt;) {
+        if (/^end/) last aaa;
+    }
+</pre>
+
+<dt>◆ <a name="length">length(<i>expr</i>)</a>
+<dt>◆ length
+<dd><p><i>expr</i> で与えられる文字列の長さを返す。<i>expr</i> 省略時は length($_) と同じ。</p>
+
+<dt>◆ <a name="link">link(<i>oldfile</i>, <i>newfile</i>)</a>
+<dd><p>ファイルをリンクする。リンクされたファイルは実態が同じで、複数のパス名を持つファイルとなる。<i>oldfile</i> に既存のファイル名、<i>newfile</i> に新規作成する新ファイル名を指定する。成功時は 1、失敗時は 0 を返す。</p>
+
+<dt>◆ listen(<i>SOCKET</i>, <i>queuesize</i>)
+<dd><p></p>
+
+<dt>◆ <a name="local">local(<i>list</i>)</a>
+<dd><p>サブルーチン、eval、do の中でローカルな変数を定義する。下記の例は 3 が表示されるが、local 文を削除すると 5 が表示される。</p>
+<pre>
+sub xxx { local($a); $a = 5 }
+$a = 3; &amp;xxx; print $a;
+</pre>
+
+<dt>◆ <a name="localtime">localtime(<i>expr</i>)</a>
+<dd><p>time() や stat() で得られた時刻を地方時間帯の年月日時分秒などに分解する。</p>
+<pre>
+($sec, $min, $hour, $mday, $mon, $year,
+    $wday, $yday, $isdst) = localtime($tt);
+</pre>
+<p>$sec, $min, ...はそれぞれ、秒数(0-59)、分(0-59)、時(0-23)、日(1-31)、月(0-11)、年(1900年からの年数(西暦の下2桁ではない))、曜日(日(0)-土(6))、年日数(1月1日を0とする)、$isdst(夏時間なら0以外の値)を表わす。</p>
+
+<dt>◆ <a name="log">log(<i>expr</i>)</a>
+<dt>◆ log
+<dd><p>e を基とする <i>expr</i> の log を返す。<i>expr</i> 省略時は log($_) と同じ。</p>
+
+<dt>◆ <a name="lstat">lstat(<i>FILEHANDLE</i>)</a>
+<dt>◆ lstat(<i>expr</i>)
+<dt>◆ lstat <i>scalar</i>
+<dd><p>stat() と同様だが、シンボリックリンクファイルの際、リンク先のファイルではなく、シンボリックリンクファイル自体の情報を得る。</p>
+
+<dt>◆ m/<i>pattern</i>/gio
+<dd><p></p>
+
+<dt>◆ /<i>pattern</i>/gio
+<dd><p></p>
+
+<dt>◆ <a name="mkdir">mkdir(<i>dirname</i>, <i>mode</i>)</a>
+<dd><p>ディレクトリを作成する。<i>mode</i> にはディレクトリのパーミッション（通常 0755）を指定する。成功時は 1 を返す。失敗時は 0 を返し、$! が設定される。</p>
+
+<dt>◆ msgctl(<i>id</i>, <i>cmd</i>, <i>arc</i>)
+<dd><p></p>
+
+<dt>◆ msgget(<i>key</i>, <i>flags</i>)
+<dd><p></p>
+
+<dt>◆ msgsnd(<i>id</i>, <i>msg</i>, <i>flags</i>)
+<dd><p></p>
+
+<dt>◆ msgrcv(<i>id</i>, <i>var</i>, <i>size</i>, <i>type</i>, <i>flags</i>)
+<dd><p></p>
+
+<dt>◆ <a name="next">next <i>label</i></a>
+<dt>◆ next
+<dd><p>最も内側、もしくは <i>label</i> で指定したループの次の繰り返しを実行する。</p>
+<pre>
+aaa: while (&lt;IN&gt;) {
+        if (/^#/) { next aaa; }
+    }
+</pre>
+
+<dt>◆ <a name="oct">oct(<i>expr</i>)</a>
+<dt>◆ oct()
+<dd><p><i>expr</i> が、0x で始まっていれば 16進数として、それ以外なら 8進数だと解釈してその値を返す。次の例は、C言語の構文と同様に、0x で始まっていれば 16進数、0で始まっていれば8進数、それ以外なら10進数と解釈する。</p>
+<pre>
+$ans = ($xx =~ /^0/) ? oct($xx) : $xx;
+</pre>
+
+<dt>◆ <a name="open">open(<i>FILEHANDLE</i>, <i>expr</i>)</a>
+<dt>◆ open(<i>FILEHANDLE</i>)
+<dd><p>ファイルやコマンドをオープンし、ファイルハンドルを得る。成功すれば非 0 を、失敗すれば undefine を返す。<i>expr</i> を省略した場合は、<i>FILEHANDLE</i> と同じ名前の変数の値が <i>expr</i> とみなされる。指定するファイル名には http://～ などの URL は指定できないので注意。</p>
+<p>ファイルを読み込みモードでオープンする。</p>
+<pre>
+open(IN, "xxx.txt");
+while (&lt;IN&gt;) { print; }
+close(IN);
+</pre>
+<p>ファイルを書込みモードでオープンする。</p>
+<pre>
+open(OUT, "&gt; xxx.txt");
+print OUT "らくがき";
+close(OUT);
+</pre>
+<p>ファイルを読み書きモードでオープンする。オープン時ファイルを空にする。</p>
+<pre>
+open(F, "+&gt; xxx.txt");
+print F "やっほ";
+seek(F, 0, 0);
+$msg = &lt;F&gt;;
+close(F);
+</pre>
+<p>ファイルを読み書きモードでオープンする。オープン時ファイルの内容はそのまま。</p>
+<pre>
+open(F, "+&lt; xxx.txt");
+$count = &lt;F&gt;;
+$count++;
+seek(F, 0, 0);
+print F $count;
+close(F);
+</pre>
+<p>ファイルを追加書込みモードでオープンする。</p>
+<pre>
+open(OUT, "&gt;&gt; xxx.txt");
+print OUT "らくがき";
+close(OUT);
+</pre>
+<p>外部コマンドを起動し、その結果を読み込む。</p>
+<pre>
+open(IN, "cat xxx.txt | nkf -j |");
+while(&lt;IN&gt;) { print; }
+close(IN);
+</pre>
+<p>外部コマンドを起動し、出力を渡す。</p>
+<pre>
+open(OUT, "| nkf -j | /usr/lib/sendmail $mailto");
+print OUT "らくがき";
+close(OUT);
+</pre>
+<p>書き込み時、バッファリングしないようにする。</p>
+<pre>
+open(OUT, "&gt; xxx.txt");
+$old = select(OUT); $| = 1; select($old);
+</pre>
+
+<dt>◆ <a name="opendir">opendir(<i>DIRHANDLE</i>, <i>expr</i>)</a>
+<dd><p>ディレクトリ内のファイル一覧を得るためにディレクトリをオープンし、ディレクトリハンドルを得る。</p>
+<pre>
+opendir(DIR, "tmp");
+while ($file = readdir(DIR)) { print "$file\n"; }
+closedir(DIR);
+</pre>
+
+<dt>◆ <a name="ord">ord(<i>expr</i>)</a>
+<dt>◆ ord()
+<dd><p><i>expr</i> の最初の文字の ASCII コードを数値で返す。<i>expr</i> 省略時は $_ を見る。例えば ord("A") は 65、ord("B") は 66 を返す。</p>
+
+<dt>◆ <a name="pack">pack(<i>template</i>, <i>list</i>)</a>
+<dd><p>バイナリデータを生成する。<i>template</i> で <i>list</i> がどんな形式のデータなのかを指定する。後ろに数値を付けるとその個数分、アスタリスク（*）をつけると <i>list</i> の最後まで、バイナリデータに変換する。</p>
+<pre>
+a　　ASCII string(ヌル文字が補完される)
+A　　ASCII string(スペースが補完される)
+b　　bit string(昇順ビットオーダ)
+B　　bit string(降順ビットオーダ)
+h　　hex string(low nybble first)
+H　　hex string(high nybble first)
+c　　符号付き1バイト数値(-128 ～ 127)
+C　　符号無し1バイト数値(0～255)
+s　　符号付きshort数値(通常2バイト)
+S　　符号無しshort数値(通常2バイト)
+i　　符号付きint数値(通常4バイト)
+I　　符号無しint数値(通常4バイト)
+l　　符号付きlong数値(通常4バイト)
+L　　符号無しlong数値(通常4バイト)
+n　　short数値(ネットワークバイトオーダ)
+N　　long数値(ネットワークバイトオーダ)
+x　　ヌル文字
+X　　back up a byte
+f　　単精度浮動小数点
+d　　倍精度浮動小数点
+p　　文字列へのポインタ
+u　　uuencodeされた文字列
+@　　絶対位置までヌル文字を埋める
+</pre>
+<p>例えば次のように使用する。</p>
+<pre>
+pack("C*", 0x41, 0x42, 0x43); # 0x41 0x42 0x43
+pack("b*", "10101010"); # 0x55
+pack("a5", "abc"); # 0x41 0x42 0x43 0x00 0x00
+</pre>
+
+<dt>◆ <a name="package">package <i>packagename</i></a>
+<dd><p>これ以降（ファイルの終わりか次の package が現れるまで）のスクリプトを <i>packagename</i> で示すパッケージとして扱うことを宣言する。パッケージの内部では独自の変数名やサブルーチン名を持てるので、パッケージの内部と外部でたまたま変数名などが重複することによる悲劇を防ぐことができる。パッケージ内の変数やサブルーチン名は「パッケージ名'変数名」で指定する。</p>
+<pre>
+print &amp;calc'add(3, 5);
+package calc;
+sub add { return($_[0] + $_[1]); }
+</pre>
+
+<dt>◆ pipe(<i>READHANDLE</i>, <i>WRITEHANDLE</i>)
+<dd><p></p>
+
+<dt>◆ <a name="pop">pop(<i>array</i>)</a>
+<dd><p>配列の最後の要素を取り出す。取り出された要素は配列から削除される。配列に要素が無い場合は undefine を返す。</p>
+
+<dt>◆ <a name="print">print(<i>FILEHANDLE</i> <i>list</i>)</a>
+<dt>◆ print(<i>list</i>)
+<dt>◆ print <i>FILEHANDLE</i> <i>list</i>
+<dt>◆ print <i>list</i>
+<dt>◆ print
+<dd><p>ファイルに文字列や変数の値を書き出す。<i>FILEHANDLE</i> を省略すると標準出力（STDOUT）に書き出す。<i>list</i> を省略すると $_ を書き出す。</p>
+
+<dt>◆ <a name="printf">printf(<i>FILEHANDLE</i> <i>format</i>, <i>list</i>)</a>
+<dt>◆ printf(<i>format</i>, <i>list</i>)
+<dt>◆ printf <i>FILEHANDLE</i> <i>format</i>, <i>list</i>
+<dt>◆ printf <i>format</i> <i>list</i>
+<dd><p>ファイルに文字列や変数の値をフォーマット付きで書き出す。<i>format</i> には書き出す文字列を指定するが、「パーセント(%)＋なんとか」は続く <i>list</i> のそれぞれの要素の値に変換される。例えば、%s は文字列に、%d は整数値、%f は小数に変換される。%10s や %10d はそれぞれ、10文字分の文字列、数値を表わす。%-10s や %-10d は右揃えで表示する。「バックスラッシュ( \ )＋文字」は特殊文字として判断され、改行( \n )、タブ( \t )、復帰( \r )などと判断される。</p>
+<pre>
+printf("Name=%s, Age=%d\n", $name, $age);
+</pre>
+
+<dt>◆ <a name="push">push(<i>array</i>, <i>list</i>)</a>
+<dd><p>配列の最後に要素(配列指定可能)を追加する。<i>array</i> に <i>list</i> が追加される。</p>
+
+<dt>◆ q/<i>string</i>/
+<dd><p></p>
+
+<dt>◆ qq/<i>string</i>/
+<dd><p></p>
+
+<dt>◆ qx/<i>string</i>/
+<dd><p></p>
+
+<dt>◆ <a name="rand">rand(<i>expr</i>)</a>
+<dt>◆ rand()
+<dd><p>0以上、<i>expr</i> 未満のランダムな値（小数付き）を返す。<i>expr</i> 省略時は rand(1) と同じ。下記の例は、0 以上 10 未満の乱数を得る。古いバージョンの perl では、<a href="#srand">srand</a> による乱数の初期化が必要。</p>
+<pre>
+$xx = int(rand(10));
+</pre>
+
+<dt>◆ <a name="read">read(<i>FILEHANDLE</i>, <i>scalar</i>, <i>length</i>, <i>offset</i>)</a>
+<dt>◆ read(<i>FILEHANDLE</i>, <i>scalar</i>, <i>length</i>)
+<dd><p>ファイルハンドルから <i>length</i> バイト分のデータを読み出して <i>scalar</i> に格納する。<i>offset</i> を指定すると読み出したデータを <i>scalar</i> の <i>offset</i> バイト目から格納する。成功時は読み出したバイト数を、失敗時は undefine を返す。バイナリデータを読み出す際に便利だが、MS-DOS や Windows などでは binmode を使用しなくてはならない場合がある。テキストファイルを読み込むのであれば、read　ではなく、&lt;<i>FILEHANDLE</i>&gt;　の形式を用いるのが一般的。</p>
+
+<dt>◆ <a name="readdir">readdir(<i>DIRHANDLE</i>)</a>
+<dd><p>ディレクトリ内のエントリ(ファイルやディレクトリなど)の一覧を得る。スカラー変数に代入する時は次のエントリを、配列変数に代入する時は残りのエントリの一覧を返す。これ以上エントリが無い場合は undefine（配列の場合はヌルリスト）を返す。</p>
+
+<dt>◆ <a name="readlink">readlink(<i>filename</i>)</a>
+<dd><p>シンボリックリンクの個数を得る。サポートされていないプラットフォームでは致命的エラーとなる。</p>
+
+<dt>◆ recv(<i>SOCKET</i>, <i>scalar</i>, <i>length</i>, <i>flags</i>)
+<dd><p></p>
+
+<dt>◆ <a name="redo">redo <i>LABEL</i></a>
+<dt>◆ redo
+<dd><p>最も内側、もしくは <i>LABEL</i> で指定したループをもう一度繰り返す。</p>
+
+<dt>◆ <a name="rename">rename(<i>OLDNAME</i>, <i>NEWNAME</i>)</a>
+<dd><p>ファイル名を変更する。成功すれば 1 を、失敗すれば 0 を返す。</p>
+
+<dt>◆ <a name="require">require(<i>expr</i>)</a>
+<dt>◆ require <i>expr</i>
+<dt>◆ require
+<dd><p>ライブラリファイルを読み込む。ライブラリファイルは習慣的に .pl の拡張子を持つ perl スクリプトである。<i>expr</i> を省略した場合は $_ をファイル名とみなす。</p>
+<pre>
+require "jcode.pl";
+</pre>
+
+<dt>◆ reset(<i>expr</i>)
+<dt>◆ reset
+<dd><p></p>
+
+<dt>◆ <a name="return">return <i>list</i></a>
+<dd><p>サブルーチンを終了する。<i>list</i> をサブルーチンの戻り値とする。return 文を省略すると、最も最後の式の値が戻り値となる。</p>
+<pre>
+sub add { return($_[0] + $_[1]); }
+</pre>
+
+<dt>◆ <a name="reverse">reverse(<i>list</i>)</a>
+<dd><p>配列(または文字列)を逆順に並び替えたものを返す。結果を配列として扱うか、スカラーとして扱うかで動作が異なる。
+<pre>
+@ans = reverse("abc", "def"); # ( "def", "abc" )が返される
+$ans = reverse("abc", "def"); # "cba"が返される。
+</pre>
+
+<dt>◆ <a name="rewinddir">rewinddir(<i>DIRHANDLE</i>)</a>
+<dd><p>readdir() で最初から読み込めるようにする。</p>
+
+<dt>◆ <a name="rindex">rindex(<i>string</i>, <i>substr</i>, <i>position</i>)</a>
+<dt>◆ rindex(<i>string</i>, <i>substr</i>)
+<dd><p><a href="#index">index()</a> と同様。文字列の後ろから探す点が異なる。</p>
+
+<dt>◆ <a name="rmdir">rmdir(<i>filename</i>)</a>
+<dt>◆ rmdir
+<dd><p>ディレクトリを削除する。成功時は 1 を返す。失敗時は 0 を返し、$! を設定する。<i>filename</i> を省略すると $_ を参照する。</p>
+
+<dt>◆ s/<i>pattern</i>/<i>replacement</i>/gieo
+<dd><p></p>
+
+<dt>◆ <a name="scalar">scalar(<i>expr</i>)</a>
+<dd><p><i>expr</i> で指定した値をスカラー値に変換して返す。</p>
+
+<dt>◆ <a name="seek">seek(<i>FILEHANDLE</i>, <i>pos</i>, <i>whence</i>)</a>
+<dd><p>ファイルの読み込み・書き込み位置を変更する。<i>whence</i> が 0 の時はファイルの先頭から <i>pos</i> バイト目に、<i>whence</i> が 1 の時は現在の位置から <i>pos</i> バイト移動した場所（負の数も指定可能）に、<i>whence</i> が 2 の時はファイルの終わりから <i>pos</i> バイト目に移動する。成功すれば 1、さもなくば 0 を返す。（<i>whence</i>の数値はシステムによって異なる場合がある？）open(OUT, "&gt;&gt; file.txt") のように、追加モードで開いたファイルの書き込み位置は、開いた時点でのファイルの終端より前に移動させることができない。この場合、open(OUT, "+&lt; file.txt") を用いるとよい。</p>
+
+<dt>◆ <a name="seekdir">seekdir(<i>DIRHANDLE</i>, <i>pos</i>)</a>
+<dd><p>readdirで読み込むディレクトリ位置を変更する。<i>pos</i> には <a href="#telldir">telldir()</a> が返す値を指定する。
+<dt>◆ select(<i>FILEHANDLE</i>)
+<dt>◆ select
+<dt>◆ select(<i>rbits</i>, <i>wbits</i>, <i>ebits</i>, <i>timeout</i>)
+<dd><p></p>
+
+<dt>◆ semctl(<i>id</i>, <i>semnum</i>, <i>cmd</i>, <i>arg</i>)
+<dt>◆ semget(<i>key</i>, <i>nsems</i>, <i>size</i>, <i>flags</i>)
+<dt>◆ semop(<i>key</i>, <i>string</i>)
+<dd><p>セマフォ関連関数。詳細は UNIX のマニュアル参照。</p>
+
+<dt>◆ send(<i>SOCKET</i>, <i>msg</i>, <i>flags</i>, <i>to</i>)
+<dt>◆ send(<i>SOCKET</i>, <i>msg</i>, <i>flags</i>)
+<dd><p></p>
+
+<dt>◆ setpgrp(<i>pid</i>, <i>pgrp</i>)
+<dd><p></p>
+
+<dt>◆ setpriority(<i>which</i>, <i>who</i>, <i>priority</i>)
+<dd><p></p>
+
+<dt>◆ setsockopt(<i>SOCKET</i>, <i>lebel</i>, <i>optname</i>, <i>optval</i>)
+<dd><p></p>
+
+<dt>◆ <a name="shift">shift(<i>array</i>)</a>
+<dt>◆ shift()
+<dd><p>配列の最初の要素を取り出す。取り出された要素は配列から削除される。配列に要素が無い場合は undefine を返す。</p>
+
+<dt>◆ shmctl(<i>id</i>, <i>cmd</i>, <i>arg</i>)
+<dt>◆ shmget(<i>key</i>, <i>size</i>, <i>flags</i>)
+<dt>◆ shmread(<i>id</i>, <i>var</i>, <i>pos</i>, <i>size</i>)
+<dt>◆ shmwrite(<i>id</i>, <i>string</i>, <i>pos</i>, <i>size</i>)
+<dd><p>共有メモリ関連関数。詳細は UNIX のマニュアル参照。</p>
+
+<dt>◆ shutdown(<i>SOCKET</i>, <i>how</i>)
+<dd><p></p>
+
+<dt>◆ <a name="sin">sin(<i>expr</i>)</a>
+<dt>◆ sin()
+<dd><p><i>expr</i> の sin 値をラジアン単位で返す。<i>expr</i> 省略時は sin($_) と同じ。</p>
+
+<dt>◆ <a name="sleep">sleep(<i>expr</i>)</a>
+<dt>◆ sleep()
+<dd><p><i>expr</i> 秒間処理を中断して待つ。<i>expr</i> を省略すると SIGALRM が発生するまで待ち、実際にまった秒数を返す。</p>
+
+<dt>◆ <a name="socket">socket(<i>SOCKET</i>, <i>domain</i>, <i>type</i>, <i>protocol</i>)</a>
+<dd><p>ネットワーク通信のためのソケットを作成する。次のようにして、WWWサーバーから http://www.xxx.zzz/index.html を簡単に読み取ることができる。ただし、socket() の引数の 2, 1, 0 は、OS によっては 2, 2, 0 だったりすることもあるので注意。</p>
+<pre>
+$addr = (gethostbyname("www.xxx.zzz"))[4];
+$name = pack("S n a4 x8", 2, 80, $addr);
+socket(S, 2, 1, 0);
+connect(S, $name);
+binmode(S);
+select(S); $| = 1; select(stdout);
+print S "GET /index.html HTTP/1.0\r\n\r\n";
+while (&lt;S&gt;) { print; }
+close(S);
+</pre>
+
+<dt>◆ socketpair(<i>SOCKET1</i>, <i>SOCKET2</i>, <i>domain</i>, <i>type</i>, <i>protocol</i>)
+<dd><p></p>
+
+<dt>◆ <a name="sort">sort(<i>list</i>)</a>
+<dt>◆ sort(<i>subroutine</i> <i>list</i>)
+<dt>◆ sort { ... } <i>list</i>
+<dd><p>配列の各要素をソートした結果を返す。引数で指定した配列は変更されない。以下の３パターンの使用方法がある。</p>
+<pre>
+sub sortfunc { $a &lt;=&gt; $b }
+@result = sort @list;
+@result = sort sortfunc @list;
+@result = sort { $a &lt;=&gt; $b } @list;
+</pre>
+<p>この場合の sortfunc(名前は任意) などをソート関数とよぶ。ソート関数には比較要素が $a, $b という名前で渡される。結果として正、0、負のいずれかで返すようにする。</p>
+
+<dt>◆ <a name="splice">splice(<i>array</i>, <i>offset</i>, <i>length</i>, <i>list</i>)</a>
+<dt>◆ splice(<i>array</i>, <i>offset</i>, <i>length</i>)
+<dt>◆ splice(<i>array</i>, <i>offset</i>)
+<dd><p>配列要素を部分削除（置換）する。<i>array</i> のうち、<i>offset</i> 番目から <i>length</i> 個の要素を <i>list</i> で置き換える。<i>offset</i> は 0 から始まる。<i>list</i> 省略時は削除する。<i>length</i> 省略時は <i>offset</i> 番以降すべてが対象となる。</p>
+
+<dt>◆ <a name="split">split(/<i>pattern</i>/, <i>expr</i>, <i>limit</i>)</a>
+<dt>◆ split(/<i>pattern</i>/, <i>expr</i>)
+<dt>◆ split(/<i>pattern</i>/)
+<dt>◆ split
+<dd><p>文字列を区切り文字で分割する。正規表現 /<i>pattern</i>/ にマッチする部分を区切り文字として、<i>expr</i>で 与えられる文字列を <i>limit</i> を超えない範囲の個数に分割し、その配列を返す。<i>limit</i> を省略した場合は個数の制限が無い。<i>expr</i> を省略した場合は $_ を分割する。/<i>pattern</i>/ を省略した場合はホワイトスペース（ひとつ以上の空白、タブ、または改行）で分割する。</p>
+<pre>
+@hhmmss = split(/:/, "12:34:56");
+</pre>
+
+<dt>◆ <a name="sprintf">sprintf(<i>format</i>, <i>list</i>)</a>
+<dd><p>printf() と同様のフォーマットを行うが、ファイルへの書き出しは行わず、結果を文字列として返す。次の例は数値を文字列に変換する。</p>
+<pre>
+$str = sprintf("%d", $number);
+</pre>
+
+<dt>◆ <a name="sqrt">sqrt(<i>expr</i>)</a>
+<dt>◆ sqrt()
+<dd><p><i>expr</i> の平方根を返す。<i>expr</i> 省略時は sqrt($_) と同じ。</p>
+
+<dt>◆ <a name="srand">srand(<i>expr</i>)</a>
+<dd><p><a href="#rand">rand</a>の種を与える。
+rand() は乱数を返すとは言っているが、プログラム起動後は常に同じパターンの値を返す。このパターンの始まりを変更するために、プログラムの先頭で srand を呼び出して無意味な値を指定してやる。ただし、Perl 5.004 以降は rand() 呼び出し時に srand() が自動的に呼び出されるので、不要。<i>expr</i> 省略時は srand(<a href="#time">time</a>) と同じ。</p>
+
+<dt>◆ <a name="stat">stat(<i>FILEHANDLE</i>)</a>
+<dt>◆ stat(<i>expr</i>)
+<dt>◆ stat <i>scalar</i>
+<dd><p>ファイルのサイズや作成日付などを調べる。</p>
+<pre>
+($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size,
+    $atime, $mtime, $ctime, $blksize, $blocks) = stat($file);
+</pre>
+<p>返却値はそれぞれ、$dev(デバイス番号)、$ino(iノード番号)、$mode(パーミッションモード)、$nlink(リンク数)、$uid(作成者のユーザID)、$gid(作成者のグループID)、$rdev(？？？)、$size(バイト数)、$atime(最終アクセス時刻)、$mtime(最終更新時刻)、$ctime(作成時刻)、$blksize(ブロックサイズ)、$blocks(ブロック数)を意味する。最終更新時刻を知りたい場合は次のようにするとよい。</p>
+<pre>
+($mtime) = (stat($file))[9];
+</pre>
+<p><i>expr</i> にアンダーバー（_）を指定すると、最後に実行した stat() の結果をそのまま返す。これは速度改善に役立つ。</p>
+
+<dt>◆ study(<i>scalar</i>)
+<dt>◆ study
+<dd><p></p>
+
+<dt>◆ <a name="sub">sub <i>funcname</i> { ... }</a>
+<dd><p>サブルーチンを定義する。</p>
+<pre>
+sub add {
+    return($_[0] + $_[1]);
+}
+print &amp;add(5, 6);
+</pre>
+
+<dt>◆ <a name="substr">substr(<i>expr</i>, <i>offset</i>, <i>length</i>)</a>
+<dt>◆ substr(<i>expr</i>, <i>offset</i>)
+<dd><p>文字列の一部を取り出す。<i>expr</i> で与えられる文字列のうち <i>offset</i> 文字から <i>length</i> 文字分を返す。最初の文字は通常 0 文字目だが、$[ により変化する。<i>offset</i> が負の値の時は $[ に関わらず、文字列の最後から -<i>offset</i> 文字目(最後の文字は1文字目)から後ろ方向に <i>length</i> 文字分を返す。<i>length</i> を省略すると残りの全てを返す。substr() は式の左辺にも使用できる。</p>
+
+<dt>◆ <a name="symlink">symlink(<i>oldfile</i>, <i>newfile</i>)</a>
+<dd><p><i>oldfile</i> を示すシンボリックファイル <i>newfile</i> を作成する。サポートされていないシステムでは致命的エラーとなるので eval を用いる。
+
+<dt>◆ syscall(<i>list</i>)
+<dd><p></p>
+
+<dt>◆ <a name="sysread">sysread(<i>FILEHANDLE</i>, <i>scalar</i>, <i>length</i>, <i>offset</i>)</a>
+<dt>◆ sysread(<i>FILEHANDLE</i>, <i>scalar</i>, <i>length</i>)
+<dd><p>ファイルから <i>length</i> バイト分を <i>scalar</i> の <i>offset</i>（省略時は 0）バイト目に読み込む。read() などと同時に用いるとバッファリングの関係で混乱が生じる。通常は実際に読み込んだバイト数を、失敗時は undef を返す。</p>
+
+<dt>◆ <a name="system">system(<i>list</i>)</a>
+<dd><p><i>list</i> で指定した外部コマンドを実行する。その実行コマンドの戻り値が system() の戻り値となる。</p>
+
+<dt>◆ <a name="syswrite">syswrite(<i>FILEHANDLE</i>, <i>scalar</i>, <i>length</i>, <i>offset</i>)</a>
+<dt>◆ syswrite(<i>FILEHANDLE</i>, <i>scalar</i>, <i>length</i>)
+<dd><p><i>scalar</i> の <i>offset</i>（省略時は 0）バイト目から <i>length</i> バイトをファイルに書き込む。print() などと同時に用いるとバッファリングの関係で混乱が生ずる。通常は書き込んだバイト数を、失敗時は undef を返す。</p>
+
+<dt>◆ <a name="tell">tell(<i>FILEHANDLE</i>)</a>
+<dt>◆ tell()
+<dd><p>ファイルの現在の読み込み・書き込み位置を得る。</p>
+
+<dt>◆ <a name="telldir">telldir(<i>DIRHANDLE</i>)</a>
+<dd><p>現在のディレクトリ位置を返す。この値は <a href="#seekdir">seekdir()</a> で用いられる。</p>
+
+<dt>◆ <a name="time">time()</a>
+<dd><p>現在の時刻を得る。グリニッジ標準時の1970年1月1日0時0分0秒からの秒数を返す。localtime() や gmtime() で変換する。</p>
+
+<dt>◆ tr/<i>searchlist</i>/<i>replacement</i>/cds
+<dd><p></p>
+
+<dt>◆ y/<i>searchlist</i>/<i>replacement</i>/cds
+<dd><p></p>
+
+<dt>◆ <a name="truncate">truncate(<i>FILEHANDLE</i>, <i>length</i>)</a>
+<dt>◆ truncate(<i>expr</i>, <i>length</i>)
+<dd><p>指定したファイルのサイズを変更する。サポートしていないシステムでは致命的エラーとなる。</p>
+
+<dt>◆ umask(<i>expr</i>)
+<dt>◆ umask()
+<dd><p></p>
+
+<dt>◆ <a name="undef">undef(<i>expr</i>)</a>
+<dt>◆ undef()
+<dd><p>変数やサブルーチン名を指定して、これらを、定義されていない状態に戻す。</p>
+
+<dt>◆ <a name="unless">unless</a>
+<dd><p><a href="#if">if</a>文と逆の意味で、「もし・・・でなければ」の処理を行う。</p>
+<pre>
+unless ($xx == 5) { print "5ではありません。\n"; }
+</pre>
+
+<dt>◆ <a name="unlink">unlink(<i>list</i>)</a>
+<dd><p>ファイルを削除する。削除に成功したファイルの個数を返す。</p>
+
+<dt>◆ <a name="unpack">unpack(<i>template</i>, <i>expr</i>)</a>
+<dd><p>バイナリデータを解釈する。<i>template</i> は <a href="#pack">pack()</a> のものと同様。</p>
+<pre>
+unpack("C", "A")  # AのASCIIコード0x41を返す
+</pre>
+<dt>◆ <a name="unshift">unshift(<i>array</i>, <i>list</i>)</a>
+<dd><p>配列の最初に要素(配列指定可能)を追加する。<i>array</i> に <i>list</i> が追加される。</p>
+
+<dt>◆ <a name="until">until (<i>expr</i>) { <i>statements</i> }</a>
+<dd><p><a href="#while">while</a> の逆で、<i>expr</i> が真になるまで、<i>statements</i> を繰り返す。</p>
+
+<dt>◆ <a name="utime">utime(<i>atime</i>, <i>mtime</i>, <i>filelist</i>)</a>
+<dd><p><i>filelist</i> で指定したファイルのアクセス時刻 <i>atime</i> と更新時刻 <i>mtime</i> を変更し、変更に成功したファイルの個数を返す。<i>atime</i> や <i>mtime</i> は <a href="#time">time()</a> で得られるような値を用いる。</p>
+
+<dt>◆ <a name="values">values(<i>assoc_array</i>)</a>
+<dd><p>指定された連想配列のすべての値の一覧を配列で返す。</p>
+<pre>
+foreach (values(%ENV)) {
+    print;
+}
+</pre>
+
+<dt>◆ vec(<i>expr</i>, <i>offset</i>, <i>bits</i>)
+<dd><p></p>
+
+<dt>◆ wait()
+<dd><p></p>
+
+<dt>◆ waitpid(<i>pid</i>, <i>flags</i>)
+<dd><p></p>
+
+<dt>◆ <a name="wantarray">wantarray()</a>
+<dd><p>サブルーチンの中で使用し、サブルーチンの戻り値が配列を期待しているかどうかを調べる。次の例は、@xx = &amp;func() で呼び出すと (1, 2, 3) を返し、$xx = &amp;func() で呼び出すと "A" を返す。</p>
+<pre>
+sub func { return wantarray() ? (1, 2, 3) : "A"; }
+</pre>
+<dt>◆ <a name="warn">warn(<i>list</i>)</a>
+<dd><p><a href="#die">die</a> と同様のメッセージを標準エラー出力 STDERR に出力する。ただしプロセスは終了しない。</p>
+
+<dt>◆ <a name="while">while (<i>expr</i>) { <i>statements</i> }</a>
+<dd><p><i>expr</i> が真の間、<i>statements</i> を繰り返す。</p>
+<pre>
+$xx = 1;
+while ($xx &lt; 10) {
+    print "xx = $xx\n";
+    $xx++;
+}
+</pre>
+<dt>◆ <a name="write">write(<i>FILEHANDLE</i>)</a>
+<dt>◆ write(<i>expr</i>)
+<dt>◆ write
+<dd><p>format 文で指定したフォーマットに従って出力を行う。詳細説明省略。sysread() に対応するのは syswrite() だが、read() に対応するのは write() ではない。</p>
+
+
+</dl>
+<hr>
+<div>Copyright (C) 1997-2003 杜甫々<br></div>
+<div>初版：1997年9月28日、最終更新：2003年3月21日</div>
+<div>http://www.tohoho-web.com/wwwperl2.htm</div>
+</body>
+</html>

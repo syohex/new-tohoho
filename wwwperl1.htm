@@ -1,0 +1,1166 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=Shift_JIS">
+<title>とほほのperl入門（概要編）</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- テキスト広告(FE) -->
+<div style="border:1px solid #9999cc; width:468px; background-color:#eeeeff; padding:3px; margin-top:3px; color:#000080; text-align:left; font-size:9pt;">
+[広告]
+<a href="http://www.westcl.com/">バイアグラ</a> /
+<a href="http://www.634-chintai.com/">八王子 賃貸</a> /
+<a href="http://www.gapcentral.gapbuster.com/ja-jp/index.asp">覆面調査</a> /
+<a href="http://review-info.info/">情報商材 暴露</a> /
+<a href="http://sakura-buzz.com/">悪徳出会い</a>
+</div>
+<h2><img src="image/popase.gif" height=19 width=18 alt="">とほほのperl入門（概要編）</h2>
+<a href="www.htm">トップ</a> &gt;
+<a href="wwwperl.htm">とほほのperl入門</a> &gt;
+概要編
+
+<h4>■ <a name="AboutPerl">perlとは</a></h4>
+
+<b>◆ <a name="About">特徴</a></b>
+<div class=i>
+<p>UNIX上で開発されたファイル処理コマンドですが、MS-DOSにも移植されています。C言語と似た構文をもち、フリーソフトとして配布されています。同様のコマンドにAWKなどがありますが、perlの方が多少記述力は高いようです。WWWにおいてCGIスクリプトを作成する際、CGIスクリプト内部でperlを使用することが多いようです。</p>
+</div>
+
+<b>◆ <a name="Version">perlのバージョン</a></b>
+<div class=i>
+<p>現在広まっているperlのバージョンには、Ver4と、Ver5があります。Ver5ではオブジェクト指向の概念が取り入れられています。ダブルクォーテーション( " )の中でアットマーク( @ )を使用できないなど、若干仕様の差異があるので注意が必要です。ここではVer4でもサポートされている機能について、説明を行います。</p>
+</div>
+
+<b>◆ <a name="HowToGet">入手方法</a></b>
+<div class=i>
+<p>「<a href="wwwtoper.htm">とほほの厳選ツール集(perl編)</a>」を参照してください。</p>
+</div>
+
+<h4>■ <a name="ExecPerl">実行方法</a></h4>
+
+<b>◆ <a name="ExecPerl1">引数指定</a></b>
+<div class=i>
+<p>コマンドプロンプトから、次のように入力してリターンキーを押してください。-eオプションは次に続く'...'をperlスクリプトとして実行することを意味します。</p>
+<pre class=c>
+perl -e "print 'Hello world!!';"
+</pre>
+</div>
+
+<b>◆ <a name="ExecPerl2">ファイル指定</a></b>
+<div class=i>
+<p>次のような内容のテキストファイル(仮にhello.plとします)を作成してください。</p>
+<pre class=c>
+print "Hello world!!\n";
+</pre>
+<p>上記で作成したファイルの名前を引数にして、コマンドプロンプトから次のようにperlコマンドを実行してください。</p>
+<pre class=c>
+perl hello.pl
+</pre>
+</div>
+
+<b>◆ <a name="ExecPerl3">自己完結型</a></b>
+<div class=i>
+<p>これはUNIXでのみ使用可能な方法です。次のような内容のテキストファイル(仮にhello.plとします)を作成してください。</p>
+<pre class=c>
+#!/usr/local/bin/perl
+print "Hello world!!\n";
+</pre>
+<p>1行目は、perlコマンドが置かれているディレクトリに応じて変更してください。#! というのはUNIXのファイル特有の記号で、その後ろに続くコマンド（上記の場合はperl）を起動するためのおまじないです。chmodコマンドを次のように使用してファイルのモードを変更してください。</p>
+<pre class=c>
+chmod 755 hello.pl
+</pre>
+<p>コマンドプロンプトから次のように入力して実行してください。</p>
+<pre class=c>
+hello.pl
+</pre>
+<p>CGIスクリプトでperlを使用する場合は、ほとんどこの３番目の方法になります。</p>
+</div>
+
+<b>◆ <a name="ExecPerl4">標準入力読み込み型</a></b>
+<div class=i>
+<p>perlコマンドの引数が指定されていない場合、標準入力から読み取った内容をperlスクリプトとして実行します。</p>
+<pre class=c>
+echo 'print "Hello World!!\n";' | perl      # UNIXの場合
+echo  print "Hello World!!\n";  | perl      # Windowsの場合
+</pre>
+</div>
+
+<h4>■ <a name="Basics">基礎知識</a></h4>
+
+<b>◆ <a name="Sample">簡単な実行例</a></b>
+<div class=i>
+<p>次の例では変数$xxに5を、変数$yyに2を代入し、その合計を変数$zzに代入した後、結果を表示します。</p>
+<pre class=c>
+$xx = 5;
+$yy = 2;
+$zz = $xx + $yy;
+print "答は $zz です。\n";
+</pre>
+</div>
+
+<b>◆ <a name="Start">これだけは覚えて</a></b>
+<div class=i>
+<p>以後の説明を楽にするために、上記の実行例についてこれだけは覚えておいてください。</p>
+<ul>
+<li>このスクリプトを実行すると「答は 7 です。」と表示されます。
+<li>それぞれの行を文(statement)と呼びます。
+<li>文の末尾にはセミコロン( ; )をつけます。
+<li>文は最初の文から順番に実行されていきます。
+<li>$xx = 5; は「変数$xxに値5を代入する」という意味を持ちます。
+<li>通常の変数にはダラー( $ )を付けて表わします。
+<li>print は「"....." を表示せよ」という命令です。
+<li>\n は「改行せよ」という意味を持ちます。
+</ul>
+</div>
+
+<h4>■ <a name="Value">定数・変数・値</a></h4>
+
+<b>◆ <a name="Numeric">数値</a></b>
+<div class=i>
+<p>perlでは次のような表現の数値を使用することができます。</p>
+<pre class=c>
+12345          # 整数
+12_345         # 整数(アンダーバーは無視されます)
+123.45         # 小数
+1.23E45        # 指数
+0x12345        # 16進数
+012345         # 8進数
+</pre>
+</div>
+
+<b>◆ <a name="String">文字列</a></b>
+<div class=i>
+<p>文字列はダブルクォーテーション( " )またはシングルクォーテーション( ' )で囲みます。</p>
+<pre class=c>
+"abc"
+'abc'
+</pre>
+<p>ダブルクォーテーションの中ではシングルクォーテーションを、シングルクォーテーションの中ではダブルクォーテーションを使用することができます。</p>
+<pre class=c>
+"abc'def'ghi"
+'abc"def"ghi'
+</pre>
+<p>どうしてもダブルクォーテーション中にダブルクォーテーションを使用したい時は、バックスラッシュ( \ )を用います。</p>
+<pre class=c>
+"ダブルクォーテーション(\")を使う"
+</pre>
+<p>ダブルクォーテーションの中では変数やバックスラッシュ( \ )が評価されますが、シングルクォーテーションの中では単なる文字として認識されます。</p>
+<pre class=c>
+$xx = 7;
+print "答は$xxです\n";     # 「答は7です」と表示されます
+print '答は$xxです\n';     # 「答は$xxです\n」と表示されます
+</pre>
+</div>
+
+<b>◆ <a name="Esc">エスケープシーケンス(\)</a></b>
+<div class=i>
+<p>ダブルクォーテーションで囲まれた文字列の中ではバックスラッシュ( \ )に続く文字は特別な意味を持ちます。</p>
+<pre class=c>
+\t        # タブ文字（\x09）
+\n        # 改行（\x0a）
+\r        # リターン（\x0d）
+\f        # フォームフィード（\x0c）
+\b        # バックスペース（\x08）
+\a        # アラーム（\x07）
+\e        # エスケープ文字（\x1b）
+\033      # 文字コード(8進数)
+\x1b      # 文字コード(16進数)
+\c[       # コントロール文字
+\l        # 次の１文字を小文字にする
+\u        # 次の１文字を大文字にする
+\L        # \Eまでの文字列を小文字にする
+\U        # \Eまでの文字列を大文字にする
+\E        # \Lや\Uを終了させます
+\" など   # ダブルクォーテーション( " )自身を表わします。
+</pre>
+</div>
+
+<b>◆ <a name="Scalar">スカラー変数($XXX)</a></b>
+<div class=i>
+<p>ダラー( $ )で始まる変数はスカラー変数と呼ばれます。スカラー変数には数値や文字列をひとつだけ代入することができます。</p>
+<pre class=c>
+$xx = 5;          # スカラー変数$xxに数値5を代入します。
+$xx = "abc";      # スカラー変数$xxに文字列abcを代入します。
+print "$xx\n";    # スカラー変数$xxの値を参照して表示します。
+</pre>
+<p>通常、何も初期化していない変数はヌルまたは0として扱われますが、perlの処理系によっては(バグなのか？)ゴミの値になることがあるようですので、最初に $xx = 0; と初期化しておいた方が無難なようです。(1998.8.23追記)</p>
+</div>
+
+<b>◆ <a name="Array">配列(@XXX)</a></b>
+<div class=i>
+<p>$変数名[添え字]という形式で配列を表現することができます。添え字には0,1,2,3...を指定します。</p>
+<pre class=c>
+$xx[0] = 5;        # 0番目の要素に数値5を代入します。
+$xx[1] = "abc";    # 1番目の要素に文字列abcを代入します。
+print "$xx[1]\n";  # 1番目の要素の内容abcを表示します。
+</pre>
+<p>次の形式のようにアットマーク( @ )を用いて配列全体や配列の範囲を表現します。</p>
+<pre class=c>
+@xx = ( "aa", "bb" );       # 配列xxにaa,bbを代入します。
+$xx[2] = 'cc';              # 2番目の要素にccを代入します。
+@xx[3..4] = ( "dd", "ee" ); # 3～4番目の要素にdd,eeを代入します。
+print @xx;                  # aa bb cc dd eeを表示します。
+print $xx[0];               # 0番目の要素aaを表示します。
+print @xx[0..2];            # 0～2番目の要素aa bb ccを表示します。
+</pre>
+<p>$#変数名 は、@変数名 の配列の最後の添え字（個数から１をひいたもの）を表わします。</p>
+<pre class=c>
+@xx = ( "aa", "bb", "cc", "dd" );
+print "$#xx\n";                     # 3と表示されます。
+</pre>
+<p>次のような配列同士の一括代入が可能です。</p>
+<pre class=c>
+( $year, $mon, $day ) = ( 1997, 2, 3 );
+</pre>
+<p>()は空配列を示します。</p>
+<pre class=c>
+@xx = ();
+</pre>
+<p>配列を操作するためにいろいろな関数が用意されています。</p>
+<pre class=c>
+$x = shift(@xx);      # 最初の要素を取り除き、これを返す
+$x = pop(@xx);        # 最後の要素を取り除き、これを返す
+push(@xx1, $xx);      # 最後に要素を追加する
+push(@xx1, @xx2);     # @xx1 の後ろに @xx2 の要素を追加する
+splice(@xx, 3, 2);    # $xx[3..4](2個)を取り除き、これを返す
+reverse(@xx);         # @xxの要素を逆順にしたものを返す
+sort(@xx);            # @xxの要素をソートした結果を返す
+@x = split(/,/, $s);  # 文字列$sを","で分割してその配列を返す
+</pre>
+<p>すべての配列要素について処理を行うには次のようにします。</p>
+<pre class=c>
+foreach $i (@xx) {
+    print "$i\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="Rensou">連想配列(%XXX)</a></b>
+<div class=i>
+<p>$変数名{文字列}という形式で、文字列を添え字とした配列を表現することができます。</p>
+これを連想配列と呼びます。
+<pre class=c>
+$xx{"Tanaka"} = "man";
+$xx{"Suzuki"} = "female";
+</pre>
+<p>%変数名 という形式で、連想配列全体を表現することができます。次の例では、$xx{"tanaka"} という変数に "man" が、$xx{"suzuki"} という変数に "female" が代入されます。</p>
+<pre class=c>
+%xx = ( "tanaka", "man", "suzuki", "female" );
+print $xx{"tanaka"};
+print $xx{"suzuki"};
+</pre>
+<p>すべての連想配列要素について処理を行うには次のようにします。</p>
+<pre class=c>
+while (($name, $value) = each(%xx)) {
+    print "$name = $value\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="VariableName">変数名に使える文字</a></b>
+<div class=i>
+<p>変数名にはアンダーバー( _ )を含む半角英数文字を使用することができます。最初の1文字は数値であってはなりません。</p>
+<pre class=c>
+$my-name       # × ハイフン( - )は使用できない
+$32xx          # × 数値で始まってはならない
+</pre>
+<p>$変数名、@変数名、%変数名 はそれぞれ個別の名前空間をもっているので、$xx と @xx はそれぞれ無関係の変数になります。</p>
+</div>
+
+<b>◆ <a name="NumericString">数値と文字列</a></b>
+<div class=i>
+<p>perlでは、数値と文字列の扱いはあいまいで、その都度数値として評価されたり、文字列として評価されたりします。次の例では1行目では文字列の 12345 が代入されていますが、2行目では加算演算子により臨機応変に数値として解釈され、12350 が表示されます。</p>
+<pre class=c>
+$xx = "12345";
+print $xx + 5;
+</pre>
+</div>
+
+<b>◆ <a name="TrueAndFalse">真(true)と偽(false)</a></b>
+<div class=i>
+<p>if ( ) 文の中などの真偽判断では、空文字列("")、ゼロ(0)、ゼロを示す文字列("0")、未定義値は偽として、それ以外は真として扱われます。true や false という特殊な変数がある訳ではないので、return(false) は、"false" という文字列を返却することになります。真偽を返却する関数を評価する際は if (&amp;func() == true) ではなく、if (&amp;func()) と評価してください。</p>
+</div>
+
+<b>◆ <a name="DefinedUndefined">定義済みと未定義</a></b>
+<div class=i>
+<p>変数には定義済みの状態と未定義の状態があります。最初は未定義ですが、最初に何か値が代入されると定義済みになります。定義済みかどうかを調べるためにdefined()を使用できます。</p>
+</div>
+
+<b>◆ <a name="DefaultValue">省略時の変数($_)</a></b>
+<div class=i>
+<p>perlには省略の美学というものがあり、いろいろな箇所で変数名を省略することができます。省略した場合は、$_ を指定したものとみなされます。</p>
+<pre class=c>
+while (&lt;IN&gt;)  # while ($_ = &lt;IN&gt;) と同じ意味
+print;        # print $_; と同じ意味
+/^From:/      # $_ =~ /^From:/ と同じ意味
+</pre>
+<p>これを用いて、</p>
+<pre class=c>
+while ($xx = &lt;IN&gt;) {
+    if ($xx =~ /^From:/) { print $xx; }
+}
+</pre>
+<p>というコードは、次のように書くことができます。</p>
+<pre class=c>
+while (&lt;IN&gt;) {
+    if (/^From:/) { print; }
+}
+</pre>
+</div>
+
+<b>◆ <a name="Environment">環境変数($ENV{'XXX'})</a></b>
+<div class=i>
+<p>perlでは%ENVという特別な連想配列変数を用いて環境変数の値を読み取ったり設定したりすることができます。</p>
+<pre class=c>
+print $ENV{'PATH'};        # 環境変数PATHの値を表示する
+$ENV{'TZ'} = "JST-9";      # 環境変数TZに値を設定する
+</pre>
+</div>
+
+<b>◆ <a name="Argument">コマンド引数($ARGV)</a></b>
+<div class=i>
+<p>コマンドラインからの引数を得るために、次の変数が使用できます。</p>
+<pre class=c>
+@ARGV          # 引数の配列
+$#ARGV         # 配列の個数－1
+$ARGV[0]       # 最初の引数
+$ARGV[$#ARGV]  # 最後の引数
+</pre>
+</div>
+
+<b>◆ <a name="Signal">シグナル($SIG{'XXX'})</a></b>
+<div class=i>
+<p>シグナルはプログラムに送信される非同期のメッセージです。例えば、強制終了を明示された時はSIGTERMシグナルが、プロセス間の通信が切断された時はSIGPIPEメッセージが、設定しておいた時刻になったらSIGALRMシグナルが、プログラムに対して送信されます。</p>
+<pre class=c>
+$SIG{'TERM'} = "sigexit";
+</pre>
+<p>と宣言することにより、そのプログラムに SIGTERMシグナルが送信された時に、&amp;sigexit()関数が実行されるようになります。</p>
+</div>
+
+<b>◆ <a name="Tokushu">その他の特殊変数($X)</a></b>
+<div class=i>
+<p>$_ の他にも、次のような特殊変数があります。</p>
+<pre class=c>
+$.       # ファイルから読み込み時の現在の行数
+$/       # 入力時のレコード区切り文字。通常は改行。
+$,       # 出力時の項目区切り文字。print @xx; の時に有効
+$"       # 出力時の項目区切り文字。print "@xx"; の時に有効
+$\       # 出力時の行末文字。print "$xx"; の後ろに付加される
+$#       # 出力時の数値形式。通常は"%.20g"。詳細はprintfを参照
+$%       # 出力時の現在のページ番号
+$=       # 出力時の現在のライン数
+$-       # 出力時の残り行数
+$~       # 出力時のフォーマット名(デフォルトはハンドル名と同じ)
+$^       # 出力時のヘッダフォーマット名
+$|       # 0以外が代入されると出力をバッファリングしなくなる。
+$$       # プロセスID
+$?       # 最後に実行されたコマンドのステータス
+$&amp;       # パターンマッチにマッチした部分文字列
+$`       # パターンマッチにマッチした部分の前側の文字列
+$'       # パターンマッチにマッチした部分の後側の文字列
+$+       # パターンマッチの最後の()に対応する文字列
+$*
+$0       # perlスクリプトのコマンド名
+$1       # パターンマッチの際の1番目の()に対応する文字列
+$[       # 配列の最初の添え字。通常は0。
+$]       # perlのバージョン情報
+$;       # 高次元連想配列の添え字の区切り文字
+$!       # エラー番号、もしくはエラー文字列
+$@       # 直前のevalコマンドのエラーメッセージ
+$&lt;       # このプロセスの実ユーザーID
+$&gt;       # このプロセスの実効ユーザーID
+$(       # このプロセスの実グループID
+$)       # このプロセスの実効グループID
+$
+$^D      # デバッグフラグの値
+$^F      # システムファイルディスクリプタの最大値
+$^I      # -iオプションで指定した拡張子の名前
+$^L
+$^P      # デバッガが使用する内部フラグ
+$^T      # スクリプトを実行した時刻
+$^W      # 警告スイッチの現在値
+$^X      # perl自身の起動時の名前
+@_       # サブルーチンへの引数
+@INC     # perlライブラリ検索ディレクトリ
+%INC     # 読み込まれたライブラリファイルの配列
+__LINE__ # スクリプト中の現在の行数
+__FILE__ # スクリプトのファイル名
+</pre>
+</div>
+
+<b>◆ <a name="BinaryData">バイナリデータ</a></b>
+<div class=i>
+pack と unpack はバイナリデータに対して、文字表現、数値表現の変換を行います。
+<p>次の例を実行すると [ABC] [65 66 67] [ABC] と表示されます。</p>
+<pre class=c>
+$xx = "ABC";                      # 文字列としての代入
+@yy = unpack("C*", $xx);          # 数値の配列に変換
+$zz = pack("C*", @yy);            # 数値の配列を文字列に変換
+print "[$xx] [@yy] [$zz]\n";
+</pre>
+</div>
+
+<h4>■ <a name="Operand">演算子</a></h4>
+
+<b>◆ <a name="SetOperand">代入</a></b>
+<div class=i>
+<p>次の例は「$xxは5である」という意味ではなく、「変数$xxに値5を代入する」という意味を持ちます。</p>
+<pre class=c>
+$xx = 5;
+</pre>
+</div>
+
+<b>◆ <a name="CalcOperand">算術演算子</a></b>
+<div class=i>
+<p>perlでは次のような演算子を用いることができます。</p>
+<pre class=c>
+$xx = 5 + 2;        # 足し算
+$xx = 5 - 2;        # 引き算
+$xx = 5 * 2;        # 掛け算
+$xx = 5 / 2;        # 割り算
+$xx = 5 % 2;        # 5を2で割った余り(=1)
+$xx = 5 ** 2;       # 5の2乗(=25)
+$xx++;              # $xxの値が1加算されます
+$xx--;              # $xxの値が1減算されます
+$xx **= 2;          # $xx = $xx ** 2; と同様
+</pre>
+</div>
+
+<b>◆ <a name="BitOperand">ビット演算子</a></b>
+<div class=i>
+<pre class=c>
+$xx | $yy           # $xxと$yyのOR
+$xx &amp; $yy           # $xxと$yyのAND
+~$xx                # $xxのビットをすべて反転させたもの
+$xx &lt;&lt; 2            # $xxを2ビット左シフト
+$xx &gt;&gt; 2            # $xxを2ビット右シフト(上位ビットには符号ビットを埋める)
+</pre>
+</div>
+
+<b>◆ <a name="CompNumOperand">数値比較演算子</a></b>
+<div class=i>
+<p>if文やwhile文の中で数値に対する条件判断を行うには、次のような比較演算子を用います。</p>
+<pre class=c>
+if ($xx == $yy)            # $xxと$yyが等しければ
+if ($xx != $yy)            # $xxと$yyが異なっていれば
+if ($xx &lt; $yy)             # $xxが$yyより小さければ
+if ($xx &gt; $yy)             # $xxが$yyより大きければ
+if ($xx &lt;= $yy)            # $xxが$yyより等しいか小さければ
+if ($xx &gt;= $yy)            # $xxが$yyより等しいか大きければ
+if (($xx==2) &amp;&amp; ($yy==3))  # $xxが2、かつ、$yyが3であれば
+if (($xx==2) || ($yy==3))  # $xxが2、もしくは、$yyが3であれば
+if ($xx &lt;=&gt; $yy)           # 比較結果を -1, 0, 1 のいずれかで返す
+</pre>
+</div>
+
+<b>◆ <a name="CompStrOperand">文字列比較演算子</a></b>
+<div class=i>
+<p>文字列に対しては次のような演算子を用います。</p>
+<pre class=c>
+if ($xx eq $yy)            # $xxと$yyが等しければ
+if ($xx ne $yy)            # $xxと$yyが異なっていれば
+if ($xx lt $yy)            # $xxが$yyより小さければ
+if ($xx gt $yy)            # $xxが$yyより大きければ
+if ($xx le $yy)            # $xxが$yyより等しいか小さければ
+if ($xx ge $yy)            # $xxが$yyより等しいか大きければ
+if ($xx =~ /ABC/)          # $xxがABCという文字を含んでいれば
+if ($xx !~ /ABC/)          # $xxがABCという文字を含んでいなければ
+if ($xx cmp $yy)           # 比較し、-1, 0, 1 のいずれかで返す
+</pre>
+</div>
+
+<b>◆ <a name="CondOperand">条件演算子</a></b>
+<div class=i>
+<p>A ? B : C は、Aが真であればBを、偽であればCを値とします。下記の例では$yyの値が5未満であれば"small"を、さもなくば"big"を$xxに代入します。</p>
+<pre class=c>
+$xx = ($yy &lt; 5) ? "small" :  "big";
+</pre>
+</div>
+
+<b>◆ <a name="MachingOperand">マッチング</a></b>
+<div class=i>
+<p>変数$xxと<a href="#Expr">正規表現</a>にマッチするか否かを調べます。</p>
+<pre class=c>
+if ($xx =~ /[0-9]+/)        # 正規表現にマッチすれば
+if ($xx !~ /[0-9]+/)        # 正規表現にマッチしなければ
+</pre>
+<p>置換文字列の中に括弧を書くと、その括弧に対応した文字列を $1, $2, ... で参照することができます。次の例は、12:34:56の秒数を求めます。</p>
+<pre class=c>
+$xx = "12:34:56";
+if ($xx =~ /([0-9][0-9]):([0-9][0-9]):([0-9][0-9])/) {
+    print $1 * 3600 + $2 * 60 + $3;
+}
+</pre>
+</div>
+
+<b>◆ <a name="CatOperand">文字列連結</a></b>
+<div class=i>
+<p>文字列を連結します。</p>
+<pre class=c>
+$xx = $yy . $zz;    # 文字列 $yy と 文字列 $zz を連結します
+$xx .= $yy;         # $xx = $xx . $yy と同様です。
+</pre>
+</div>
+
+<b>◆ <a name="ReplaceOperand">文字列置換</a></b>
+<div class=i>
+<p>次の例は、文字列$xxの中の abc という文字列をすべて大文字の ABC に変換します。最初の s は置換することを表わします。最後の g を省略した場合は、最初に現れたabcを1度だけ置換します。</p>
+<pre class=c>
+$xx =~ s/abc/ABC/g;
+</pre>
+<p>abc の部分には後で述べる正規表現を指定することができます。(...)を使用すると(...)に対応する文字列を $1, $2, $3,...で参照することができます。次の例は、"12:34:56" を "12時34分56秒" に置換します。</p>
+<pre class=c>
+$xx = "12:34:56";
+$xx =~ s/([0-9][0-9]):([0-9][0-9]):([0-9][0-9])/$1時$2分$3秒/g;
+</pre>
+<p>最後の g の部分をオプションと呼びます。g オプションは、見つかったすべてのパターンを置換します。</p>
+<pre class=c>
+$xx = "abcabcabc";
+$xx =~ s/abc/ABC/;   # ABCabcabc となります。
+$xx =~ s/abc/ABC/g;  # ABCABCABC となります。
+</pre>
+<p>eオプションは、ABCの部分を文字列ではなく、perlの実行文と解釈して、その結果に置換します。次の例は、12:34:56を秒数に置換します。</p>
+<pre class=c>
+$xx = "12:34:56";
+$xx =~ s/([0-9][0-9]):([0-9][0-9]):([0-9][0-9])/$1*3600+$2*60+$3/e;
+</pre>
+<p>区切り文字（/）はアルファベット、数字以外の任意記号を用いることができます。置換文字中の区切り文字はバックスラッシュ(\)を用いてエスケープ（区切り文字という意味を無効化する）必要がありますが、区切り文字を変更してやると、その煩わしさを解消できます。以下の2行は同じ処理を行います。</p>
+<pre class=c>
+$xx =~ s/http:\/\/www.yyy.zzz\//http:\/\/aaa.bbb.ccc\//;
+$xx =~ s|http://www.yyy.zzz/|http://aaa.bbb.ccc/|;
+</pre>
+<p>区切り文字としてシングルクォーテーション（'）を用いると、置換文字の変数解釈などを行わないようになります。</p>
+<pre class=c>
+$yy = "YY";
+$xx = "999"; $xx =~ s/[0-9]/$yy/g;    # YYYYYY となる
+$xx = "999"; $xx =~ s'[0-9]'$yy'g;    # $yy$yy$yy となる
+</pre>
+<p>次の例は、URLエンコードされた %20 のような文字列をデコードします。CGIなどではよく使用される構文です。</p>
+<pre class=c>
+$xx =~ s/%([0-9a-fA-F][0-9a-fA-F])/pack("C", hex($1))/eg;
+</pre>
+</div>
+
+<b>◆ <a name="RepeatOperand">繰り返し演算子</a></b>
+<div class=i>
+<pre class=c>
+print '-' x 80;     # '-'を80個表示します。
+$xx x= 80;          # $xx を80回繰り返したものを$xxに代入します。
+@ones = (1) x 80;   # 80個の(1, 1, 1, 1, ......, 1)と同様です。
+</pre>
+</div>
+
+<b>◆ <a name="RangeOperand">範囲演算子</a></b>
+<div class=i>
+<pre class=c>
+@xx = (0 .. 5);     # @xx = (0, 1, 2, 3, 4, 5);と同様。
+for (0 .. 5)        # for ($_ = 0; $_ &lt;= 5; $_++) と同様
+</pre>
+</div>
+
+<b>◆ <a name="FileTest">ファイル検査</a></b>
+<div class=i>
+<p>次のようにして、ファイルが書き込み可能かどうかなどを検査することができます。</p>
+<pre class=c>
+# ファイル名で指定する
+if (-w "file.txt") { print "書き込み可能Write\n"; }
+
+# ファイルハンドルで指定する
+open(IN, "file.txt");
+if (-r IN) { print "読み込み可能\n"; }
+close(IN);
+
+# アンダーライン( _ )は最後に検査されたファイルを示す
+if (-r "file.txt") { print "読み込み可能\n"; }
+if (-w _) { print "書き込み可能\n"; }
+
+# stat()を用いた例
+stat("file.txt");
+if (-r _) { print "読み込み可能\n"; }
+</pre>
+<p>次のような検査が可能です。（UNIXでしか意味の無い物も多いです）</p>
+<pre class=c>
+-r      # 読み込み可能であれば
+-w      # 書き込み可能であれば
+-x      # 実行可能であれば
+-o      # 自分のものであれば
+-R      # 実uid/gidで読み込み可能であれば
+-W      # 実uid/gidで書き込み可能であれば
+-X      # 実uid/gidで実行可能であれば
+-O      # 実uidのものであれば
+-e      # 存在すれば
+-z      # サイズが0であれば
+-s      # サイズが0でなければ(ファイルサイズを返す)
+-f      # 通常ファイルであれば
+-d      # ディレクトリであれば
+-l      # シンボリックリンクであれば
+-p      # 名前付きパイプであれば
+-S      # ソケットであれば
+-b      # ブロック型スペシャルファイルであれば
+-c      # キャラクタ型スペシャルファイルであれば
+-u      # setuidビットが立っていれば
+-g      # setgifビットが立っていれば
+-k      # stickyビットが立っていれば
+-t      # ファイルハンドルが tty としてオープンされていれば
+-T      # ファイルがテキストファイルであれば
+-B      # ファイルがバイナリファイルであれば
+-M      # perl起動時における、ファイルの更新時刻からの日数
+-A      # perl起動時における、ファイルの参照時刻からの日数
+-C      # perl起動時における、ファイルの作成時刻からの日数
+</pre>
+</div>
+
+<h4>■ <a name="Syntax">制御構文</a></h4>
+
+<b>◆ <a name="if">if elsif else文</a></b>
+<div class=i>
+<p>if(...)は単純な条件判断をする際に用います。</p>
+<pre class=c>
+if ($xx &gt; 5) {
+    print "5より大きい\n";
+} elsif ($xx == 5) {
+    print "5ちょうど\n";
+} else {
+    print "5より小さい\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="unless">unless文</a></b>
+<div class=i>
+<p>unless(...)はif(...)と逆の意味を持ちます。</p>
+<pre class=c>
+unless ($xx &gt; 5) {
+    print "5より大きくない\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="while">while文</a></b>
+<div class=i>
+<p>while(...)は、(...)が真のあいだ{...}を繰り返します。</p>
+<pre class=c>
+$xx = 1;
+while ($xx &lt; 10) {
+    print "xx = $xx\n";
+    $xx++;
+}
+</pre>
+</div>
+
+<b>◆ <a name="until">until文</a></b>
+<div class=i>
+<p>until(...)は、(...)が真になるまで{...}を繰り返します。</p>
+<pre class=c>
+$xx = 1;
+until ($xx &gt; 10) {
+    print "xx = $xx\n";
+    $xx++;
+}
+</pre>
+</div>
+
+<b>◆ <a name="do">do文</a></b>
+<div class=i>
+<p>do{...}を用いて、if(...), unless(...), while(...), until(...)の構文順序を変更することができます。</p>
+<pre class=c>
+do { print "xx = $xx\n"; } if ($xx == 5);
+do { print "xx = $xx\n"; } unless ($xx == 5);
+do { print "xx = $xx\n"; $xx++; } while ($xx &lt; 5);
+do { print "xx = $xx\n"; $xx++; } until ($xx &gt; 5);
+</pre>
+do {...}の中身が単文の場合は、do { ; }を省略することができます。
+<pre class=c>
+print "xx = $xx\n" if ($xx == 5);
+print "xx = $xx\n" unless ($xx == 5);
+print "xx = $xx\n" while ($xx++ &lt; 5);
+print "xx = $xx\n" until ($xx++ &gt; 5);
+</pre>
+</div>
+
+<b>◆ <a name="for">for文</a></b>
+<div class=i>
+<p>for(...)は指定回数処理を実行する際に用います。次の例は最初に$xxに1を代入して、$xxが10以下であるあいだ、$xxを1ずつ加算しながら、printを実行することを意味します。</p>
+<pre class=c>
+for ($xx = 1; $xx &lt;= 10; $xx++) {
+    print "xx = $xx\n";
+}
+</pre>
+<p>次の構文も上と同じ動作をします。</p>
+<pre class=c>
+@xx = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+for (@xx) {
+    print "xx = $_\n";
+}
+</pre>
+<p>また、次の構文も同様です。</p>
+<pre class=c>
+for (1..10) {
+    print "xx = $_\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="foreach">foreach文</a></b>
+<div class=i>
+<p>foreach(...)は配列の各要素に対して処理を行います。</p>
+<pre class=c>
+@xx = ( 11, 22, 33, 44 );
+foreach $i (@xx) {
+    print "i = $i\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="last">last文</a></b>
+<div class=i>
+<p>C言語のbreakと同じ動きをします。最も内側のループを抜けます。</p>
+<pre class=c>
+while (&lt;IN&gt;) {
+    if ($_ eq "END") {
+        last;
+    }
+}
+</pre>
+</div>
+
+<b>◆ <a name="next">next文</a></b>
+<div class=i>
+<p>C言語のcontinueと同じ動きをします。最も内側のループを繰り返します。</p>
+<pre class=c>
+while (&lt;IN&gt;) {
+    if ($_ =~ /^#/) {
+        next;
+    }
+}
+</pre>
+</div>
+
+<b>◆ <a name="continue">continue文</a></b>
+<div class=i>
+<p>例えば、次の2つのコードは同じ動作となります。</p>
+<pre class=c>
+for ($xx = 1; $xx &lt; 10; $xx++) {
+    print "$xx\n";
+}
+</pre>
+<p>および</p>
+<pre class=c>
+$xx = 1;
+while ($xx &lt; 10) {
+    print "$xx\n";
+} continue {
+    $xx++;
+}
+</pre>
+</div>
+
+<h4>■ <a name="InputOutput">入出力</a></h4>
+
+<b>◆ <a name="InputFile">ファイル読み込み</a></b>
+<div class=i>
+<p>ファイルから各行を読み込むには次のようにします。ここで、INのような変数をファイルハンドルと呼びます。ファイルハンドルはINでもHEHEHEでもGUGOGOでも、自分の好きな名前で構いません。ファイルを読み書きする際は、ファイル名ではなく、このファイルハンドルを指定することになります。</p>
+<pre class=c>
+open(IN, "datafile.txt");
+while ($xx = &lt;IN&gt;) { print $xx; }
+close(IN);
+</pre>
+<p>変数 $xx を省略した場合は、省略時の暗黙の変数 $_ が使用されます。前記の例は次のように記述することもできます。</p>
+<pre class=c>
+open(IN, "datafile.txt");
+while (&lt;IN&gt;) { print; }
+close(IN);
+</pre>
+<p>これは、次の記述と同じ意味を持ちます。</p>
+<pre class=c>
+open(IN, "datafile.txt");
+while ($_ = &lt;IN&gt;) { print $_; }
+close(IN);
+</pre>
+<p>もっと簡単には、次のようにも記述することができます。</p>
+<pre class=c>
+open(IN, "datafile.txt");
+print while (&lt;IN&gt;);
+close(IN);
+</pre>
+<p>次のようにファイルの各行を配列に一括して読み込むこともできます。</p>
+<pre class=c>
+open(IN, "datafile.txt");
+@xx = &lt;IN&gt;;
+foreach $yy (@xx) {
+    print $yy;
+}
+close(IN);
+</pre>
+<p>また、次のようにすると、コマンドラインで指定したファイルをひとつづつオープンし、それを順次読み込むことができます。</p>
+<pre class=c>
+while (&lt;&gt;) {
+    print;
+}
+</pre>
+<p>これは、だいたい、次のような処理と同等になります。</p>
+<pre class=c>
+for ($i = 0; $i &lt;= $#ARGV; $i++) {
+    open(IN, $ARGV[$i]);
+    while (&lt;IN&gt;) {
+        print;
+    }
+    close(IN);
+}
+</pre>
+</div>
+
+<b>◆ <a name="OutputFile">ファイル書き込み</a></b>
+<div class=i>
+<p>ファイルに何かを書き込むには次のようにします。</p>
+<pre class=c>
+open(OUT, "&gt; datafile.txt");
+print(OUT "こんにちわ\n");
+close(OUT);
+</pre>
+<p>ファイルに追加書き込みするには次のようにします。</p>
+<pre class=c>
+open(OUT, "&gt;&gt; datafile.txt");
+print(OUT "こんにちわ\n");
+close(OUT);
+</pre>
+</div>
+
+<b>◆ <a name="ExecCommand">外部コマンド実行</a></b>
+<div class=i>
+<p>出力結果を外部コマンドに渡すこともできます。次の例ではprint文の出力をnkfコマンドでJISコードに変換して出力しています。</p>
+<pre class=c>
+open(OUT, "| /usr/local/bin/nkf -j");
+print(OUT "こんにちわ\n");
+close(OUT);
+</pre>
+<p>また、外部コマンドの出力結果を読み取ることもできます。次の例では、datafile.txt の中身を nkf コマンドでEUCに変換したデータを読み込みます。</p>
+<pre class=c>
+open(IN, "/usr/local/bin/nkf -e datafile.txt |");
+while (&lt;IN&gt;) {
+    print $_;
+}
+close(IN);
+</pre>
+<p>単に外部コマンドを実行するだけであれば、次のようにします。</p>
+<pre class=c>
+system("/usr/local/bin/nkf -e datafile.txt");
+</pre>
+</div>
+
+<b>◆ <a name="Handle">ハンドル</a></b>
+<div class=i>
+<p>前述の IN や OUT, STDOUT などをハンドルと呼びます。ハンドルは通常、大文字を用いて表わします。</p>
+</div>
+
+<b>◆ <a name="Stdio">標準入出力</a></b>
+<div class=i>
+<p>ハンドルは open() を用いて作成する他に、次の3つのハンドルがあらかじめオープンされています。</p>
+<pre class=c>
+STDIN     標準入力
+STDOUT    標準出力
+STDERR    標準エラー出力
+</pre>
+<p>標準入力から各行を読み込むには次のようにします。</p>
+<pre class=c>
+while (&lt;STDIN&gt;) {
+    print;
+}
+</pre>
+<p>&lt; &gt;の中のSTDINは省略することができます。以下のようにした場合、コマンドの引数で何も指定しなかった場合は標準入力から、コマンドの引数でファイルのリストを指定した場合は、そのファイルを順次読み取ることができます。</p>
+<pre class=c>
+while (&lt;&gt;) {
+    print;
+}
+</pre>
+</div>
+
+<b>◆ <a name="NewLine">改行コード</a></b>
+<div class=i>
+<p>Windowsでは \r\n、Macintoshでは \r、UNIXでは \n のように、OSによって改行コードが異なります。入力ファイルの改行コードに関わらず、自分の環境に適した改行コードに変換するには以下のようにします。（UNIX、Windowsで確認。Macintoshでは未確認）</p>
+<pre class=c>
+while (&lt;IN&gt;) {
+    s/[\r\n]*$//;
+    print "$_\n";
+}
+</pre>
+<p>Windowsでは $_\n ではなく $_\r\n にすべきだと思われるかもしれませんが、Windows上で上記のスクリプトを実行した場合、STDOUT や OUT への出力は \n が \r\n に自動変換されて書き込まれます。これをテキストモードと呼びます。この自動変換を行わないようにしたい時は binmode()を用いてバイナリモードにしてください。UNIXでは常にバイナリモード（というか、テキストモードとバイナリモードの動作が同じ）となります。</p>
+<p>任意の改行形式のファイルを読みとって、UNIXの改行形式のファイルに変換する例は次のようになります。</p>
+<pre class=c>
+open(IN, "any.txt");
+open(OUT, "&gt; unix.txt");
+binmode(OUT);
+while (&lt;IN&gt;) {
+    s/[\r\n]*$//;
+    print OUT "$_\n";
+}
+close(IN);
+close(OUT);
+</pre>
+</div>
+
+<b>◆ <a name="Binary">バイナリ読み込み</a></b>
+<div class=i>
+<p>例えば次のようなコードを用いる事により、ファイルをバイナリデータとして読み込む事ができます。</p>
+<pre class=c>
+($dev, $ino, $mode, $nlink, $uid, $gid,
+ $rdev, $size, $atime, $mtime, $ctime, $blksize, $blocks)
+        = stat("binary.dat");
+open(IN, "binary.dat");
+binmode(IN);
+sysread(IN, $buf, $size);
+close(IN);
+@data = unpack("C*", $buf);
+for $x (@data) {
+    :
+}
+</pre>
+<p>binmode()はUNIXでは必要ありませんが、Windowsで \n が \r\n に変換されてしまうのを防ぐために必要です。</p>
+</div>
+
+<h4>■ <a name="SubAndLib">サブルーチンとライブラリ</a></h4>
+
+<b>◆ <a name="Subroutine">サブルーチン(sub)</a></b>
+<div class=i>
+<p>次のようにしてサブルーチンを宣言することができます。</p>
+<pre class=c>
+sub add {
+    return($_[0] + $_[1]);
+}
+</pre>
+<p>サブルーチンは宣言しただけでは実行されませんが、次のように呼び出す事によって実行されます。</p>
+<pre class=c>
+print &amp;add(3, 5);
+</pre>
+<p>サブルーチンに渡された引数は特殊配列変数 @_ に格納されるので、$_[0], $_[1], $_[2],...として参照することができます。return(...)は ... をサブルーチンの戻り値としてサブルーチンを終了することを意味します。return()を省略した場合は、サブルーチンの最後の文(statement)の結果がサブルーチンの戻り値となります。</p>
+<p>C言語と違ってperlではほとんどの変数はグローバル変数なので、サブルーチンの外でも中でも同じ名前で参照・設定できます。サブルーチンの中でローカル変数(サブルーチンの中だけで有効な名前)を使用するには次のようにします。</p>
+<pre class=c>
+sub add {
+    local(@a) = @_;
+    local($i);
+    local($ans) = 0;
+    for ($i = 0; $i &lt;= $#a; $i++) {
+        $ans += $a[$i];
+    }
+    return($ans);
+}
+</pre>
+<p>特殊変数 @_ の代入部を次のようにすると、perl Ver4.X ではうまくいかない(値が渡されない)場合があるので注意しましょう。</p>
+<pre class=c>
+sub add {
+    local(@a);
+    local($i);
+    @a = @_;
+       :
+</pre>
+</div>
+
+<b>◆ <a name="CallByRef">参照渡し</a></b>
+<div class=i>
+<p>サブルーチンに複数の配列を渡す際や、pop, push を用いてサブルーチン内で配列の個数を変更する際など、「*名前」という参照渡しを用いると都合が良い場合があります。</p>
+<pre class=c>
+sub listprint {
+    local(*list1, *list2) = @_;
+    print "[ "; print @list1; print " ]\n";
+    print "[ "; print @list2; print " ]\n";
+}
+@xx = (1, 2, 3);
+@yy = (4, 5, 6);
+&amp;listprint(*xx, *yy); 
+</pre>
+</div>
+
+<b>◆ <a name="Library">ライブラリ</a></b>
+<div class=i>
+<p>perlのライブラリは通常、calc.pl のように拡張子 .pl のファイル名で提供されます。これは環境変数PERLLIBで指定されたディレクトリやカレントディレクトリから検索されます。特殊変数@INCはperlライブラリを探す場所のリストを保持しています。</p>
+<p>次は簡単なperlライブラリの例(calc.pl)です。</p>
+<pre class=c>
+;#####################
+;# perl Library calc
+;#####################
+package calc;
+sub add {
+    return($_[0] + $_[1]);
+}
+1;
+</pre>
+<p>コメントを記述する場合はシャープ( # )の前にセミコロン( ; )を追記する必要がある場合もあるそうです。</p>
+<p>package は、これ以降(ファイルの終わりか次の package が現れるまで)のスクリプトを calc パッケージとして扱うことを宣言します。パッケージの内部では独自の変数名空間を持てるので、パッケージの内部と外部の間でたまたま変数名が重複する事による悲劇を解除することができます。パッケージ内のサブルーチンや変数は、「パッケージ名'名前」で指定します。</p>
+<p>最後の1は特に何をするものでもありませんが、このライブラリを require で読み込む際のおまじないだと思ってください。</p>
+<p>このライブラリを呼び出して実行するには次のようにします。</p>
+<pre class=c>
+require "calc.pl";
+print &amp;calc'add(3, 5);
+</pre>
+</div>
+
+<h4>■ <a name="Other">その他</a></h4>
+
+<b>◆ <a name="Comment">コメント(#)</a></b>
+<div class=i>
+<p>perlスクリプト中でシャープ( # )から行末まではコメントとして無視されます。</p>
+<pre class=c>
+$xx = 5;    # ここから行末までは無視されます
+</pre>
+</div>
+
+<b>◆ <a name="Expr">正規表現</a></b>
+<div class=i>
+<p>次の例の/EFG/などのように、perlでは文字列の特徴を表現することができます。</p>
+<pre class=c>
+$xx = "ABCDEFG";
+if ($xx =~ /EFG/) {          # 文字列$xxが文字列EFGを含んでいたら
+    print "含んでいる\n";
+}
+</pre>
+<p>上記のif文の( )内は「変数$xxの中に、EFGという文字列が含まれていたら」という意味になります。このように、ある文字列が指定した特徴に一致することを「マッチする」と言います。正規表現のEFGの箇所には次のような表記を用いることができます。^ABC, ABC$ 以外はすべて、「その文字列を含んでいたら」という意味になります）</p>
+<pre class=c>
+  A           Aという文字
+  ABC         ABCという文字列
+  A+          1個以上連続したA(A, AA, AAA, ...)
+  A*          0個以上連続したA(  , A, AA, AAA, ...)
+  .           1つの任意文字(A, B, C, ...) (\nを除く)
+  A?          0または1つのA(  , A)
+  ^ABC        ABCで始まっていたら
+  ABC$        ABCで終わっていたら
+  [ABC]       A,B,Cのいずれか1文字
+  [A-Z]       A～Zまでのいずれか1文字
+  [A-Za-z0-9] A～Z, a～z, 0-9までのいずれか1文字
+  [^ABC]      A,B,C以外の文字
+  [^A-Z]      A～Z以外の文字
+  A|B|C       AまたはBまたはC
+  \w          英数文字かアンダーバー( _ )。[a-zA-Z0-9_]と同様
+  \W          \w以外の文字
+  \d          数値文字。[0-9]と同等
+  \D          \d以外の文字
+  \s          空白文字
+  \S          \s以外の文字
+  \b          単語の区切り？？？？？？
+  \B          \b以外の文字
+  \nなど      エスケープシーケンス文字の\nなど
+  (ABC)       ABCという文字列。カッコ部分は後で参照可能です。
+</pre>
+<p>これらを組み合わせてたとえば、「perlの変数名に用いることができる名前」は次のように表わされます。</p>
+<pre class=c>
+^[A-Za-z_][A-Za-z0-9_]*$
+</pre>
+<p>正規表現中では下記の文字は特殊な文字（メタ文字）として扱われますので、これらの文字を表わすには \+, \*, \?, ...のようにします。</p>
+<pre class=c>
++ * ? . ( ) [ ] { } | \
+</pre>
+<p>括弧(...)で囲んだ部分は、正規表現内では \1, \2, \3, ...として参照できます。1, 2, 3, ...は、正規表現中で括弧が現れる順番を示します。</p>
+<pre class=c>
+   ^(...)\1    最初の3文字がもう一度繰り返す(ABCABCなど)
+</pre>
+<p>また、正規表現の外ではマッチの結果を次のように参照できます。</p>
+<pre class=c>
+$1, $2, $3, ...      (  )の部分にマッチした文字列
+$+                   最後にマッチした(  )部分
+$&amp;                   マッチした部分の文字列
+$`                   マッチした部分から前側の文字列
+$'                   マッチした部分から後側の文字列
+</pre>
+<p>たとえば、次のように使用することができます。</p>
+<pre class=c>
+if ($time =~ /^([0-9][0-9]):([0-9][0-9]):([0-9][0-9])$/) {
+    $hour = $1;
+    $min = $2;
+    $sec = $3;
+}
+</pre>
+</div>
+
+<b>◆ <a name="EOF">&lt;&lt;によるデータ表記</a></b>
+<div class=i>
+<p>次の例では、「Hello World!!」という文字列を3行表示します。END_OF_DATAの部分はどんな文字列でも使用できますが、(1)&lt;&lt;の後ろにはスペースを空けてはならない、(2)最初のEND_OF_DATAの後ろにはセミコロン(;)が必要、(3)最後のEND_OF_DATAの後ろには改行が必要、など注意点も多いので気を付けてください。</p>
+<pre class=c>
+print &lt;&lt;END_OF_DATA;
+Hello World!!
+Hello World!!
+Hello World!!
+END_OF_DATA
+</pre>
+<p>次の例では、変数 $msg に 3行のメッセージを代入しています。</p>
+<pre class=c>
+$msg = &lt;&lt;END_OF_DATA;
+This is Japan.
+That is America.
+That is England.
+END_OF_DATA
+</pre>
+<p>次の例でも同様に、「Hello World!!」を3行表示します。この場合、空行がデータの終わりを示します。）</p>
+<pre class=c>
+print &lt;&lt; x 3;
+Hello World!!
+
+</pre>
+</div>
+
+<b>◆ <a name="Reference">リファレンス</a></b>
+<div class=i>
+<p>Perl5からはC言語のポインタに相当するリファレンスがサポートされました。\$xx, \@xx, \%xx はそれぞれの変数へのリファレンスを示します。</p>
+<pre class=c>
+$aa = 123;
+$xx = \$aa;
+print "$$xx\n";
+
+@bb = ( "AAA", "BBB" );
+$xx = \@bb;
+print "$xx-&gt;[0]\n";
+print "$xx-&gt;[1]\n";
+
+$cc{'name'} = "tanaka";
+$cc{'age'} = 24;
+$xx = \%cc;
+print "$xx-&gt;{'name'}\n";
+print "$xx-&gt;{'age'}\n";
+</pre>
+<p>連想配列とリファレンスを組み合わせることにより、C言語の構造体の配列のようなものを表現することができます。</p>
+<pre class=c>
+push @persons, { "name" =&gt; "tanaka", "age" =&gt; 24 };
+push @persons, { "name" =&gt; "suzuki", "age" =&gt; 28 };
+foreach $person (@persons) {
+    print "$person-&gt;{'name'} $person-&gt;{'age'}\n";
+}
+</pre>
+<p>上記では名前無しの連想配列という機能を用いています。次のようにしてしまうと、$persons[0] と $persons[1] に同じリファレンス値が代入されてしまうので、期待通りの動作をしません。</p>
+<pre class=c>
+%person = ( "name", "tanaka", "age", 24 );
+push(@persons, \%person);
+%person = ( "name", "suzuki", "age", 28 );
+push(@persons, \%person);
+foreach $person (@persons) {
+    print "$person-&gt;{'name'} $person-&gt;{'age'}\n";
+}
+</pre>
+</div>
+
+<b>◆ <a name="Kanji">日本語の取り扱い</a></b>
+<div class=i>
+<p>日本語には、シフトJIS、EUC、JISなどいくつかの漢字コードがあります。（→ <a href="wwwkanji.htm">漢字コードについて</a>）。Perlで漢字コードの変換を行うには、jcode.pl などのライブラリを使用します。</p>
+<pre class=c>
+   <a href="ftp://ftp.iij.ad.jp/pub/IIJ/dist/utashiro/perl/">ftp://ftp.iij.ad.jp/pub/IIJ/dist/utashiro/perl/</a>
+</pre>
+<p>jcode.plは、以下のように使用します。</p>
+<pre class=c>
+require "jcode.pl";
+$xx = "日本語";
+&amp;jcode'convert(*xx, "euc");  # EUCに変換
+&amp;jcode'convert(*xx, "jis");  # JISに変換
+&amp;jcode'convert(*xx, "sjis"); # シフトJISに変換
+&amp;jcode'h2z_sjis(*xx);        # 半角カナを全角カナに変換
+</pre>
+<p>スクリプトをシフトJISで記述する場合、"表" や "予" などにように、シフトJIS漢字コードの2バイト目が 0x5c（バックスラッシュ（\））となる文字を使用すると、文字化けすることがあります。この場合、下記のような方法で対処します。</p>
+<ul>
+<li>スクリプトをEUCで記述する。
+<li>"表示" ではなく、'表示' のようにシングルクォートを用いる。
+<li>"表\示" や "予\約" のように、バックスラッシュを補完してやる。
+</ul>
+</div>
+
+<hr>
+<div>Copyright (C) 1997-2009 杜甫々</div>
+<div>初版：1997年2月3日、最終更新：2009年2月22日</div>
+<div>http://www.tohoho-web.com/wwwperl1.htm</div>
+</body>
+</html>
