@@ -229,7 +229,7 @@ sort(@xx);            # @xxの要素をソートした結果を返す
 </pre>
 <p>すべての配列要素について処理を行うには次のようにします。</p>
 <pre class=c>
-foreach $i (@xx) {
+foreach my $i (@xx) {
     print "$i\n";
 }
 </pre>
@@ -251,7 +251,7 @@ print $xx{"suzuki"};
 </pre>
 <p>すべての連想配列要素について処理を行うには次のようにします。</p>
 <pre class=c>
-while (($name, $value) = each(%xx)) {
+while (my ($name, $value) = each(%xx)) {
     print "$name = $value\n";
 }
 </pre>
@@ -290,19 +290,19 @@ print $xx + 5;
 <div class=i>
 <p>perlには省略の美学というものがあり、いろいろな箇所で変数名を省略することができます。省略した場合は、$_ を指定したものとみなされます。</p>
 <pre class=c>
-while (&lt;IN&gt;)  # while ($_ = &lt;IN&gt;) と同じ意味
+while (&lt;$fh&gt;)  # while ($_ = &lt;$fh&gt;) と同じ意味
 print;        # print $_; と同じ意味
 /^From:/      # $_ =~ /^From:/ と同じ意味
 </pre>
 <p>これを用いて、</p>
 <pre class=c>
-while ($xx = &lt;IN&gt;) {
+while (my $xx = &lt;$fh&gt;) {
     if ($xx =~ /^From:/) { print $xx; }
 }
 </pre>
 <p>というコードは、次のように書くことができます。</p>
 <pre class=c>
-while (&lt;IN&gt;) {
+while (&lt;$fh&gt;) {
     if (/^From:/) { print; }
 }
 </pre>
@@ -640,7 +640,7 @@ unless ($xx &gt; 5) {
 <div class=i>
 <p>while(...)は、(...)が真のあいだ{...}を繰り返します。</p>
 <pre class=c>
-$xx = 1;
+my $xx = 1;
 while ($xx &lt; 10) {
     print "xx = $xx\n";
     $xx++;
@@ -652,7 +652,7 @@ while ($xx &lt; 10) {
 <div class=i>
 <p>until(...)は、(...)が真になるまで{...}を繰り返します。</p>
 <pre class=c>
-$xx = 1;
+my $xx = 1;
 until ($xx &gt; 10) {
     print "xx = $xx\n";
     $xx++;
@@ -682,13 +682,13 @@ print "xx = $xx\n" until ($xx++ &gt; 5);
 <div class=i>
 <p>for(...)は指定回数処理を実行する際に用います。次の例は最初に$xxに1を代入して、$xxが10以下であるあいだ、$xxを1ずつ加算しながら、printを実行することを意味します。</p>
 <pre class=c>
-for ($xx = 1; $xx &lt;= 10; $xx++) {
+for (my $xx = 1; $xx &lt;= 10; $xx++) {
     print "xx = $xx\n";
 }
 </pre>
 <p>次の構文も上と同じ動作をします。</p>
 <pre class=c>
-@xx = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+my @xx = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 for (@xx) {
     print "xx = $_\n";
 }
@@ -705,8 +705,8 @@ for (1..10) {
 <div class=i>
 <p>foreach(...)は配列の各要素に対して処理を行います。</p>
 <pre class=c>
-@xx = ( 11, 22, 33, 44 );
-foreach $i (@xx) {
+my @xx = ( 11, 22, 33, 44 );
+foreach my $i (@xx) {
     print "i = $i\n";
 }
 </pre>
@@ -716,7 +716,7 @@ foreach $i (@xx) {
 <div class=i>
 <p>C言語のbreakと同じ動きをします。最も内側のループを抜けます。</p>
 <pre class=c>
-while (&lt;IN&gt;) {
+while (&lt;$fh&gt;) {
     if ($_ eq "END") {
         last;
     }
@@ -728,7 +728,7 @@ while (&lt;IN&gt;) {
 <div class=i>
 <p>C言語のcontinueと同じ動きをします。最も内側のループを繰り返します。</p>
 <pre class=c>
-while (&lt;IN&gt;) {
+while (&lt;$fh&gt;) {
     if ($_ =~ /^#/) {
         next;
     }
@@ -740,13 +740,13 @@ while (&lt;IN&gt;) {
 <div class=i>
 <p>例えば、次の2つのコードは同じ動作となります。</p>
 <pre class=c>
-for ($xx = 1; $xx &lt; 10; $xx++) {
+for (my $xx = 1; $xx &lt; 10; $xx++) {
     print "$xx\n";
 }
 </pre>
 <p>および</p>
 <pre class=c>
-$xx = 1;
+my $xx = 1;
 while ($xx &lt; 10) {
     print "$xx\n";
 } continue {
@@ -1126,19 +1126,22 @@ print "$xx-&gt;{'age'}\n";
 </pre>
 <p>連想配列とリファレンスを組み合わせることにより、C言語の構造体の配列のようなものを表現することができます。</p>
 <pre class=c>
+my @persons;
 push @persons, { "name" =&gt; "tanaka", "age" =&gt; 24 };
 push @persons, { "name" =&gt; "suzuki", "age" =&gt; 28 };
-foreach $person (@persons) {
+foreach my $person (@persons) {
     print "$person-&gt;{'name'} $person-&gt;{'age'}\n";
 }
 </pre>
 <p>上記では名前無しの連想配列という機能を用いています。次のようにしてしまうと、$persons[0] と $persons[1] に同じリファレンス値が代入されてしまうので、期待通りの動作をしません。</p>
 <pre class=c>
+my @persons;
+my %persons;
 %person = ( "name", "tanaka", "age", 24 );
 push(@persons, \%person);
 %person = ( "name", "suzuki", "age", 28 );
 push(@persons, \%person);
-foreach $person (@persons) {
+foreach my $person (@persons) {
     print "$person-&gt;{'name'} $person-&gt;{'age'}\n";
 }
 </pre>
