@@ -566,9 +566,9 @@ for (0 .. 5)        # for ($_ = 0; $_ &lt;= 5; $_++) と同様
 if (-w "file.txt") { print "書き込み可能Write\n"; }
 
 # ファイルハンドルで指定する
-open(IN, "file.txt");
-if (-r IN) { print "読み込み可能\n"; }
-close(IN);
+open my $fh, '<', "file.txt" or die "Can't open file.txt:$!";
+if (-r $fh) { print "読み込み可能\n"; }
+close $fh;
 
 # アンダーライン( _ )は最後に検査されたファイルを示す
 if (-r "file.txt") { print "読み込み可能\n"; }
@@ -759,38 +759,46 @@ while ($xx &lt; 10) {
 
 <b>◆ <a name="InputFile">ファイル読み込み</a></b>
 <div class=i>
-<p>ファイルから各行を読み込むには次のようにします。ここで、INのような変数をファイルハンドルと呼びます。ファイルハンドルはINでもHEHEHEでもGUGOGOでも、自分の好きな名前で構いません。ファイルを読み書きする際は、ファイル名ではなく、このファイルハンドルを指定することになります。</p>
+<p>ファイルから各行を読み込むには次のようにします。ここで、$fhのような変数をファイルハンドルと呼びます。ファイルハンドルは好きな変数名で構いません。ファイルを読み書きする際は、ファイル名ではなく、このファイルハンドルを指定することになります。open関数は必ず 3引数で使うようにしましょう.</p>
 <pre class=c>
-open(IN, "datafile.txt");
-while ($xx = &lt;IN&gt;) { print $xx; }
-close(IN);
+open my $fh, '&lt;', "datafile.txt" or die "Can't open datafile.txt: $!";
+while (my $xx = &lt;$fh&gt;) { print $xx; }
+close $fh;
 </pre>
 <p>変数 $xx を省略した場合は、省略時の暗黙の変数 $_ が使用されます。前記の例は次のように記述することもできます。</p>
 <pre class=c>
-open(IN, "datafile.txt");
-while (&lt;IN&gt;) { print; }
-close(IN);
+open my $fh, '&lt;', "datafile.txt" or die "Can't open datafile.txt: $!";
+while (&lt;$fh&gt;) { print; }
+close $fh;
 </pre>
 <p>これは、次の記述と同じ意味を持ちます。</p>
 <pre class=c>
-open(IN, "datafile.txt");
-while ($_ = &lt;IN&gt;) { print $_; }
-close(IN);
+open my $fh, '&lt;', "datafile.txt" or die "Can't open datafile.txt: $!";
+while ($_ = &lt;$fh&gt;) { print $_; }
+close $fh;
 </pre>
 <p>もっと簡単には、次のようにも記述することができます。</p>
 <pre class=c>
-open(IN, "datafile.txt");
-print while (&lt;IN&gt;);
-close(IN);
+open my $fh, '&lt;', "datafile.txt" or die "Can't open datafile.txt: $!";
+print while (&lt;$fh&gt;);
+close $fh;
 </pre>
 <p>次のようにファイルの各行を配列に一括して読み込むこともできます。</p>
 <pre class=c>
-open(IN, "datafile.txt");
-@xx = &lt;IN&gt;;
-foreach $yy (@xx) {
+open my $fh, '&lt;', "datafile.txt" or die "Can't open datafile.txt: $!";
+my @xx = &lt;$fh&gt;;
+foreach my $yy (@xx) {
     print $yy;
 }
-close(IN);
+close $fh;
+</pre>
+<p>スカラ変数にファイルの内容を一括して読み取るには次のようにします</p>
+<pre class=c>
+my $file_content = do {
+    local $/;
+    open my $fh, '&lt;', "datafile.txt" or die "Can't open datafile.txt: $!";
+    <$fh>;
+};
 </pre>
 <p>また、次のようにすると、コマンドラインで指定したファイルをひとつづつオープンし、それを順次読み込むことができます。</p>
 <pre class=c>
@@ -800,12 +808,12 @@ while (&lt;&gt;) {
 </pre>
 <p>これは、だいたい、次のような処理と同等になります。</p>
 <pre class=c>
-for ($i = 0; $i &lt;= $#ARGV; $i++) {
-    open(IN, $ARGV[$i]);
-    while (&lt;IN&gt;) {
+foreach my $file (@ARGV) {
+    open my $fh, '&lt;', $file or die "Can't open $file: $!";
+    while (&lt;$fh&gt;) {
         print;
     }
-    close(IN);
+    close $fh;
 }
 </pre>
 </div>
@@ -814,15 +822,15 @@ for ($i = 0; $i &lt;= $#ARGV; $i++) {
 <div class=i>
 <p>ファイルに何かを書き込むには次のようにします。</p>
 <pre class=c>
-open(OUT, "&gt; datafile.txt");
-print(OUT "こんにちわ\n");
-close(OUT);
+open my $fh, '&gt;', 'datafile.txt' or die "Can't open datafile.txt: $!";
+print $fh こんにちわ\n";
+close $fh;
 </pre>
 <p>ファイルに追加書き込みするには次のようにします。</p>
 <pre class=c>
-open(OUT, "&gt;&gt; datafile.txt");
-print(OUT "こんにちわ\n");
-close(OUT);
+open my $fh, '&gt;&gt;', 'datafile.txt' or die "Can't open datafile.txt: $!";
+print $fh こんにちわ\n";
+close $fh;
 </pre>
 </div>
 
@@ -830,21 +838,21 @@ close(OUT);
 <div class=i>
 <p>出力結果を外部コマンドに渡すこともできます。次の例ではprint文の出力をnkfコマンドでJISコードに変換して出力しています。</p>
 <pre class=c>
-open(OUT, "| /usr/local/bin/nkf -j");
-print(OUT "こんにちわ\n");
-close(OUT);
+open my $fh, "|-", "/usr/local/bin/nkf", "-j" or die "Can't exec nkf: $!";
+print $fh "こんにちわ\n";
+close $fh;
 </pre>
 <p>また、外部コマンドの出力結果を読み取ることもできます。次の例では、datafile.txt の中身を nkf コマンドでEUCに変換したデータを読み込みます。</p>
 <pre class=c>
-open(IN, "/usr/local/bin/nkf -e datafile.txt |");
-while (&lt;IN&gt;) {
+open my $fh, "|-", "/usr/local/bin/nkf", "-e" "datafile.txt" or die "Can't exec nkf: $!";
+while (&lt;$fh&gt;) {
     print $_;
 }
-close(IN);
+close $fh;
 </pre>
 <p>単に外部コマンドを実行するだけであれば、次のようにします。</p>
 <pre class=c>
-system("/usr/local/bin/nkf -e datafile.txt");
+system("/usr/local/bin/nkf", "-e", "datafile.txt");
 </pre>
 </div>
 
@@ -887,15 +895,15 @@ while (&lt;IN&gt;) {
 <p>Windowsでは $_\n ではなく $_\r\n にすべきだと思われるかもしれませんが、Windows上で上記のスクリプトを実行した場合、STDOUT や OUT への出力は \n が \r\n に自動変換されて書き込まれます。これをテキストモードと呼びます。この自動変換を行わないようにしたい時は binmode()を用いてバイナリモードにしてください。UNIXでは常にバイナリモード（というか、テキストモードとバイナリモードの動作が同じ）となります。</p>
 <p>任意の改行形式のファイルを読みとって、UNIXの改行形式のファイルに変換する例は次のようになります。</p>
 <pre class=c>
-open(IN, "any.txt");
-open(OUT, "&gt; unix.txt");
-binmode(OUT);
-while (&lt;IN&gt;) {
+open my $ifh, '&lt;', "any.txt" or die "Can't open any.txt: $!";
+open my $ofh, '&lt;', "unix.txt" or die "Can't open unix.txt: $!";
+binmode $ofh;
+while (&lt;$ifh&gt;) {
     s/[\r\n]*$//;
-    print OUT "$_\n";
+    print $ofh "$_\n";
 }
-close(IN);
-close(OUT);
+close $ifh;
+close $ofh;
 </pre>
 </div>
 
@@ -903,15 +911,16 @@ close(OUT);
 <div class=i>
 <p>例えば次のようなコードを用いる事により、ファイルをバイナリデータとして読み込む事ができます。</p>
 <pre class=c>
-($dev, $ino, $mode, $nlink, $uid, $gid,
- $rdev, $size, $atime, $mtime, $ctime, $blksize, $blocks)
+my ($dev, $ino, $mode, $nlink, $uid, $gid,
+   $rdev, $size, $atime, $mtime, $ctime, $blksize, $blocks)
         = stat("binary.dat");
-open(IN, "binary.dat");
-binmode(IN);
-sysread(IN, $buf, $size);
-close(IN);
-@data = unpack("C*", $buf);
-for $x (@data) {
+open my $fh, '&lt;', "binary.dat" or die "Can't open binary.dat: $!";
+binmode $fh;
+my $num = sysread $fh, my $buf, $size;
+die "Error sysread: $!" unless defined $num;
+close $fh;
+my @data = unpack("C*", $buf);
+for my $x (@data) {
     :
 }
 </pre>
