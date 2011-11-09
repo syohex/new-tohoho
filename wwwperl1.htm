@@ -858,7 +858,7 @@ system("/usr/local/bin/nkf", "-e", "datafile.txt");
 
 <b>◆ <a name="Handle">ハンドル</a></b>
 <div class=i>
-<p>前述の IN や OUT, STDOUT などをハンドルと呼びます。ハンドルは通常、大文字を用いて表わします。</p>
+<p>前述の $fh や STDOUT、STDERRなどをファイルハンドルと呼びます。</p>
 </div>
 
 <b>◆ <a name="Stdio">標準入出力</a></b>
@@ -887,7 +887,7 @@ while (&lt;&gt;) {
 <div class=i>
 <p>Windowsでは \r\n、Macintoshでは \r、UNIXでは \n のように、OSによって改行コードが異なります。入力ファイルの改行コードに関わらず、自分の環境に適した改行コードに変換するには以下のようにします。（UNIX、Windowsで確認。Macintoshでは未確認）</p>
 <pre class=c>
-while (&lt;IN&gt;) {
+while (&lt;$fh&gt;) {
     s/[\r\n]*$//;
     print "$_\n";
 }
