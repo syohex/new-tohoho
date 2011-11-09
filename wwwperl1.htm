@@ -966,7 +966,7 @@ sub listprint {
 }
 @xx = (1, 2, 3);
 @yy = (4, 5, 6);
-&amp;listprint(*xx, *yy); 
+&amp;listprint(*xx, *yy);
 </pre>
 </div>
 
@@ -1137,25 +1137,20 @@ foreach $person (@persons) {
 
 <b>◆ <a name="Kanji">日本語の取り扱い</a></b>
 <div class=i>
-<p>日本語には、シフトJIS、EUC、JISなどいくつかの漢字コードがあります。（→ <a href="wwwkanji.htm">漢字コードについて</a>）。Perlで漢字コードの変換を行うには、jcode.pl などのライブラリを使用します。</p>
+<p>
+日本語には、シフトJIS、EUC、JISなどいくつかの漢字コードがあります。（→ <a href="wwwkanji.htm">漢字コードについて</a>）。
+Perlで漢字コードの変換を行うには、Encodeモジュールを使用します。</p>
 <pre class=c>
-   <a href="ftp://ftp.iij.ad.jp/pub/IIJ/dist/utashiro/perl/">ftp://ftp.iij.ad.jp/pub/IIJ/dist/utashiro/perl/</a>
+   <a href="http://blog.livedoor.jp/dankogai/archives/51031595.html">メンテナである Dan Kogai氏による Encode入門</a>
 </pre>
-<p>jcode.plは、以下のように使用します。</p>
+<p>Encodeモジュールは、以下のように使用します。(ソースファイルは UTF-8とする)</p>
 <pre class=c>
-require "jcode.pl";
-$xx = "日本語";
-&amp;jcode'convert(*xx, "euc");  # EUCに変換
-&amp;jcode'convert(*xx, "jis");  # JISに変換
-&amp;jcode'convert(*xx, "sjis"); # シフトJISに変換
-&amp;jcode'h2z_sjis(*xx);        # 半角カナを全角カナに変換
+use Encode;
+my $xx = decode('utf8', "日本語");
+encode('euc-jp', $xx);     # EUC-JPに変換
+encode('shift_jis', $xx);  # Shift JISに変換
+encode('cp932', $xx);      # CP932(Shift JIS + MS/IBM vendor mappings)
 </pre>
-<p>スクリプトをシフトJISで記述する場合、"表" や "予" などにように、シフトJIS漢字コードの2バイト目が 0x5c（バックスラッシュ（\））となる文字を使用すると、文字化けすることがあります。この場合、下記のような方法で対処します。</p>
-<ul>
-<li>スクリプトをEUCで記述する。
-<li>"表示" ではなく、'表示' のようにシングルクォートを用いる。
-<li>"表\示" や "予\約" のように、バックスラッシュを補完してやる。
-</ul>
 </div>
 
 <hr>
