@@ -314,7 +314,14 @@ endgrent - –¢e
 <dl style="margin-right:20px">
 
 <dt>Ÿ <a name="alarm">alarm(<i>expr</i>)</a>
-<dd><p><i>expr</i> •bŒã‚ÉƒAƒ‰[ƒ€ƒVƒOƒiƒ‹iSIGALRMj‚ğ”­s‚·‚éBSIGALRM ‚ÍA$SIG{'ALRM'}="ŠÖ”–¼"; ‚Å•ßŠl‚·‚éBÄİ’è‚µ‚½‚è <i>expr</i> ‚É 0 ‚ğw’è‚·‚é‚ÆAˆÈ‘O‚Ìİ’è‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚êAˆÈ‘O‚Ìİ’è‚Ìc‚èŠÔ‚ª•Ô‚³‚ê‚éBOS ‚É‚æ‚Á‚Ä‚ÍƒTƒ|[ƒg‚³‚ê‚Ä‚¢‚È‚¢B</p>
+<dd><p><i>expr</i> •bŒã‚ÉƒAƒ‰[ƒ€ƒVƒOƒiƒ‹iSIGALRMj‚ğ”­s‚·‚éBSIGALRM ‚ÍA$SIG{'ALRM'}=ƒTƒuƒ‹[ƒ`ƒ“ƒŠƒtƒ@ƒŒƒ“ƒXA‚à‚µ‚­‚Í $SIG{'ALRM'}="ŠÖ”–¼"; ‚Å•ßŠl‚·‚éBÄİ’è‚µ‚½‚è <i>expr</i> ‚É 0 ‚ğw’è‚·‚é‚ÆAˆÈ‘O‚Ìİ’è‚ÍƒLƒƒƒ“ƒZƒ‹‚³‚êAˆÈ‘O‚Ìİ’è‚Ìc‚èŠÔ‚ª•Ô‚³‚ê‚éBOS ‚É‚æ‚Á‚Ä‚ÍƒTƒ|[ƒg‚³‚ê‚Ä‚¢‚È‚¢B</p>
+<pre>
+$SIG{'ALRM'} = sub {
+    print "ALARM!!\n";
+};
+alarm(5);
+</pre>
+‚à‚µ‚­‚Í
 <pre>
 $SIG{'ALRM'} = "sigalrm";
 sub sigalrm { print "ALARM!!\n"; }
@@ -337,7 +344,7 @@ alarm(5);
 func()
 
 sub func {
-    ($package, $filename, $line) = caller;
+    my ($package, $filename, $line) = caller;
     print "$package, $filename, $line\n";
 }
 </pre>
@@ -382,18 +389,17 @@ chdir("C:/Temp");
 <dd><p>—˜—pÒ‚ÌƒpƒXƒ[ƒh‚ğƒtƒ@ƒCƒ‹‚É•Û‘¶‚·‚éÛA‚»‚Ì‚Ü‚Ü•Û‘¶‚µ‚Ä‚¨‚­‚ÆŠëŒ¯‚È‚Ì‚ÅAcrypt() ‚Å DES ‚É‚æ‚éˆÃ†‰»‚ğs‚Á‚Ä‚©‚ç•Û‘¶‚·‚é‚Æ‚æ‚¢BˆÃ†‰»‚µ‚½ƒpƒXƒ[ƒh‚©‚çŒ³‚ÌƒpƒXƒ[ƒh‚ğ‰ğ“Ç‚·‚é‚±‚Æ‚Í¢“ï‚¾‚ªAŒ³‚ÌƒpƒXƒ[ƒh‚ğƒ`ƒFƒbƒN‚·‚é‚±‚Æ‚Í—eˆÕ‚É‚Å‚«‚éB‰ğ“Ç‚ğ¢“ï‚É‚·‚é‚½‚ß‚ÉA<i>salt</i> ‚É‚Íƒhƒbƒgi.jAƒXƒ‰ƒbƒVƒ…i/j‚ğŠÜ‚Ş2•¶š‚Ì‰p”•¶š‚ğƒ‰ƒ“ƒ_ƒ€‚Éw’è‚·‚éB‚±‚Ì2•¶š‚ÍˆÃ†‰»‚³‚ê‚½ƒpƒXƒ[ƒh‚ÌÅ‰‚Ì2•¶š‚Æ‚È‚éB2•¶š–Ú‚æ‚èŒã‚ë‚Í–³‹‚³‚ê‚éB</p>
 <pre>
 # ƒpƒXƒ[ƒh‚ğ "hi.mi.tu" ‚Æ‚·‚é
-$passwd = "hi.mi.tu";
+my $passwd = "hi.mi.tu";
 
 # ˆÃ†‰»‚µ‚½ƒpƒXƒ[ƒh($epasswd)‚ğ“¾‚é
-srand();
-@salts = ( "A".."Z", "a".."z", "0".."9", ".", "/" );
-$salt = $salts[int(rand(64))] . $salts[int(rand(64))];
-$epasswd = crypt($passwd, $salt);
+my @salts = ( "A".."Z", "a".."z", "0".."9", ".", "/" );
+my $salt = $salts[int(rand(64))] . $salts[int(rand(64))];
+my $epasswd = crypt($passwd, $salt);
 print "epasswd=$epasswd\n";
 
 # ˆÃ†‰»‚µ‚½ƒpƒXƒ[ƒh‚ÅƒpƒXƒ[ƒh‚ğƒ`ƒFƒbƒN‚·‚é
-$passwd = "hi.mi.tu";
-$epasswd = "ZpoK9sz7yGHRo";
+my $passwd = "hi.mi.tu";
+my $epasswd = "ZpoK9sz7yGHRo";
 if ($epasswd eq crypt($passwd, $epasswd)) {
     print "Match!!\n";
 }
@@ -409,29 +415,30 @@ if ($epasswd eq crypt($passwd, $epasswd)) {
 <dt>Ÿ <a name="defined">defined(<i>expr</i>)</a>
 <dd><p>•Ï”A”z—ñAƒTƒuƒ‹[ƒ`ƒ“‚ª’è‹`‚³‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×A^‚Ü‚½‚Í‹U‚ğ•Ô‚·B’l‚ªƒkƒ‹•¶š(‚Ü‚½‚Í0A‚Ü‚½‚Í‹ó”z—ñ)‚È‚Ì‚©A‚»‚ê‚Æ‚à’è‹`‚³‚ê‚Ä‚¢‚È‚¢‚Ì‚©‚ğ’²‚×‚é–‚ª‚Å‚«‚éB‚¢‚­‚Â‚©‚ÌŠÖ”‚àundefine‚Ì’l‚ğ•Ô‚·–‚ª‚ ‚éB</p>
 <pre>
-defined($xx)              # ‹U‚ğ•Ô‚·
-$xx = ""; defined($xx)    # ^‚ğ•Ô‚·
-$xx = 0; defined($xx)     # ^‚ğ•Ô‚·
+my $xx;
+defined $xx               # ‹U‚ğ•Ô‚·
+$xx = ""; defined $xx     # ^‚ğ•Ô‚·
+$xx = 0; defined $xx      # ^‚ğ•Ô‚·
 </pre>
 
 <dt>Ÿ <a name="delete">delete $<i>assoc_array</i>{<i>key</i>}</a>
-<dd><p>w’è‚µ‚½˜A‘z”z—ñ‚ğíœA‚Â‚Ü‚èAundefine ‚Ìó‘Ô‚É‚·‚éB</p>
+<dd><p>w’è‚µ‚½˜A‘z”z—ñ‚Ì—v‘f‚ğíœA‚Â‚Ü‚èAundefine ‚Ìó‘Ô‚É‚·‚éB</p>
 
 <dt>Ÿ <a name="die">die(<i>list</i>)</a>
 <dd><p>perl ƒXƒNƒŠƒvƒg‚ğI—¹‚·‚éB<i>list</i> ‚ğ STDERR ‚Éo—Í‚µA$! ‚Ì’li‚à‚µ $! ‚ª 0 ‚È‚ç($?&gt;&gt;8) ‚Ì’lj‚ğ perl ƒXƒNƒŠƒvƒg‚Ì–ß‚è’l‚Æ‚·‚éBeval ‚Ì’†‚Åg—p‚µ‚½ê‡‚ÍƒXƒNƒŠƒvƒg‚ğI—¹‚¹‚¸A<i>list</i> ‚ğ $@ ‚Éİ’è‚µAeval ‚ª undefine ‚ÅI—¹‚·‚éB<i>list</i> ‚Ì––”ö‚É‰üs‚ª–³‚¢ê‡‚ÍAƒXƒNƒŠƒvƒg–¼‚âs”Ô†‚È‚Ç‚ª––”ö‚É•t‰Á‚³‚ê‚éB</p>
 <pre>
-open(IN, $file) || die "Can't open file.\n";
-open(IN, $file) || die "Can't open file. Stopped";
+open my $fh, '&lt;', $file or die "Can't open $file: $!\n";
+open my $fh, '&lt;', $file or die "Can't open $file: Stopped";
 </pre>
 
 <dt>Ÿ <a name="do">do { ... }</a>
 <dt>Ÿ do <i>subroutine</i> (<i>list</i>)
 <dt>Ÿ do <i>expr</i>
-<dd><p>... ‚â <i>Ssubroutine</i> ‚ğÀs‚·‚éBŸ‚Ì—á‚Å‚ÍÅŒã‚Ì®‚Ì’l‚ª do ‚Ì–ß‚è’l‚Æ‚È‚éB</p>
+<dd><p>... ‚â <i>subroutine</i> ‚ğÀs‚·‚éBŸ‚Ì—á‚Å‚ÍÅŒã‚Ì®‚Ì’l‚ª do ‚Ì–ß‚è’l‚Æ‚È‚éB</p>
 <pre>
 $xx = do { $yy = 5; $zz = 8; }  # –ß‚è’l‚ÍÅŒã‚Ì®‚Ì’l
 </pre>
-<p>Ÿ‚Ì—á‚Å‚ÍƒTƒuƒ‹[ƒ`ƒ“ do ‚ğŒÄ‚Ño‚µ‚Ä–ß‚è’l‚ğ•Ô‚·Bi‚½‚¾‚µA&amp;add(5, 3) ‚ğ—p‚¢‚é‚Ì‚ªˆê”Ê“IBj</p>
+<p>Ÿ‚Ì—á‚Å‚ÍƒTƒuƒ‹[ƒ`ƒ“ do ‚ğŒÄ‚Ño‚µ‚Ä–ß‚è’l‚ğ•Ô‚·Bi‚½‚¾‚µAadd(5, 3) ‚ğ—p‚¢‚é‚Ì‚ªˆê”Ê“IBj</p>
 <pre>
 sub add { return($_[0] + $_[1]); }
 print do add(5, 3);
@@ -452,7 +459,7 @@ do { print "xx = $xx\n"; $xx++; } while ($xx &lt; 5);
 <dt>Ÿ <a name="each">each(<i>assoc_array</i>)</a>
 <dd><p>˜A‘z”z—ñ‚Ì‚·‚×‚Ä‚Ì—v‘f‚É‚Â‚¢‚Äˆ—‚ğs‚¤B</p>
 <pre>
-while (($key, $value) = each(%xxx)) {
+while (my ($key, $value) = each(%xxx)) {
     print "$key = $value\n";
 }
 </pre>
@@ -495,8 +502,8 @@ $x = 10; $y = 0;
 $ans = eval { $x / $y; };
 if ($@) { warn "WARNING: $@"; }
 
-open(OUT, "&gt; xx");
-eval { flock(OUT, 2); };
+open my $fh, '&gt;', "xx" or die "Can't open xx: $!";
+eval { flock($fh, 2); };
 if ($@) { warn "WARNING: flock isn't supported.\n"; }
 </pre>
 
@@ -528,20 +535,20 @@ if ($@) { warn "WARNING: flock isn't supported.\n"; }
 <p>“Ç‚İ‚İéŒ¾ƒƒbƒN‚Íu¡‚©‚ç„‚ª“Ç‚İ‚Ş‚©‚çA‘¼‚Ì’N‚à‘‚«‚Ş‚Èv‚Æ‚¢‚¤éŒ¾‚Å‚ ‚èA‘‚«‚İéŒ¾ƒƒbƒN‚Íu¡‚©‚ç„‚ª‘‚«‚Ş‚©‚çA‘¼‚Ì’N‚à“Ç‚İ‚ñ‚¾‚è‘‚«‚ñ‚¾‚è‚·‚é‚Èv‚Æ‚¢‚¤éŒ¾‚Å‚ ‚éB‚½‚¾‚µA‘‚«‚İ‚ğ‹Ö~‚·‚é‚ÆŒ¾‚Á‚Ä‚àAflock() ‚ğg—p‚µ‚Ä‚¢‚È‚¢ƒvƒƒZƒX‚Ì‘‚«‚İ‚Ü‚Å‹Ö~‚Å‚«‚é–ó‚Å‚Í‚È‚¢BƒuƒƒbƒNƒ‚[ƒh‚Å‚ÍA©•ª‚ªƒƒbƒN‚ğ‚©‚¯‚é‚±‚Æ‚ª‚Å‚«‚éó‘Ô‚É‚È‚é‚Ü‚ÅƒvƒƒOƒ‰ƒ€‚ªˆê’â~‚·‚éB”ñƒuƒƒbƒNƒ‚[ƒh‚Å‚ÍA©•ª‚ªƒƒbƒN‚ğ‚©‚¯‚é‚±‚Æ‚ª‚Å‚«‚½‚©A‚Å‚«‚È‚©‚Á‚½‚ç‚·‚®‚É^‚Ü‚½‚Í‹U‚ğ•Ô‚·Bflock() ‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚È‚¢ƒVƒXƒeƒ€‚à‚ ‚èA–³—‚Ég—p‚·‚é‚Æ perl ‚ªˆÙíI—¹‚·‚éB”Ä—p«‚Ì‚ ‚éƒvƒƒOƒ‰ƒ€‚ğ‹Lq‚·‚éê‡‚Í eval ‚ğg—p‚·‚é‚Æ‚æ‚¢B</p>
 <p>‰º‹L‚Ì—á‚Í2‚Â‚ÌŒë‚è‚ğ”Æ‚µ‚Ä‚¢‚éB</p>
 <pre>
-open(OUT, "&gt; outfile.txt");
-flock(OUT, 2);
-print OUT "........";
-flock(OUT, 8);
-close(OUT);
+open my $fh, '&gt;', "outfile.txt" or die "Can't open outfile.txt";
+flock($fh, 2);
+print $fh "........";
+flock($fh, 8);
+close($fh);
 </pre>
 <p>‚Ğ‚Æ‚Â–Ú‚Í open() ‚ğs‚Á‚½“_‚ÅAƒƒbƒN‚ğs‚¤‚æ‚è‚à‘O‚Éƒtƒ@ƒCƒ‹ƒTƒCƒY‚ğ 0 ‚É‚µ‚Ä‚µ‚Ü‚¤“_B‚Ó‚½‚Â–Ú‚ÍAprint ‚É‚æ‚é‘‚«‚İƒLƒƒƒbƒVƒ…‚ªƒtƒ‰ƒbƒVƒ…‚³‚ê‚é‘O‚É flock(OUT, 8) ‚ÅƒƒbƒN‚ğ‰ğœ‚µ‚Ä‚µ‚Ü‚Á‚Ä‚¢‚é“_‚Å‚ ‚éBã‹L‚ÌƒR[ƒh‚ÍŸ‚Ì‚æ‚¤‚É‘‚©‚È‚­‚Ä‚Í‚È‚ç‚È‚¢Bclose() ‚ğs‚Á‚½‚âƒvƒƒOƒ‰ƒ€‚ªI—¹‚·‚é‚É‚Í©“®“I‚ÉƒƒbƒN‚Í‰ğœ‚³‚ê‚éBi‚½‚¾‚µA2‚Â–Ú‚Ì–â‘è‚ÍÅ‹ß‚Ì perl ‚Å‚Í‰ü‘P‚³‚ê‚Ä‚¢‚éj</p>
 <pre>
-open(OUT, "+&lt; outfile.txt");
-flock(OUT, 2);
-truncate(OUT, 0);
-seek(OUT, 0, 0);
-print OUT "........";
-close(OUT);
+open my $fh, "+&lt;", "outfile.txt" or die "Can't open outfile.txt";
+flock($fh, 2);
+truncate($fh, 0);
+seek($fh, 0, 0);
+print $fh "........";
+close($fh);
 </pre>
 
 <dt>Ÿ <a name="for">for (<i>expr1</i>; <i>expr2</i>; <i>expr3</i>) { <i>statements</i> }</a>
@@ -549,7 +556,7 @@ close(OUT);
 <dt>Ÿ for (<i>from</i> .. <i>to</i>) { <i>statement</i> }
 <dd><p>‚Ü‚¸ <i>expr1</i> ‚ğÀs‚µA‚»‚ÌŒãA<i>expr3</i> ‚ğs‚¢‚È‚ª‚ç <i>expr2</i> ‚ª^‚ÌŠÔ <i>statements</i> ‚ğÀs‚·‚éBŸ‚Ì—á‚Í‚¢‚¸‚ê‚àA10‰ñƒ‹[ƒv‚ğÀs‚·‚é—á‚Å‚ ‚éB</p>
 <pre>
-for ($xx = 1; $xx &lt;= 10; $xx++) {
+for (my $xx = 1; $xx &lt;= 10; $xx++) {
     print "xx = $xx\n";
 }
 for (1, 2, 3, 4, 5, 6, 7, 8, 9, 10) {
@@ -564,8 +571,8 @@ for (1..10) {
 <dt>Ÿ foreach (<i>array</i>) { <i>statements</i> }
 <dd><p>”z—ñ‚ÌŠe—v‘f‚É‘Î‚µ‚Äˆ—‚ğs‚¤Bforeach ‚Ì‘ã‚í‚è‚É for ‚ğg‚¤‚±‚Æ‚à‚»‚Ì‹t‚à‰Â”\‚¾‚ªA”z—ñ‘€ì‚Ìê‡‚Í foreach ‚ğ—p‚¢‚é‚Ì‚ªˆê”Ê“IB</p>
 <pre>
-@zz = (11, 22, 33, 44, 55);
-foreach $xx (@zz) {
+my @zz = (11, 22, 33, 44, 55);
+foreach my $xx (@zz) {
     print "xx = $xx\n";
 }
 </pre>
@@ -577,9 +584,11 @@ foreach (@zz) {
 </pre>
 
 <dt>Ÿ <a name="fork">fork()</a>
-<dd><p>qƒvƒƒZƒX‚ğ¶¬‚µAeƒvƒƒZƒX‚ÆqƒvƒƒZƒX‚É•ªŠò‚·‚éBeƒvƒƒZƒX‚Ìê‡ $pid ‚É‚ÍqƒvƒƒZƒX‚ÌID‚ªAqƒvƒƒZƒX‚Ìê‡A$pid ‚É‚Í 0 ‚ª•Ô‚éBfork() ‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚È‚¢ƒVƒXƒeƒ€‚à‚ ‚èA–³—‚Ég—p‚·‚é‚Æ perl ‚ªˆÙíI—¹‚·‚éB</p>
+<dd><p>qƒvƒƒZƒX‚ğ¶¬‚µAeƒvƒƒZƒX‚ÆqƒvƒƒZƒX‚É•ªŠò‚·‚éBeƒvƒƒZƒX‚Ìê‡ $pid ‚É‚ÍqƒvƒƒZƒX‚ÌID‚ªAqƒvƒƒZƒX‚Ìê‡A$pid ‚É‚Í 0 ‚ª•Ô‚éBƒGƒ‰[‚ª”­¶‚µ‚½ê‡‚Í undef‚ª•Ô‚éBfork() ‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚È‚¢ƒVƒXƒeƒ€‚à‚ ‚èA–³—‚Ég—p‚·‚é‚Æ perl ‚ªˆÙíI—¹‚·‚éB</p>
 <pre>
-if ($pid = fork()) {
+my $pid = fork();
+die "Can't fork $!" unless defined $pid;
+if ($pid != 0) {
     print "‚±‚ê‚ÍeƒvƒƒZƒX‚Å‚·B\n";
 } else {
     print "‚±‚ê‚ÍqƒvƒƒZƒX‚Å‚·B\n";
@@ -590,7 +599,7 @@ if ($pid = fork()) {
 <dt>Ÿ getc()
 <dd><p><i>FILEHANDLE</i> ‚©‚ç 1•¶š“Ç‚İ‚ŞB<i>FILEHANDLE</i> È—ª‚Í•W€“ü—Í STDIN ‚©‚ç“Ç‚İ‚ŞBƒtƒ@ƒCƒ‹‚ÌI’[‚É’B‚·‚é‚Æƒkƒ‹•¶š‚ğ•Ô‚·B</p>
 <pre>
-while ($c = getc(IN)) { print $c; }
+while ($c = getc($fh)) { print $c; }
 </pre>
 
 <dt>Ÿ getlogin()
@@ -617,7 +626,7 @@ while ($c = getc(IN)) { print $c; }
 <dt>Ÿ <a name="gethostbyname">gethostbyname(<i>name</i>)</a>
 <dd><p>Ú×à–¾‚ÍÈ—ª‚·‚é‚ªADNS ‚ğ—p‚¢‚ÄƒzƒXƒg–¼‚ğIPƒAƒhƒŒƒX‚É•ÏŠ·‚·‚é‚±‚Æ‚ª‚Å‚«‚éB</p>
 <pre>
-$addr = (gethostbyname($host))[4];
+my $addr = (gethostbyname($host))[4];
 $addr = sprintf("%u.%u.%u.%u", unpack("C*", $addr));
 </pre>
 
@@ -639,8 +648,8 @@ $addr = sprintf("%u.%u.%u.%u", unpack("C*", $addr));
 <dt>Ÿ <a name="gethostbyaddr">gethostbyaddr(<i>addr</i>, <i>addrtype</i>)</a>
 <dd><p>Ú×à–¾‚ÍÈ—ª‚·‚é‚ªADNS ‚ğ—p‚¢‚ÄIPƒAƒhƒŒƒX‚©‚çƒzƒXƒg–¼‚ğ‹‚ß‚é‚±‚Æ‚ª‚Å‚«‚éB</p>
 <pre>
-$addr = "127.0.0.1";
-$host = gethostbyaddr(pack("C4", split(/\./, $addr)), 2);
+my $addr = "127.0.0.1";
+my $host = gethostbyaddr(pack("C4", split(/\./, $addr)), 2);
 </pre>
 
 <dt>Ÿ getnetbyaddr(<i>addr</i>, <i>addrtype</i>)
@@ -727,7 +736,7 @@ $host = gethostbyaddr(pack("C4", split(/\./, $addr)), 2);
 <dt>Ÿ <a name="hex">hex(<i>expr</i>)</a>
 <dd><p><i>expr</i> ‚ğ 16i”‚Ì•¶š—ñ‚Æ‰ğß‚µ‚Ä‚»‚Ì’l‚ğ•Ô‚·B<i>expr</i> È—ª‚Í hex($_) ‚Æ“¯—lB</p>
 <pre>
-$ans = hex("FF");
+my $ans = hex("FF");
 </pre>
 
 <dt>Ÿ <a name="if">if (<i>expr</i>) { <i>statements</i> }</a>
@@ -756,7 +765,7 @@ index("ABCDEFG", "DEF");   # 3‚ğ•Ô‚·
 <dt>Ÿ join(<i>expr</i>, <i>array</i>)
 <dd><p><i>array</i> ‚Å—^‚¦‚ç‚ê‚é•¶š—ñ‚ğ <i>expr</i> ‚Ì’l‚Å‹æØ‚è‚È‚ª‚ç˜AŒ‹‚·‚éB</p>
 <pre>
-$now = join(":", $hour, $min, $sec);
+my $now = join(":", $hour, $min, $sec);
 </pre>
 
 <dt>Ÿ <a name="keys">keys(<i>assoc_array</i>)</a>
@@ -770,9 +779,12 @@ $now = join(":", $hour, $min, $sec);
 <dt>Ÿ last
 <dd><p>Å‚à“à‘¤‚Ìƒ‹[ƒv‚ğ”²‚¯‚éB<i>label</i> ‚ªw’è‚³‚ê‚Ä‚¢‚ê‚Îƒ‰ƒxƒ‹–¼‚Ìƒ‹[ƒv‚ğ”²‚¯‚éB</p>
 <pre>
-aaa: while (&lt;IN&gt;) {
-        if (/^end/) last aaa;
+aaa:
+while (&lt;$fh&gt;) {
+    if (/^end/) {
+        last aaa;
     }
+}
 </pre>
 
 <dt>Ÿ <a name="length">length(<i>expr</i>)</a>
@@ -786,16 +798,20 @@ aaa: while (&lt;IN&gt;) {
 <dd><p></p>
 
 <dt>Ÿ <a name="local">local(<i>list</i>)</a>
-<dd><p>ƒTƒuƒ‹[ƒ`ƒ“AevalAdo ‚Ì’†‚Åƒ[ƒJƒ‹‚È•Ï”‚ğ’è‹`‚·‚éB‰º‹L‚Ì—á‚Í 3 ‚ª•\¦‚³‚ê‚é‚ªAlocal •¶‚ğíœ‚·‚é‚Æ 5 ‚ª•\¦‚³‚ê‚éB</p>
+<dd><p>ƒ_ƒCƒiƒ~ƒbƒNƒXƒR[ƒv‚Ì•Ï”‚ğéŒ¾‚·‚é. ƒOƒ[ƒoƒ‹•Ï”(%ENV, %SIG“™)‚ğˆê“I‚É‘‚«Š·‚¦‚éê‡‚Ég—p‚·‚éBˆÈ‰º‚Ì—á‚Å‚ÍŠÖ” xxx“à‚Æ‚»‚±‚©‚çŒÄ‚Ño‚³‚ê‚éŠÖ”‚É‚Â‚¢‚Ä SIGINT‚ğ–³‹‚·‚é</p>
 <pre>
-sub xxx { local($a); $a = 5 }
-$a = 3; &amp;xxx; print $a;
+sub xxx {
+    local $SIG{INT} = "IGNORE";
+    ...
+}
+xxx();
+# ˆÈ~‚Å SIGINT‚ğó‚¯æ‚é‚ÆI—¹‚·‚é
 </pre>
 
 <dt>Ÿ <a name="localtime">localtime(<i>expr</i>)</a>
 <dd><p>time() ‚â stat() ‚Å“¾‚ç‚ê‚½‚ğ’n•ûŠÔ‘Ñ‚Ì”NŒ“ú•ª•b‚È‚Ç‚É•ª‰ğ‚·‚éB</p>
 <pre>
-($sec, $min, $hour, $mday, $mon, $year,
+my ($sec, $min, $hour, $mday, $mon, $year,
     $wday, $yday, $isdst) = localtime($tt);
 </pre>
 <p>$sec, $min, ...‚Í‚»‚ê‚¼‚êA•b”(0-59)A•ª(0-59)A(0-23)A“ú(1-31)AŒ(0-11)A”N(1900”N‚©‚ç‚Ì”N”(¼—ï‚Ì‰º2Œ…‚Å‚Í‚È‚¢))A—j“ú(“ú(0)-“y(6))A”N“ú”(1Œ1“ú‚ğ0‚Æ‚·‚é)A$isdst(‰ÄŠÔ‚È‚ç0ˆÈŠO‚Ì’l)‚ğ•\‚í‚·B</p>
@@ -834,16 +850,19 @@ $a = 3; &amp;xxx; print $a;
 <dt>Ÿ next
 <dd><p>Å‚à“à‘¤A‚à‚µ‚­‚Í <i>label</i> ‚Åw’è‚µ‚½ƒ‹[ƒv‚ÌŸ‚ÌŒJ‚è•Ô‚µ‚ğÀs‚·‚éB</p>
 <pre>
-aaa: while (&lt;IN&gt;) {
-        if (/^#/) { next aaa; }
+aaa:
+while (&lt;IN&gt;) {
+    if (/^#/) {
+        next aaa;
     }
+}
 </pre>
 
 <dt>Ÿ <a name="oct">oct(<i>expr</i>)</a>
 <dt>Ÿ oct()
 <dd><p><i>expr</i> ‚ªA0x ‚Ån‚Ü‚Á‚Ä‚¢‚ê‚Î 16i”‚Æ‚µ‚ÄA‚»‚êˆÈŠO‚È‚ç 8i”‚¾‚Æ‰ğß‚µ‚Ä‚»‚Ì’l‚ğ•Ô‚·BŸ‚Ì—á‚ÍACŒ¾Œê‚Ì\•¶‚Æ“¯—l‚ÉA0x ‚Ån‚Ü‚Á‚Ä‚¢‚ê‚Î 16i”A0‚Ån‚Ü‚Á‚Ä‚¢‚ê‚Î8i”A‚»‚êˆÈŠO‚È‚ç10i”‚Æ‰ğß‚·‚éB</p>
 <pre>
-$ans = ($xx =~ /^0/) ? oct($xx) : $xx;
+my $ans = ($xx =~ /^0/) ? oct($xx) : $xx;
 </pre>
 
 <dt>Ÿ <a name="open">open(<i>FILEHANDLE</i>, <i>expr</i>)</a>
@@ -851,63 +870,69 @@ $ans = ($xx =~ /^0/) ? oct($xx) : $xx;
 <dd><p>ƒtƒ@ƒCƒ‹‚âƒRƒ}ƒ“ƒh‚ğƒI[ƒvƒ“‚µAƒtƒ@ƒCƒ‹ƒnƒ“ƒhƒ‹‚ğ“¾‚éB¬Œ÷‚·‚ê‚Î”ñ 0 ‚ğA¸”s‚·‚ê‚Î undefine ‚ğ•Ô‚·B<i>expr</i> ‚ğÈ—ª‚µ‚½ê‡‚ÍA<i>FILEHANDLE</i> ‚Æ“¯‚¶–¼‘O‚Ì•Ï”‚Ì’l‚ª <i>expr</i> ‚Æ‚İ‚È‚³‚ê‚éBw’è‚·‚éƒtƒ@ƒCƒ‹–¼‚É‚Í http://` ‚È‚Ç‚Ì URL ‚Íw’è‚Å‚«‚È‚¢‚Ì‚Å’ˆÓB</p>
 <p>ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚İƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚éB</p>
 <pre>
-open(IN, "xxx.txt");
-while (&lt;IN&gt;) { print; }
-close(IN);
+open my $fh, '&lt;', "xxx.txt" or die "Can't open xxx.txt";
+while (&lt;$fh&gt;) { print; }
+close $fh;
 </pre>
 <p>ƒtƒ@ƒCƒ‹‚ğ‘‚İƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚éB</p>
 <pre>
-open(OUT, "&gt; xxx.txt");
-print OUT "‚ç‚­‚ª‚«";
-close(OUT);
+open my $fh, '&gt;', "xxx.txt" or die "Can't open xxx.txt";
+print $fh "‚ç‚­‚ª‚«";
+close $fh;
 </pre>
 <p>ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘‚«ƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚éBƒI[ƒvƒ“ƒtƒ@ƒCƒ‹‚ğ‹ó‚É‚·‚éB</p>
 <pre>
-open(F, "+&gt; xxx.txt");
-print F "‚â‚Á‚Ù";
-seek(F, 0, 0);
-$msg = &lt;F&gt;;
-close(F);
+open my $fh, '+&gt;', "xxx.txt" or die "Can't open xxx.txt";
+print $fh "‚â‚Á‚Ù";
+seek($fh, 0, 0);
+my $msg = &lt;$fh&gt;;
+close $fh;
 </pre>
 <p>ƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‘‚«ƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚éBƒI[ƒvƒ“ƒtƒ@ƒCƒ‹‚Ì“à—e‚Í‚»‚Ì‚Ü‚ÜB</p>
 <pre>
-open(F, "+&lt; xxx.txt");
-$count = &lt;F&gt;;
+open my $fh, "+&lt;", "xxx.txt" or die "Can't open xxx.txt";
+my $count = &lt;<$fh>&gt;;
 $count++;
-seek(F, 0, 0);
-print F $count;
-close(F);
+seek($fh, 0, 0);
+print $fh $count;
+close $fh;
 </pre>
 <p>ƒtƒ@ƒCƒ‹‚ğ’Ç‰Á‘‚İƒ‚[ƒh‚ÅƒI[ƒvƒ“‚·‚éB</p>
 <pre>
-open(OUT, "&gt;&gt; xxx.txt");
-print OUT "‚ç‚­‚ª‚«";
-close(OUT);
+open my $fh, '&gt;&gt;', "xxx.txt" or die "Can't open xxx.txt";
+print $fh "‚ç‚­‚ª‚«";
+close $fh;
 </pre>
 <p>ŠO•”ƒRƒ}ƒ“ƒh‚ğ‹N“®‚µA‚»‚ÌŒ‹‰Ê‚ğ“Ç‚İ‚ŞB</p>
 <pre>
-open(IN, "cat xxx.txt | nkf -j |");
-while(&lt;IN&gt;) { print; }
-close(IN);
+my @cmd = ('cat', 'xxx.txt');
+open my $fh, "-|", @cmd or die "Can't exec '@cmd'";
+while(&lt;$fh&gt;) { print; }
+close $fh;
 </pre>
 <p>ŠO•”ƒRƒ}ƒ“ƒh‚ğ‹N“®‚µAo—Í‚ğ“n‚·B</p>
 <pre>
-open(OUT, "| nkf -j | /usr/lib/sendmail $mailto");
-print OUT "‚ç‚­‚ª‚«";
-close(OUT);
+my @cmd = ('nkf', '-j);
+open my $fh, "|-", @cmd or die "Can't exec '@cmd'";
+print $fh "‚ç‚­‚ª‚«";
+close $fh;
 </pre>
 <p>‘‚«‚İAƒoƒbƒtƒ@ƒŠƒ“ƒO‚µ‚È‚¢‚æ‚¤‚É‚·‚éB</p>
 <pre>
-open(OUT, "&gt; xxx.txt");
-$old = select(OUT); $| = 1; select($old);
+open my $fh, '&gt;', "xxx.txt" or die "Can't open xxx.txt";
+my $old = select $fh;
+local $| = 1;
+select $old;
+# ‰½‚ç‚©‚Ìˆ—
+$close $fh;
 </pre>
 
 <dt>Ÿ <a name="opendir">opendir(<i>DIRHANDLE</i>, <i>expr</i>)</a>
 <dd><p>ƒfƒBƒŒƒNƒgƒŠ“à‚Ìƒtƒ@ƒCƒ‹ˆê——‚ğ“¾‚é‚½‚ß‚ÉƒfƒBƒŒƒNƒgƒŠ‚ğƒI[ƒvƒ“‚µAƒfƒBƒŒƒNƒgƒŠƒnƒ“ƒhƒ‹‚ğ“¾‚éB</p>
 <pre>
-opendir(DIR, "tmp");
-while ($file = readdir(DIR)) { print "$file\n"; }
-closedir(DIR);
+opendir my $dh, "tmp" or die "Can't opendir tmp";
+while (my $file = readdir($dh)) { print "$file\n"; }
+closedir $dh;
 </pre>
 
 <dt>Ÿ <a name="ord">ord(<i>expr</i>)</a>
@@ -949,11 +974,11 @@ pack("a5", "abc"); # 0x41 0x42 0x43 0x00 0x00
 </pre>
 
 <dt>Ÿ <a name="package">package <i>packagename</i></a>
-<dd><p>‚±‚êˆÈ~iƒtƒ@ƒCƒ‹‚ÌI‚í‚è‚©Ÿ‚Ì package ‚ªŒ»‚ê‚é‚Ü‚Åj‚ÌƒXƒNƒŠƒvƒg‚ğ <i>packagename</i> ‚Å¦‚·ƒpƒbƒP[ƒW‚Æ‚µ‚Äˆµ‚¤‚±‚Æ‚ğéŒ¾‚·‚éBƒpƒbƒP[ƒW‚Ì“à•”‚Å‚Í“Æ©‚Ì•Ï”–¼‚âƒTƒuƒ‹[ƒ`ƒ“–¼‚ğ‚Ä‚é‚Ì‚ÅAƒpƒbƒP[ƒW‚Ì“à•”‚ÆŠO•”‚Å‚½‚Ü‚½‚Ü•Ï”–¼‚È‚Ç‚ªd•¡‚·‚é‚±‚Æ‚É‚æ‚é”ßŒ€‚ğ–h‚®‚±‚Æ‚ª‚Å‚«‚éBƒpƒbƒP[ƒW“à‚Ì•Ï”‚âƒTƒuƒ‹[ƒ`ƒ“–¼‚ÍuƒpƒbƒP[ƒW–¼'•Ï”–¼v‚Åw’è‚·‚éB</p>
+<dd><p>‚±‚êˆÈ~iƒtƒ@ƒCƒ‹‚ÌI‚í‚è‚©Ÿ‚Ì package ‚ªŒ»‚ê‚é‚Ü‚Åj‚ÌƒXƒNƒŠƒvƒg‚ğ <i>packagename</i> ‚Å¦‚·ƒpƒbƒP[ƒW‚Æ‚µ‚Äˆµ‚¤‚±‚Æ‚ğéŒ¾‚·‚éBƒpƒbƒP[ƒW‚Ì“à•”‚Å‚Í“Æ©‚Ì•Ï”–¼‚âƒTƒuƒ‹[ƒ`ƒ“–¼‚ğ‚Ä‚é‚Ì‚ÅAƒpƒbƒP[ƒW‚Ì“à•”‚ÆŠO•”‚Å‚½‚Ü‚½‚Ü•Ï”–¼‚È‚Ç‚ªd•¡‚·‚é‚±‚Æ‚É‚æ‚é”ßŒ€‚ğ–h‚®‚±‚Æ‚ª‚Å‚«‚éBƒpƒbƒP[ƒW“à‚Ì•Ï”‚âƒTƒuƒ‹[ƒ`ƒ“–¼‚ÍuƒpƒbƒP[ƒW–¼::•Ï”–¼v‚Åw’è‚·‚éBƒfƒtƒHƒ‹ƒg‚Ì package‚Í main‚Å‚ ‚é</p>
 <pre>
-print &amp;calc'add(3, 5);
-package calc;
-sub add { return($_[0] + $_[1]); }
+print Calc::add(3, 5);
+package Calc;
+sub add { return $_[0] + $_[1]; }
 </pre>
 
 <dt>Ÿ pipe(<i>READHANDLE</i>, <i>WRITEHANDLE</i>)
@@ -1038,8 +1063,8 @@ sub add { return($_[0] + $_[1]); }
 <dt>Ÿ <a name="reverse">reverse(<i>list</i>)</a>
 <dd><p>”z—ñ(‚Ü‚½‚Í•¶š—ñ)‚ğ‹t‡‚É•À‚Ñ‘Ö‚¦‚½‚à‚Ì‚ğ•Ô‚·BŒ‹‰Ê‚ğ”z—ñ‚Æ‚µ‚Äˆµ‚¤‚©AƒXƒJƒ‰[‚Æ‚µ‚Äˆµ‚¤‚©‚Å“®ì‚ªˆÙ‚È‚éB
 <pre>
-@ans = reverse("abc", "def"); # ( "def", "abc" )‚ª•Ô‚³‚ê‚é
-$ans = reverse("abc", "def"); # "cba"‚ª•Ô‚³‚ê‚éB
+my @ans = reverse("abc", "def"); # ( "def", "abc" )‚ª•Ô‚³‚ê‚é
+my $ans = reverse("abc", "def"); # "cba"‚ª•Ô‚³‚ê‚éB
 </pre>
 
 <dt>Ÿ <a name="rewinddir">rewinddir(<i>DIRHANDLE</i>)</a>
@@ -1170,12 +1195,12 @@ rand() ‚Í—”‚ğ•Ô‚·‚Æ‚ÍŒ¾‚Á‚Ä‚¢‚é‚ªAƒvƒƒOƒ‰ƒ€‹N“®Œã‚Íí‚É“¯‚¶ƒpƒ^[ƒ“‚Ì’l‚ğ•Ô‚
 <dt>Ÿ stat <i>scalar</i>
 <dd><p>ƒtƒ@ƒCƒ‹‚ÌƒTƒCƒY‚âì¬“ú•t‚È‚Ç‚ğ’²‚×‚éB</p>
 <pre>
-($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size,
+my ($dev, $ino, $mode, $nlink, $uid, $gid, $rdev, $size,
     $atime, $mtime, $ctime, $blksize, $blocks) = stat($file);
 </pre>
 <p>•Ô‹p’l‚Í‚»‚ê‚¼‚êA$dev(ƒfƒoƒCƒX”Ô†)A$ino(iƒm[ƒh”Ô†)A$mode(ƒp[ƒ~ƒbƒVƒ‡ƒ“ƒ‚[ƒh)A$nlink(ƒŠƒ“ƒN”)A$uid(ì¬Ò‚Ìƒ†[ƒUID)A$gid(ì¬Ò‚ÌƒOƒ‹[ƒvID)A$rdev(HHH)A$size(ƒoƒCƒg”)A$atime(ÅIƒAƒNƒZƒX)A$mtime(ÅIXV)A$ctime(ì¬)A$blksize(ƒuƒƒbƒNƒTƒCƒY)A$blocks(ƒuƒƒbƒN”)‚ğˆÓ–¡‚·‚éBÅIXV‚ğ’m‚è‚½‚¢ê‡‚ÍŸ‚Ì‚æ‚¤‚É‚·‚é‚Æ‚æ‚¢B</p>
 <pre>
-($mtime) = (stat($file))[9];
+my ($mtime) = (stat($file))[9];
 </pre>
 <p><i>expr</i> ‚ÉƒAƒ“ƒ_[ƒo[i_j‚ğw’è‚·‚é‚ÆAÅŒã‚ÉÀs‚µ‚½ stat() ‚ÌŒ‹‰Ê‚ğ‚»‚Ì‚Ü‚Ü•Ô‚·B‚±‚ê‚Í‘¬“x‰ü‘P‚É–ğ—§‚ÂB</p>
 
@@ -1189,7 +1214,7 @@ rand() ‚Í—”‚ğ•Ô‚·‚Æ‚ÍŒ¾‚Á‚Ä‚¢‚é‚ªAƒvƒƒOƒ‰ƒ€‹N“®Œã‚Íí‚É“¯‚¶ƒpƒ^[ƒ“‚Ì’l‚ğ•Ô‚
 sub add {
     return($_[0] + $_[1]);
 }
-print &amp;add(5, 6);
+print add(5, 6);
 </pre>
 
 <dt>Ÿ <a name="substr">substr(<i>expr</i>, <i>offset</i>, <i>length</i>)</a>
@@ -1282,7 +1307,7 @@ foreach (values(%ENV)) {
 <dd><p></p>
 
 <dt>Ÿ <a name="wantarray">wantarray()</a>
-<dd><p>ƒTƒuƒ‹[ƒ`ƒ“‚Ì’†‚Åg—p‚µAƒTƒuƒ‹[ƒ`ƒ“‚Ì–ß‚è’l‚ª”z—ñ‚ğŠú‘Ò‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚éBŸ‚Ì—á‚ÍA@xx = &amp;func() ‚ÅŒÄ‚Ño‚·‚Æ (1, 2, 3) ‚ğ•Ô‚µA$xx = &amp;func() ‚ÅŒÄ‚Ño‚·‚Æ "A" ‚ğ•Ô‚·B</p>
+<dd><p>ƒTƒuƒ‹[ƒ`ƒ“‚Ì’†‚Åg—p‚µAƒTƒuƒ‹[ƒ`ƒ“‚Ì–ß‚è’l‚ª”z—ñ‚ğŠú‘Ò‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ’²‚×‚éBŸ‚Ì—á‚ÍA@xx = func() ‚ÅŒÄ‚Ño‚·‚Æ (1, 2, 3) ‚ğ•Ô‚µA$xx = func() ‚ÅŒÄ‚Ño‚·‚Æ "A" ‚ğ•Ô‚·B</p>
 <pre>
 sub func { return wantarray() ? (1, 2, 3) : "A"; }
 </pre>
@@ -1292,7 +1317,7 @@ sub func { return wantarray() ? (1, 2, 3) : "A"; }
 <dt>Ÿ <a name="while">while (<i>expr</i>) { <i>statements</i> }</a>
 <dd><p><i>expr</i> ‚ª^‚ÌŠÔA<i>statements</i> ‚ğŒJ‚è•Ô‚·B</p>
 <pre>
-$xx = 1;
+my $xx = 1;
 while ($xx &lt; 10) {
     print "xx = $xx\n";
     $xx++;
