@@ -32,7 +32,7 @@ if ($xx &gt; 100) {
 
 <b>◆ <a name="For">10回処理を繰り返す</a></b>
 <pre class=c>
-for ($i = 0; $i &lt; 10; $i++) {
+for (my $i = 0; $i &lt; 10; $i++) {
     print "$i\n";
 }
 </pre>
@@ -41,22 +41,21 @@ for ($i = 0; $i &lt; 10; $i++) {
 
 <b>◆ <a name="StringByChar">文字を1文字ずつ処理する</a></b>
 <pre class=c>
-$str = "ABCDEFG";
-for ($i = 0; $i &lt; length($str); $i++) {
-    $c = substr($str, $i, 1);
+my $str = "ABCDEFG";
+for (my $i = 0; $i &lt; length($str); $i++) {
+    my $c = substr($str, $i, 1);
     print "[$c] ";
 }
 </pre>
 
 <b>◆ <a name="StringByWchar">文字を1文字ずつ処理する(日本語対応)</a></b>
 <pre class=c>
-$str = "ABCDEFGあいうえお";   # 漢字コードはEUCとする
-for ($i = 0; $i &lt; length($str); $i++) {
-    $c = substr($str, $i, 1);
-    if ($c =~ /[\x80-\xff]/) {
-        $c = substr($str, $i++, 2);
-    }
-    print "[$c] ";
+use Encode;
+
+my $str = decode('utf8', "ABCDEFGあいうえお");   # ファイルの文字コードは utf8とする.
+for (my $i = 0; $i &lt; length($str); $i++) {
+    my $c = substr($str, $i, 1);
+    print encode('utf8', "[$c] ");
 }
 </pre>
 
@@ -67,8 +66,9 @@ $str =~ s/\s*$//;
 
 <b>◆ <a name="IsJapanese">全角文字が含まれているか調べる</a></b>
 <pre class=c>
-# $strの漢字コードをEUCにしておいて
-if ($str =~ /[\x80-\xff]/) { print "全角文字が含まれてます"; }
+use Unicode::EastAsianWidth; # 要インストール
+# $strの漢字コードを utf-8にしておいて
+if ($str =~ /\p{InFullWidth}/) { print "全角文字が含まれてます"; }
 </pre>
 
 <h4>■ 書き出し</h4>
@@ -110,16 +110,17 @@ $old = select(OUT); $| = 1; select($old);
 
 <b>◆ <a name="Lock">ファイルをロックする</a></b>
 <pre class=c>
-open(OUT, "&gt; file.txt");
-flock(OUT, 2);
-print OUT ".......\n";
-close(OUT);  # closeすると自動的にアンロックされる
+open my $fh, '&gt;', "file.txt" or die "Can't open file.txt";
+flock $fh, 2;
+print $fh ".......\n";
+close $fh;  # closeすると自動的にアンロックされる
 </pre>
 
 <h4>■ 配列</h4>
 
 <b>◆ <a name="Array">配列を用いる</a></b>
 <pre class=c>
+my @xx;
 $xx[0] = "あああ";
 $xx[1] = "いいい";
 print "$xx[0]\n";
@@ -127,7 +128,7 @@ print "$xx[0]\n";
 
 <b>◆ <a name="ForArray">すべての配列要素に対して処理する</a></b>
 <pre class=c>
-for $yy (@xx) {
+for my $yy (@xx) {
     print $yy;
 }
 </pre>
@@ -137,10 +138,11 @@ for $yy (@xx) {
 <b>◆ <a name="ReadFile">ファイルを読み出す</a></b>
 <pre class=c>
 open(IN, "xxxx.txt");
-while (&lt;IN&gt;) {
+open my $fh, '<', "xxxx.txt" or die "Can't open xxxx.txt";
+while (&lt;$fh&gt;) {
     print $_;
 }
-close(IN);
+close $fh;
 </pre>
 
 <b>◆ <a name="FileSize">ファイルのサイズを得る</a></b>
@@ -150,11 +152,11 @@ $size = -s $file;
 
 <b>◆ <a name="Binary">ファイルをバイナリモードで読み出す</a></b>
 <pre class=c>
-$size = -s $file;
-open(IN, $file);
-binmode(IN);              # Windowsで必要
-sysread(IN, $buf, $size);
-close(IN);
+my $size = -s $file;
+open $fh, '&lt;', $file or die "Can't open $file";
+binmode $fh;              # Windowsで必要
+sysread $fh, my $buf, $size;
+close $fh;
 </pre>
 
 <b>◆ <a name="Exist">ファイルが存在するか確認する</a></b>
@@ -166,11 +168,11 @@ if (-f $file) {
 
 <b>◆ <a name="LockFile">ファイルをロックする</a></b>
 <pre class=c>
-open(OUT, "&gt;&gt; outfile.txt");
-flock(OUT, 2);
-truncate(OUT, 0);
-print "....";
-close(OUT);
+open my $fh, '&gt;&gt;', "outfile.txt" or die "Can't open outfile.txt";
+flock $fh, 2;
+truncate $fh, 0;
+print $fh "....";
+close $fh;
 </pre>
 
 <h4>■ サブルーチン</h4>
@@ -184,24 +186,23 @@ sub add {
 
 <b>◆ <a name="Call">サブルーチンを呼び出す</a></b>
 <pre class=c>
-$answer = &amp;add(3, 5);
+$answer = add(3, 5);
 </pre>
 
 <b>◆ <a name="Local">サブルーチンの中で使う変数をローカル変数とする</a></b>
 <pre class=c>
 sub add {
-    local($ans);
-    $ans = $_[0] + $_[1];
-    return($ans);
+    my ($arg1, $arg2) = @_;
+    return $arg1 + $arg2;
 }
 </pre>
 
 <h4>■ その他</h4>
 
-<b>◆ <a name="Argv">引数を解釈する</a></b>
+<b>◆ <a name="Argv">コマンドライン引数を解釈する</a></b>
 <pre class=c>
-for ($i = 0; $i &lt;= $#ARGV; $i++) {
-    print "$ARGV[$i]\n";
+foreach my $arg (@ARGV) {
+    print "$arg\n";
 }
 </pre>
 
@@ -212,7 +213,7 @@ $ENV{'TZ'} = "JST-9";
 
 <b>◆ <a name="Signal">プログラム強制中断の際の処理を記述する</a></b>
 <pre class=c>
-$SIG{'INT'} = $SIG{'HUP'} = $SIG{'QUIT'} = $SIG{'TERM'} = "sigexit";
+$SIG{'INT'} = $SIG{'HUP'} = $SIG{'QUIT'} = $SIG{'TERM'} = \&amp;sigexit;
 sub sigexit {
     # この部分に作業ファイル削除などの終了処理を記述する
 }
