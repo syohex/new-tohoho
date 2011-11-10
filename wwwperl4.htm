@@ -26,14 +26,20 @@
 
 <h4>■ <a name="Japanese">perlで日本語を扱うには</a></h4>
 <div class=i>
-<p>シフトJISでperlスクリプトを記述する場合、「表示」が「侮ヲ」のように文字化けすることがあります。これは、漢字コードの2バイト目がバックスラッシュ( \ )のコードと重複する文字を用いた時に発生します。"表\示" のように、文字化けする個所の前後にバックスラッシュ( \ )を余分に挿入することで回避できます。</p>
-<p>perlで漢字コードの変換を行うには、<a href="wwwtoper.htm#jcode.pl">jcode</a> というライブラリを用いると便利です。漢字コードを変換するには次のように使用します。</p>
+<p>Perlで日本語を扱う場合は Encodeモジュールを利用します。入口で decodeし, 出口 encodeするということが基本です。</p>
 <pre class=c>
-require "jcode.pl";
-$xx = "漢字";
-&amp;jcode'convert(*xx, "euc");
+use Encode;
+my $xx = decode('utf-8', "漢字"); # 第一引数に第二引数の文字コードを指定します.(shift_jis, euc-jp, utf-8等)
+# $xxに対する処理. decodeしたことにより, asciiと同じ間隔で length関数等が利用できます.
+print encode('shift_jis', $xx);  # 第一引数に変換する文字コードを指定します.
 </pre>
-<p>2バイト文字を扱う際は、一度EUCに変換してから処理すると、1バイト目も2バイト目も0x80-0xffの間なので楽です。シフトJISの場合は、1バイト目は0x80～0xffの間ですが、2バイト目は通常のASCIIコードと重複する値になるのでで、注意が必要です。例えば、$xx = "テスト"; $xx =~ s/e/E/g; なんてことをやると、$xx の値は "ウスト" になってしまいます。</p>
+<p>すべて UTF-8で扱う場合は以下のように書けます</p>
+<pre class=c>
+use utf8;
+binmode STDOUT, ":utf8";
+my $xx = "漢字"; 'use utf8;'により, utf-8として扱われる
+print $xx;  # 'binmode...'により, STDOUT出力する文字は utf-8で encodeされる.
+</pre>
 </div>
 
 <h4>■ <a name="Timezone">時間が9時間ずれる場合</a></h4>
@@ -50,11 +56,11 @@ $xx = "漢字";
 <div class=i>
 <p>flock()を用いてファイルをロックする場合、よく次のようなコーディングをしていまいますが、これは2つの誤りを含んでいます。詳しくは <a href="wwwperl2.htm#flock">flock()</a>を参照してください。</p>
 <pre class=c>
-open(OUT, "&gt; datafile.txt");
-flock(OUT, 2);
-print OUT "....";
-flock(OUT, 8);
-close(OUT);
+open my $fh, '&gt;', "datafile.txt" or die "Can't open datafile.txt";
+flock $fh, 2;
+print $fh "....";
+flock $fh, 8;
+close $fh;
 </pre>
 </div>
 
