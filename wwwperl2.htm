@@ -71,7 +71,8 @@ PRE {
 <a href="#return">return</a> - サブルーチンから戻る<br>
 <a href="#caller">caller</a> - サブルーチンの情報を返す<br>
 <a href="#package">package</a> - パッケージを開始する<br>
-<a href="#require">require</a> - ライブラリファイルを読み込む
+<a href="#use">use</a> - コンパイル時にライブラリを読み込む
+<a href="#require">require</a> - 実行時にライブラリを読み込む
 </div>
 
 <h4>■ <a name="FileIo">ファイル入出力</a></h4>
@@ -282,7 +283,8 @@ dbmclose - 未稿
 <a href="#defined">defined</a> - 定義されているか調べる<br>
 <a href="#system">system</a> - 外部コマンドを実行する<br>
 <a href="#exec">exec</a> - 外部コマンドを実行する<br>
-<a href="#local">local</a> - ローカル変数を定義する<br>
+<a href="#local">local</a> - ダイナミックスコープ変数を宣言する<br>
+<a href="#my">my</a> - ローカル変数を定義する<br>
 <a href="#sleep">sleep</a> - 数秒間待つ<br>
 <a href="#undef">undef</a> - 変数などを未定義の状態にする<br>
 <a href="#warn">warn</a> - エラーメッセージを出力する<br>
@@ -846,6 +848,16 @@ my ($sec, $min, $hour, $mday, $mon, $year,
 <dt>◆ msgrcv(<i>id</i>, <i>var</i>, <i>size</i>, <i>type</i>, <i>flags</i>)
 <dd><p></p>
 
+<dt>◆ <a name="my">my(<i>list</i>)</a>
+<dd><p>ローカル(レキシカル)変数を宣言する. 有効範囲は現在のスコープの末尾までである</p>
+<pre>
+sub xxx {
+    my $var = 10;
+    ...
+    # $varの有効範囲
+}
+</pre>
+
 <dt>◆ <a name="next">next <i>label</i></a>
 <dt>◆ next
 <dd><p>最も内側、もしくは <i>label</i> で指定したループの次の繰り返しを実行する。</p>
@@ -1045,9 +1057,9 @@ $xx = int(rand(10));
 <dt>◆ <a name="require">require(<i>expr</i>)</a>
 <dt>◆ require <i>expr</i>
 <dt>◆ require
-<dd><p>ライブラリファイルを読み込む。ライブラリファイルは習慣的に .pl の拡張子を持つ perl スクリプトである。<i>expr</i> を省略した場合は $_ をファイル名とみなす。</p>
+<dd><p>ライブラリを読み込む。useと違い requireは実行時に読み取りを行う。動的にモジュールを読み込む場合は useでなく, requireを使用する。</p>
 <pre>
-require "jcode.pl";
+require "$hoge";
 </pre>
 
 <dt>◆ reset(<i>expr</i>)
@@ -1285,6 +1297,13 @@ unpack("C", "A")  # AのASCIIコード0x41を返す
 
 <dt>◆ <a name="until">until (<i>expr</i>) { <i>statements</i> }</a>
 <dd><p><a href="#while">while</a> の逆で、<i>expr</i> が真になるまで、<i>statements</i> を繰り返す。</p>
+
+<dt>◆ <a name="use">use(<i>expr</i>)</a>
+<dt>◆ use <i>ModuleName</i>
+<dd><p>コンパイル時にライブラリを読み込む。requireと異なり, 指定したモジュールの import関数の呼び出しも行う</p>
+<pre>
+use LWP::UserAgent;
+</pre>
 
 <dt>◆ <a name="utime">utime(<i>atime</i>, <i>mtime</i>, <i>filelist</i>)</a>
 <dd><p><i>filelist</i> で指定したファイルのアクセス時刻 <i>atime</i> と更新時刻 <i>mtime</i> を変更し、変更に成功したファイルの個数を返す。<i>atime</i> や <i>mtime</i> は <a href="#time">time()</a> で得られるような値を用いる。</p>
