@@ -1,0 +1,176 @@
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=Shift_JIS">
+<title>とほほのperl入門</title>
+<link rel="stylesheet" href="style.css">
+<meta name="Keyword" content="perl">
+</head>
+<body>
+<div style="border:1px solid #9999cc; width:530px; background-color:#eeeeff; padding:3px; margin-top:3px; color:#333399; text-align:left; font-size:9pt;">
+<!-- テキスト広告(UF) -->
+[広告]
+<a href="http://www.denshitabaco.jp/">電子タバコの良いサイト</a>
+</div>
+<h2><img src="image/popase.gif" height=19 width=18 alt="">とほほのperl入門</h2>
+<a href="www.htm">トップ</a> &gt;
+とほほのperl入門
+<h4>■ <a href="wwwperl1.htm">概要編</a></h4>
+<ul>
+<li><a href="wwwperl1.htm#AboutPerl">perlとは</a>
+<ul>
+<li><a href="wwwperl1.htm#About">特徴</a>
+<li><a href="wwwperl1.htm#Version">perlのバージョン</a>
+<li><a href="wwwperl1.htm#HowToGet">入手方法</a>
+</ul>
+<li><a href="wwwperl1.htm#ExecPerl">実行方法</a>
+<ul>
+<li><a href="wwwperl1.htm#ExecPerl1">引数指定</a>
+<li><a href="wwwperl1.htm#ExecPerl2">ファイル指定</a>
+<li><a href="wwwperl1.htm#ExecPerl3">自己完結型</a>
+<li><a href="wwwperl1.htm#ExecPerl4">標準入力読み込み型</a>
+</ul>
+<li><a href="wwwperl1.htm#Basics">基礎知識</a>
+<ul>
+<li><a href="wwwperl1.htm#Sample">簡単な実行例</a>
+<li><a href="wwwperl1.htm#Start">これだけは覚えて</a>
+</ul>
+<li><a href="wwwperl1.htm#Value">定数・変数・値</a>
+<ul>
+<li><a href="wwwperl1.htm#Numeric">数値</a>
+<li><a href="wwwperl1.htm#String">文字列</a>
+<li><a href="wwwperl1.htm#Esc">エスケープシーケンス(\)</a>
+<li><a href="wwwperl1.htm#Scalar">スカラー変数($XXX)</a>
+<li><a href="wwwperl1.htm#Array">配列(@XXX)</a>
+<li><a href="wwwperl1.htm#Rensou">連想配列(%XXX)</a>
+<li><a href="wwwperl1.htm#VariableName">変数名に使える文字</a>
+<li><a href="wwwperl1.htm#NumericString">数値と文字列</a>
+<li><a href="wwwperl1.htm#TrueAndFalse">真(true)と偽(false)</a>
+<li><a href="wwwperl1.htm#DefinedUndefined">定義済みと未定義</a>
+<li><a href="wwwperl1.htm#DefaultValue">省略時の変数($_)</a>
+<li><a href="wwwperl1.htm#Environment">環境変数($ENV{'XXX'})</a>
+<li><a href="wwwperl1.htm#Argument">コマンド引数($ARGV)</a>
+<li><a href="wwwperl1.htm#Signal">シグナル($SIG{'XXX'})</a>
+<li><a href="wwwperl1.htm#Tokushu">その他の特殊変数($X)</a>
+<li><a href="wwwperl1.htm#BinaryData">バイナリデータ</a>
+</ul>
+<li><a href="wwwperl1.htm#Operand">演算子</a>
+<ul>
+<li><a href="wwwperl1.htm#SetOperand">代入</a>
+<li><a href="wwwperl1.htm#CalcOperand">算術演算子</a>
+<li><a href="wwwperl1.htm#BitOperand">ビット演算子</a>
+<li><a href="wwwperl1.htm#CompNumOperand">数値比較演算子</a>
+<li><a href="wwwperl1.htm#CompStrOperand">文字列比較演算子</a>
+<li><a href="wwwperl1.htm#CondOperand">条件演算子</a>
+<li><a href="wwwperl1.htm#MachingOperand">マッチング</a>
+<li><a href="wwwperl1.htm#CatOperand">文字列連結</a>
+<li><a href="wwwperl1.htm#ReplaceOperand">文字列置換</a>
+<li><a href="wwwperl1.htm#RepeatOperand">繰り返し演算子</a>
+<li><a href="wwwperl1.htm#RangeOperand">範囲演算子</a>
+<li><a href="wwwperl1.htm#FileTest">ファイル検査</a>
+</ul>
+<li><a href="wwwperl1.htm#Syntax">制御構文</a>
+<ul>
+<li><a href="wwwperl1.htm#if">if elsif else文</a>
+<li><a href="wwwperl1.htm#unless">unless文</a>
+<li><a href="wwwperl1.htm#while">while文</a>
+<li><a href="wwwperl1.htm#until">until文</a>
+<li><a href="wwwperl1.htm#do">do文</a>
+<li><a href="wwwperl1.htm#for">for文</a>
+<li><a href="wwwperl1.htm#foreach">foreach文</a>
+<li><a href="wwwperl1.htm#last">last文</a>
+<li><a href="wwwperl1.htm#next">next文</a>
+<li><a href="wwwperl1.htm#continue">continue文</a>
+</ul>
+<li><a href="wwwperl1.htm#InputOutput">入出力</a>
+<ul>
+<li><a href="wwwperl1.htm#InputFile">ファイル読み込み</a>
+<li><a href="wwwperl1.htm#OutputFile">ファイル書き込み</a>
+<li><a href="wwwperl1.htm#ExecCommand">外部コマンド実行</a>
+<li><a href="wwwperl1.htm#Handle">ハンドル</a>
+<li><a href="wwwperl1.htm#Stdio">標準入出力</a>
+<li><a href="wwwperl1.htm#NewLine">改行コード</a>
+<li><a href="wwwperl1.htm#Binary">バイナリ読み込み</a>
+</ul>
+<li><a href="wwwperl1.htm#SubAndLib">サブルーチンとライブラリ</a>
+<ul>
+<li><a href="wwwperl1.htm#Subroutine">サブルーチン(sub)</a>
+<li><a href="wwwperl1.htm#CallByRef">参照渡し</a>
+<li><a href="wwwperl1.htm#Library">ライブラリ</a>
+</ul>
+<li><a href="wwwperl1.htm#Other">その他</a>
+<ul>
+<li><a href="wwwperl1.htm#Comment">コメント(#)</a>
+<li><a href="wwwperl1.htm#Expr">正規表現</a>
+<li><a href="wwwperl1.htm#EOF">&lt;&lt;によるデータ表記</a>
+<li><a href="wwwperl1.htm#Reference">リファレンス</a>
+<li><a href="wwwperl1.htm#Kanji">日本語の取り扱い</a>
+</ul>
+</ul>
+<h4>■ <a href="wwwperl2.htm">リファレンス編</a></h4>
+<ul>
+<li><a href="wwwperl2.htm#Statement">プログラム制御</a>
+<li><a href="wwwperl2.htm#Subroutine">サブルーチン・パッケージ・ライブラリ</a>
+<li><a href="wwwperl2.htm#FileIo">ファイル入出力</a>
+<li><a href="wwwperl2.htm#FileOp">ファイル操作</a>
+<li><a href="wwwperl2.htm#DirOp">ディレクトリ操作</a>
+<li><a href="wwwperl2.htm#DirIo">ディレクトリ読み出し</a>
+<li><a href="wwwperl2.htm#String">文字列操作</a>
+<li><a href="wwwperl2.htm#Times">時刻操作</a>
+<li><a href="wwwperl2.htm#Array">配列制御</a>
+<li><a href="wwwperl2.htm#XArray">連想配列制御</a>
+<li><a href="wwwperl2.htm#Math">数学関数</a>
+<li><a href="wwwperl2.htm#Conv">データ変換</a>
+<li><a href="wwwperl2.htm#Process">プロセス制御</a>
+<li><a href="wwwperl2.htm#Signal">シグナル</a>
+<li><a href="wwwperl2.htm#Sockets">ソケット</a>
+<li><a href="wwwperl2.htm#Msg">メッセージ</a>
+<li><a href="wwwperl2.htm#Semaphore">セマフォ</a>
+<li><a href="wwwperl2.htm#Shm">共有メモリ</a>
+<li><a href="wwwperl2.htm#Db">データベース</a>
+<li><a href="wwwperl2.htm#Other">その他</a>
+</ul>
+<h4>■ <a href="wwwperl3.htm">利用例編</a></h4>
+<ul>
+<li><a href="wwwperl3.htm#If">条件判断する</a>
+<li><a href="wwwperl3.htm#For">10回処理を繰り返す</a>
+<li><a href="wwwperl3.htm#StringByChar">文字を1文字ずつ処理する</a>
+<li><a href="wwwperl3.htm#StringByWchar">文字を1文字ずつ処理する(日本語対応)</a>
+<li><a href="wwwperl3.htm#DeleteReturn">行末の改行コードや空白を取り去る</a>
+<li><a href="wwwperl3.htm#IsJapanese">全角文字が含まれているか調べる</a>
+<li><a href="wwwperl3.htm#Print">文字列を書き出す</a>
+<li><a href="wwwperl3.htm#Quote">ダブルクォーテーションを含む文字列を書き出す</a>
+<li><a href="wwwperl3.htm#At">アットマークを含む文字列を書き出す</a>
+<li><a href="wwwperl3.htm#Format">書式を指定して書き出す</a>
+<li><a href="wwwperl3.htm#Multi">数行にわたる内容を書き出す</a>
+<li><a href="wwwperl3.htm#Flush">バッファをフラッシュする</a>
+<li><a href="wwwperl3.htm#Lock">ファイルをロックする</a>
+<li><a href="wwwperl3.htm#Array">配列を用いる</a>
+<li><a href="wwwperl3.htm#ForArray">すべての配列要素に対して処理する</a>
+<li><a href="wwwperl3.htm#ReadFile">ファイルを読み出す</a>
+<li><a href="wwwperl3.htm#FileSize">ファイルのサイズを得る</a>
+<li><a href="wwwperl3.htm#Binary">ファイルをバイナリモードで読み出す</a>
+<li><a href="wwwperl3.htm#Exist">ファイルが存在するか確認する</a>
+<li><a href="wwwperl3.htm#LockFile">ファイルをロックする</a>
+<li><a href="wwwperl3.htm#Sub">サブルーチンを定義する</a>
+<li><a href="wwwperl3.htm#Call">サブルーチンを呼び出す</a>
+<li><a href="wwwperl3.htm#Local">サブルーチンの中で使う変数をローカル変数とする</a>
+<li><a href="wwwperl3.htm#Argv">引数を解釈する</a>
+<li><a href="wwwperl3.htm#Japan">時間帯を日本時間に設定する</a>
+<li><a href="wwwperl3.htm#Signal">プログラム強制中断の際の処理を記述する</a>
+</ul>
+<h4>■ <a href="wwwperl4.htm">まめ知識</a></h4>
+<ul>
+<li><a href="wwwperl4.htm#perl5att">Perl5では"..."の中に@を使えない</a>
+<li><a href="wwwperl4.htm#Japanese">perlで日本語を扱うには</a>
+<li><a href="wwwperl4.htm#Timezone">時間が9時間ずれる場合</a>
+<li><a href="wwwperl4.htm#eval">サポートされていないかもしれない関数</a>
+<li><a href="wwwperl4.htm#Flock">flock()の間違った使い方</a>
+<li><a href="wwwperl4.htm#Http">簡単なHTTPクライアントを実現するには？</a>
+<li><a href="wwwperl4.htm#Gethost">IPアドレスをホスト名に変換するには？</a>
+</ul>
+<hr>
+<div>Copyright (C) 1997-2002 杜甫々</div>
+<div>初版：1997年2月3日、最終更新：2002年2月24日</div>
+<div>http://www.tohoho-web.com/wwwperl.htm</div>
+</body>
+</html>
