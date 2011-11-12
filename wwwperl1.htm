@@ -48,8 +48,10 @@ perl -we "print 'Hello world!!';"
 
 <b>◆ <a name="ExecPerl2">ファイル指定</a></b>
 <div class=i>
-<p>次のような内容のテキストファイル(仮にhello.plとします)を作成してください。</p>
+<p>次のような内容のテキストファイル(仮にhello.plとします)を作成してください。'use strict;'、'use warnings;'をつけることでコードに問題がある場合指摘してくれるようになります。必ずつけるようにしてください</p>
 <pre class=c>
+use strict;
+use warnings;
 print "Hello world!!\n";
 </pre>
 <p>上記で作成したファイルの名前を引数にして、コマンドプロンプトから次のようにperlコマンドを実行してください。</p>
@@ -60,7 +62,7 @@ perl hello.pl
 
 <b>◆ <a name="ExecPerl3">自己完結型</a></b>
 <div class=i>
-<p>これはUNIXでのみ使用可能な方法です。次のような内容のテキストファイル(仮にhello.plとします)を作成してください。'use strict;'、'use warnings;'は基本的につけるようにします。</p>
+<p>これはUNIXでのみ使用可能な方法です。次のような内容のテキストファイル(仮にhello.plとします)を作成してください。</p>
 <pre class=c>
 #!/usr/bin/env perl
 use strict;

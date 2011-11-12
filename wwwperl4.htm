@@ -19,6 +19,21 @@
 <a href="wwwperl.htm">とほほのperl入門</a> &gt;
 まめ知識
 
+<h4>■ <a name="strict">エラーチェックを行うには</a></h4>
+<div class=i>
+<p>Perlはデフォルトでは非常に寛大であり、あなたの意図した通りにプログラムを書いていない場合でも動作することがあります。それは意図通りに動いていないので問題があると言えます。その問題を自分の目で追うのは大変な作業です。strictプラグマ, warningsプラグマを使うことであなたに代わって Perlがエラーを見つけてくれます。使い方は簡単です。プログラムの冒頭に use strict; use warnings;を追加するだけです。</p>
+<pre class=c>
+#!/usr/bin/env perl
+use strict;
+use warnings;
+</pre>
+<p>詳しい説明は以下の参考サイトにありますので、詳しく知りたい場合はそちらを参照して下さい</p>
+<ul>
+  <li><a href="http://blog.livedoor.jp/dankogai/archives/50502585.html">strictプラグマの解説</a></li>
+  <li><a href="blog.livedoor.jp/dankogai/archives/j51068305.html">warningsプラグマの解説</a></li>
+</ul>
+</div>
+
 <h4>■ <a name="Japanese">perlで日本語を扱うには</a></h4>
 <div class=i>
 <p>Perlで日本語を扱う場合は Encodeモジュールを利用します。入口で decodeし, 出口 encodeするということが基本です。</p>
